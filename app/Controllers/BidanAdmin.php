@@ -3,31 +3,32 @@
 namespace App\Controllers;
 
 use \App\Models\BidanModel;
+use \App\Models\UsersModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class BidanAdmin extends BaseController
 {
     public function index()
     {
-        $bidan = new BidanModel();
-        $data['title'] = "Admin Bidan";
-        $data['header'] = "Data Bidan";
-        $data['bidans'] = $bidan->findAll();
+        $user = new UsersModel();
+        $data = [
+            'title' => "Admin Bidan",
+            'header' => "Data Bidan",
+            'bidans' => $user->where('group_user', 3)->findAll()
+        ];
 
         echo view('admin/bidan/admin_data_bidan', $data);
     }
 
     public function preview($id)
     {
-        $bidan = new BidanModel();
-        $data['bidan'] = $bidan->where('id', $id)->first();
+        $user = new UsersModel();
 
-        if (!$data['bidan']) {
-            throw PageNotFoundException::forPageNotFound();
-        }
-
-        $data['title'] = "Admin Bidan - Detail";
-        $data['header'] = "Data Bidan";
+        $data = [
+            'title' => "Admin Bidan",
+            'header' => "Detail Bidan",
+            'bidan' => $user->where('id', $id)->first()
+        ];
         echo view('admin/bidan/admin_detail_bidan', $data);
     }
 
@@ -40,18 +41,38 @@ class BidanAdmin extends BaseController
                     'rules' => 'required',
                     'errors' => ['required' => 'Harap isi kolom {field}']
                 ],
-                'alamat'  => [
-                    'rules' => 'required',
-                    'errors' => ['required' => 'Harap isi kolom {field}']
-                ],
                 'telepon'  => [
                     'label' => 'nomor telepon',
-                    'rules' => 'required|numeric|min_length[10]|is_unique[bidan.telepon]|is_unique[konsumen.telepon]',
+                    'rules' => 'required|numeric|min_length[10]|is_unique[user.telepon]',
                     'errors' => [
                         'required' => 'Harap isi kolom {field}',
                         'numeric' => 'Harap isi kolom {field} dengan nomor',
                         'min_length' => '{field} minimal {param} digit',
                         'is_unique' => '{field} sudah terdaftar',
+                    ]
+                ],
+                'email'  => [
+                    'rules' => 'required|valid_email|is_unique[user.email]',
+                    'errors' => [
+                        'required' => 'Harap isi kolom {field}',
+                        'valid_email' => 'Harap isi email yang valid',
+                        'is_unique' => '{field} sudah terdaftar'
+                    ]
+                ],
+                'password'  => [
+                    'rules' => 'required|min_length[8]',
+                    'errors' => [
+                        'required' => 'Harap isi kolom {field}',
+                        'min_length' => 'Minimal 8 karakter'
+                    ]
+                ],
+                'password_confirm'  => [
+                    'label' => 'konfirmasi password',
+                    'rules' => 'required|min_length[8]|matches[password]',
+                    'errors' => [
+                        'required' => 'Harap isi kolom {field}',
+                        'min_length' => 'Minimal 8 karakter',
+                        'matches' => '{field} salah',
                     ]
                 ]
             ]
@@ -60,11 +81,14 @@ class BidanAdmin extends BaseController
         $isDataValid = $validation->withRequest($this->request)->run();
 
         if ($isDataValid) {
-            $bidan = new BidanModel();
-            $bidan->save([
+            $user = new UsersModel();
+            $user->save([
                 "nama" => $this->request->getPost('nama'),
-                "alamat" => $this->request->getPost('alamat'),
                 "telepon" => $this->request->getPost('telepon'),
+                "email" => $this->request->getPost('email'),
+                "password" => md5($this->request->getPost('password')),
+                "saldo" => 0,
+                "group_user" => 3
             ]);
 
             $message = 'Data Berhasil disimpan';
@@ -89,8 +113,8 @@ class BidanAdmin extends BaseController
     {
         $id = $this->request->getGet('id');
 
-        $bidan = new BidanModel();
-        $data['bidan'] = $bidan->where('id', $id)->first();
+        $user = new UsersModel();
+        $data['bidan'] = $user->where('id', $id)->first();
 
         if (!$data['bidan']) {
             throw PageNotFoundException::forPageNotFound();
@@ -103,8 +127,8 @@ class BidanAdmin extends BaseController
     {
         $id = $this->request->getPost('id');
 
-        $bidan = new BidanModel();
-        $data['bidan'] = $bidan->where('id', $id)->first();
+        $user = new UsersModel();
+        $data['bidan'] = $user->where('id', $id)->first();
 
         $validation =  \Config\Services::validation();
         $validation->setRules(
@@ -114,18 +138,38 @@ class BidanAdmin extends BaseController
                     'rules' => 'required',
                     'errors' => ['required' => 'Harap isi kolom {field}']
                 ],
-                'alamat'  => [
-                    'rules' => 'required',
-                    'errors' => ['required' => 'Harap isi kolom {field}']
-                ],
                 'telepon'  => [
                     'label' => 'nomor telepon',
-                    'rules' => 'required|numeric|min_length[10]|is_unique[bidan.telepon,id,{id}]|is_unique[konsumen.telepon]',
+                    'rules' => 'required|numeric|min_length[10]|is_unique[user.telepon,id,{id}]',
                     'errors' => [
                         'required' => 'Harap isi kolom {field}',
                         'numeric' => 'Harap isi kolom {field} dengan nomor',
                         'min_length' => '{field} minimal {param} digit',
                         'is_unique' => '{field} sudah terdaftar',
+                    ]
+                ],
+                'email'  => [
+                    'rules' => 'required|valid_email|is_unique[user.email,id,{id}]',
+                    'errors' => [
+                        'required' => 'Harap isi kolom {field}',
+                        'valid_email' => 'Harap isi email yang valid',
+                        'is_unique' => '{field} sudah terdaftar'
+                    ]
+                ],
+                'password'  => [
+                    'rules' => 'min_length[8]|permit_empty',
+                    'errors' => [
+                        'required' => 'Harap isi kolom {field}',
+                        'min_length' => 'Minimal 8 karakter'
+                    ]
+                ],
+                'password_confirm'  => [
+                    'label' => 'konfirmasi password',
+                    'rules' => 'min_length[8]|matches[password]|permit_empty',
+                    'errors' => [
+                        'required' => 'Harap isi kolom {field}',
+                        'min_length' => 'Minimal 8 karakter',
+                        'matches' => '{field} salah',
                     ]
                 ]
             ]
@@ -134,17 +178,61 @@ class BidanAdmin extends BaseController
         $isDataValid = $validation->withRequest($this->request)->run();
 
         if ($isDataValid) {
-            $bidan->update($id, [
-                "nama" => $this->request->getPost('nama'),
-                "alamat" => $this->request->getPost('alamat'),
-                "telepon" => $this->request->getPost('telepon')
-            ]);
+            if (empty($this->request->getPost('password')) && empty($this->request->getPost('first_password')) && empty($this->request->getPost('password_confirm'))) {
+                $user->update($id, [
+                    "nama" => $this->request->getPost('nama'),
+                    "telepon" => $this->request->getPost('telepon'),
+                    "email" => $this->request->getPost('email'),
+                    "saldo" => 0,
+                    "group_user" => 3
+                ]);
 
-            $message = 'Data berhasil diubah';
+                $message = 'Data berhasil diubah';
 
-            session()->setFlashData('pesan', $message);
+                session()->setFlashData('pesan', $message);
 
-            echo $message;
+                echo $message;
+            } else {
+                $db = \Config\Database::connect();
+                $builder = $db->table('user');
+                $builder->select('password');
+                $builder->where('id', $id);
+                $builder->limit(1);
+                $query = $builder->get();
+                $result = $query->getResultArray();
+                foreach ($result as $rst) {
+                    $first_password = $rst['password'];
+                    $first_password_field = md5($this->request->getPost('first_password'));
+                    $password = $this->request->getPost('password');
+                    $password_confirm = $this->request->getPost('password_confirm');
+
+                    if ($first_password == $first_password_field) {
+                        if ($password != '' || $password_confirm != '') {
+                            if ($password == $password_confirm) {
+                                $user->update($id, [
+                                    "nama" => $this->request->getPost('nama'),
+                                    "telepon" => $this->request->getPost('telepon'),
+                                    "email" => $this->request->getPost('email'),
+                                    "password" => md5($this->request->getPost('password')),
+                                    "saldo" => 0,
+                                    "group_user" => 3
+                                ]);
+
+                                $message = 'Data berhasil diubah';
+
+                                session()->setFlashData('pesan', $message);
+                            } else {
+                                $message = 'Password dan konfirmasi password tidak sesuai';
+                            }
+                        } else {
+                            $message = 'Jika ingin mengubah password silahkan isi semua kolom password, jika tidak kosongkan';
+                        }
+                    } else {
+                        $message = 'Password lama tidak sesuai';
+                    }
+                    echo $message;
+                }
+            }
         } else {
             $message = $validation->getErrors();
 
@@ -160,8 +248,8 @@ class BidanAdmin extends BaseController
 
     public function delete($id)
     {
-        $bidan = new BidanModel();
-        $bidan->delete($id);
+        $user = new UsersModel();
+        $user->delete($id);
         session()->setFlashData('pesan', 'Data berhasil dihapus');
         return redirect('admin/bidan');
     }

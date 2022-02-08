@@ -11,7 +11,7 @@
                 </div>
                 <div class=" col-auto">
                     <h3 class="h3"><?= $bidan['nama'] ?></h3>
-                    <span>di <b><?= $bidan['alamat'] ?></b></span>
+                    <span>Email <b><?= $bidan['email'] ?></b></span>
                     <div>Telepon <b><?= $bidan['telepon'] ?></b></div>
                 </div>
             </div>

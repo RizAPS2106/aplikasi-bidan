@@ -1,5 +1,10 @@
 $(document).ready(function() {
 
+// Ubah Password Toggle Script 
+    $('#ubah_password').click(function(){
+        $('#form_ubah_password').toggle();
+    });
+
 // DataTables
 
     $('#bidan_table').DataTable();
@@ -23,8 +28,10 @@ $(document).ready(function() {
                 if (data != 'Data Berhasil disimpan') {
                     $('#create').val("Simpan");
                     var elementnama = document.getElementById("nama");
-                    var elementalamat = document.getElementById("alamat");
                     var elementtelepon = document.getElementById("telepon");
+                    var elementemail = document.getElementById("email");
+                    var elementpassword = document.getElementById("password");
+                    var elementpassword_confirm = document.getElementById("password_confirm");
 
                     if (data.includes("nama")) {
                         elementnama.classList.add("is-invalid");
@@ -32,16 +39,34 @@ $(document).ready(function() {
                         elementnama.classList.remove("is-invalid");
                     }
 
-                    if (data.includes("alamat")) {
-                        elementalamat.classList.add("is-invalid");
+                    if (data.includes("telepon")) {
+                        elementtelepon.classList.add("is-invalid");
                     } else {
-                        elementalamat.classList.remove("is-invalid");
+                        elementtelepon.classList.remove("is-invalid");
                     }
 
                     if (data.includes("telepon")) {
                         elementtelepon.classList.add("is-invalid");
                     } else {
                         elementtelepon.classList.remove("is-invalid");
+                    }
+
+                    if (data.includes("email")) {
+                        elementemail.classList.add("is-invalid");
+                    } else {
+                        elementemail.classList.remove("is-invalid");
+                    }
+
+                    if (data.includes("password")) {
+                        elementpassword.classList.add("is-invalid");
+                    } else {
+                        elementpassword.classList.remove("is-invalid");
+                    }
+
+                    if (data.includes("konfirmasi password")) {
+                        elementpassword_confirm.classList.add("is-invalid");
+                    } else {
+                        elementpassword_confirm.classList.remove("is-invalid");
                     }
 
                     swal({
@@ -90,8 +115,8 @@ var base_url = window.location.origin;
                     $('#updateModal').modal('show');
                     $('[name="id"]').val(data.id);
                     $('[name="nama"]').val(data.nama);
-                    $('[name="alamat"]').val(data.alamat);
                     $('[name="telepon"]').val(data.telepon);
+                    $('[name="email"]').val(data.email);
                 });
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -151,9 +176,12 @@ var base_url = window.location.origin;
             success: function(data) {
                 if (data != 'Data berhasil diubah') {
                     $('#edit').val("Ubah");
-                    var elementnama = document.getElementById("namas");
-                    var elementalamat = document.getElementById("alamats");
-                    var elementtelepon = document.getElementById("telepons");
+                    var elementnama = document.getElementById("nama");
+                    var elementtelepon = document.getElementById("telepon");
+                    var elementemail = document.getElementById("email");
+                    var elementfirstpassword = document.getElementById("first_password");
+                    var elementpassword = document.getElementById("password");
+                    var elementpassword_confirm = document.getElementById("password_confirm");
 
                     if (data.includes("nama")) {
                         elementnama.classList.add("is-invalid");
@@ -161,16 +189,40 @@ var base_url = window.location.origin;
                         elementnama.classList.remove("is-invalid");
                     }
 
-                    if (data.includes("alamat")) {
-                        elementalamat.classList.add("is-invalid");
+                    if (data.includes("telepon")) {
+                        elementtelepon.classList.add("is-invalid");
                     } else {
-                        elementalamat.classList.remove("is-invalid");
+                        elementtelepon.classList.remove("is-invalid");
                     }
 
                     if (data.includes("telepon")) {
                         elementtelepon.classList.add("is-invalid");
                     } else {
                         elementtelepon.classList.remove("is-invalid");
+                    }
+
+                    if (data.includes("email")) {
+                        elementemail.classList.add("is-invalid");
+                    } else {
+                        elementemail.classList.remove("is-invalid");
+                    }
+                    
+                    if (data.includes("Password lama")) {
+                        elementfirstpassword.classList.add("is-invalid");
+                    } else {
+                        elementfirstpassword.classList.remove("is-invalid");
+                    }
+
+                    if (data.includes("password")) {
+                        elementpassword.classList.add("is-invalid");
+                    } else {
+                        elementpassword.classList.remove("is-invalid");
+                    }
+
+                    if (data.includes("konfirmasi password")) {
+                        elementpassword_confirm.classList.add("is-invalid");
+                    } else {
+                        elementpassword_confirm.classList.remove("is-invalid");
                     }
 
                     swal({

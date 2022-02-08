@@ -18,8 +18,8 @@
     <tr class="text-light">
       <th>#</th>
       <th>Nama</th>
-      <th>Alamat</th>
       <th>Telepon</th>
+      <th>Email</th>
       <th>
         <center>Aksi</center>
       </th>
@@ -37,10 +37,10 @@
           <?= $bidan['nama'] ?><br>
         </td>
         <td>
-          <?= $bidan['alamat'] ?><br>
+          <?= $bidan['telepon'] ?><br>
         </td>
         <td>
-          <?= $bidan['telepon'] ?><br>
+          <?= $bidan['email'] ?><br>
         </td>
         <td>
           <center>
@@ -79,16 +79,31 @@
             </div>
           </div>
           <div class="form-group my-2">
-            <textarea name="alamat" class="form-control" rows="5" placeholder="Alamat" id="alamat"></textarea>
-            <div class="invalid-feedback">
-              Isi kolom alamat
-            </div>
-          </div>
-          <div class="form-group my-2">
             <label for="telepon">Telepon</label>
             <input type="text" name="telepon" class="form-control" onkeypress="return isNumberKey(event)" id="telepon">
             <div class="invalid-feedback">
               Isi kolom nomor telepon dengan nomor minimal 10 digit.
+            </div>
+          </div>
+          <div class="form-group my-2">
+            <label for="email">Email</label>
+            <input type="email" name="email" class="form-control" id="email">
+            <div class="invalid-feedback">
+              Isi kolom email dengan valid
+            </div>
+          </div>
+          <div class="form-group my-2">
+            <label for="password">Password</label>
+            <div class="row">
+              <div class="col">
+                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                <div class="invalid-feedback">
+                  Isi kolom password dengan minimal 8 karakter
+                </div>
+              </div>
+              <div class="col">
+                <input type="password" name="password_confirm" class="form-control" id="password_confirm" placeholder="Konfirmasi password">
+              </div>
             </div>
           </div>
         </div>
@@ -112,28 +127,48 @@
       <form method="post" id="edit_form">
         <?= csrf_field(); ?>
         <div class="modal-body">
-          <div class="form-group my-2">
-            <input type="hidden" name="id" class="form-control" value="<?= $bidan['id']; ?>">
-          </div>
+          <input type="hidden" name="id" class="form-control" id="id">
           <div class="form-group my-2">
             <label for="nama">Nama</label>
-            <input type="text" name="nama" class="form-control" value="<?= $bidan['nama']; ?>" id="namas">
+            <input type="text" name="nama" class="form-control" id="nama">
             <div class="invalid-feedback">
               Isi kolom nama
             </div>
           </div>
           <div class="form-group my-2">
-            <textarea name="alamat" class="form-control" rows="5" placeholder="Alamat" id="alamats"><?= $bidan['alamat']; ?></textarea>
+            <label for="telepon">Telepon</label>
+            <input type="text" name="telepon" class="form-control" onkeypress="return isNumberKey(event)" id="telepon">
             <div class="invalid-feedback">
-              Isi kolom alamat
+              Isi kolom nomor telepon dengan nomor minimal 10 digit.
             </div>
           </div>
           <div class="form-group my-2">
-            <label for="telepon">Telepon</label>
-            <input type="text" name="telepon" class="form-control" onkeypress="return isNumberKey(event)" value="<?= $bidan['telepon']; ?>" id="telepons">
+            <label for="email">Email</label>
+            <input type="email" name="email" class="form-control" id="email">
             <div class="invalid-feedback">
-              Isi kolom nomor telepon dengan nomor minimal 10 digit
+              Isi kolom email dengan valid
             </div>
+          </div>
+
+          <hr>
+
+          <div class="form-group my-2">
+            <label type="button" for="password" id="ubah_password" class="w-100 dropdown-toggle">Ubah Password</label>
+            <div id="form_ubah_password" style="display: none;" class="mt-3">
+              <input type="password" name="first_password" class="form-control" id="first_password" placeholder="Password lama">
+              <div class="row my-2">
+                <div class="col">
+                  <input type="password" name="password" class="form-control" id="password" placeholder="Password baru">
+                  <div class="invalid-feedback">
+                    Isi kolom password dengan minimal 8 karakter
+                  </div>
+                </div>
+                <div class="col">
+                  <input type="password" name="password_confirm" class="form-control" id="password_confirm" placeholder="Konfirmasi password">
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
         <div class="modal-footer">
