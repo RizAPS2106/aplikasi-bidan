@@ -1,0 +1,7 @@
+.sweet-button {
+  background-color: #027941;
+}
+
+.sweet-button:not([disabled]):hover {
+  background-color: #198754;
+}
