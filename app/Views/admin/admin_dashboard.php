@@ -15,7 +15,7 @@
                             <div class="text-xs font-weight-bold text-white text-uppercase mb-1">
                                 ADMIN
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-white">-</div>
+                            <div class="h5 mb-0 font-weight-bold text-white"><?php echo count($admins) ?></div>
                             <br>
                         </div>
                         <div class="col-auto">
