@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group my-2">
                         <center>
-                            <label>Belum punya akun?</label><a href="<?= base_url('register/index'); ?>">Daftar</a>
+                            <label>Belum punya akun?</label><a href="<?= base_url('register'); ?>">Daftar</a>
                         </center>
                     </div>
                 </div>

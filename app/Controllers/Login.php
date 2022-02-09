@@ -2,30 +2,30 @@
 
 namespace App\Controllers;
 
-use App\Models\UsersModel;
+use App\Models\UserModel;
 
 class Login extends BaseController
 {
     public function index()
     {
-        //include helper form
-
         helper(['form']);
-        $data = ['title' => 'Login'];
+        $data = ['title' => 'Masuk'];
         echo view('login/login', $data);
     }
 
     public function auth()
     {
-        $session = session();
-        $users = new UsersModel();
+        $user = new UserModel();
+
         $email = $this->request->getVar('email');
-        $password = md5($this->request->getVar('password'));
-        $data = $users->where('email', $email)->first();
+        $password_field = md5($this->request->getVar('password'));
+
+        $data = $user->where('email', $email)->first();
         if ($data) {
-            $pass = $data['password'];
-            if ($password == $pass) {
-                $ses_data = [
+            $password = $data['password'];
+
+            if ($password_field == $password) {
+                $session_data = [
                     'id'            => $data['id'],
                     'nama'          => $data['nama'],
                     'email'         => $data['email'],
@@ -33,21 +33,21 @@ class Login extends BaseController
                     'logged_in'     => TRUE
                 ];
 
-                $users->update($data['id'], [
+                session()->set($session_data);
+
+                $user->update($data['id'], [
                     'status_login' => 'login'
                 ]);
 
-                $session->set($ses_data);
-
                 if ($data['group_user'] == 1) {
-                    $message = "Konsumen berhasil masuk";
+                    $message = "Admin";
                 } else if ($data['group_user'] == 2) {
-                    $message = "Admin berhasil masuk";
+                    $message = "Konsumen";
                 } else if ($data['group_user'] == 3) {
-                    $message = "Bidan berhasil masuk";
+                    $message = "Bidan";
                 }
             } else {
-                $message = 'Password Salah';
+                $message = 'Password salah';
             }
         } else {
             $message = 'Email tidak terdaftar';
@@ -58,15 +58,15 @@ class Login extends BaseController
 
     public function logout()
     {
-        $session = session();
-        $id = $session->get('id');
+        $id = session()->get('id');
 
-        $users = new UsersModel();
-        $users->update($id, [
+        $user = new UserModel();
+        $user->update($id, [
             'status_login' => 'logout'
         ]);
 
-        $session->destroy();
+        session()->destroy();
+
         return redirect()->to('/');
     }
 }

@@ -36,7 +36,7 @@
                                 <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                             </div>
                             <div class="col">
-                                <input type="password" name="password_confirm" class="form-control" id="password_confirm" placeholder="Konfirmasi password">
+                                <input type="password" name="konfirmasi_password" class="form-control" id="konfirmasi_password" placeholder="Konfirmasi password">
                             </div>
                         </div>
                         <input type="hidden" id="password_invalid">
@@ -45,7 +45,8 @@
                         </div>
                     </div>
                     <div class="form-group my-3 d-grid gap-2">
-                        <input type="hidden" value="<?php echo base_url('register/save/'); ?>" id="create_url">
+                        <input type="hidden" name="group_user" value="1 ">
+                        <input type="hidden" value="<?php echo base_url('register/register/'); ?>" id="create_url">
                         <input type="submit" class="btn btn-success" value="Daftar" id="create">
                     </div>
                     <div class="form-group my-2">

@@ -2,20 +2,20 @@
 
 namespace App\Controllers;
 
-use \App\Models\UsersModel;
+use \App\Models\UserModel;
 
 class Admin extends BaseController
 {
-    public function dashboard()
+    public function index()
     {
-        $user = new UsersModel();
+        $user = new UserModel();
 
         $data = [
             'title' => "Administrator",
             'header' => "Dashboard",
-            'bidans' => $user->where('group_user', 3)->findAll(),
-            'admins' => $user->where('group_user', 2)->findAll(),
-            'konsumens' => $user->where('group_user', 1)->findAll()
+            'admin' => $user->where('group_user', 1)->findAll(),
+            'konsumen' => $user->where('group_user', 2)->findAll(),
+            'bidan' => $user->where('group_user', 3)->findAll(),
         ];
 
         echo view('admin/admin_dashboard', $data);
@@ -23,12 +23,12 @@ class Admin extends BaseController
 
     public function profil()
     {
-        $user = new UsersModel();
+        $user = new UserModel();
 
         $id = session()->get('id');
 
         $data = [
-            'title' => "Administrator",
+            'title' => "Profil Administrator",
             'header' => "Profil",
             'profil' => $user->where('id', $id)->first()
         ];
@@ -38,7 +38,7 @@ class Admin extends BaseController
 
     public function profil_preview_edit()
     {
-        $user = new UsersModel();
+        $user = new UserModel();
 
         $id = session()->get('id');
 
@@ -51,7 +51,7 @@ class Admin extends BaseController
     {
         $id = $this->request->getPost('id');
 
-        $user = new UsersModel();
+        $user = new UserModel();
         $data['user'] = $user->where('id', $id)->first();
 
         $validation =  \Config\Services::validation();

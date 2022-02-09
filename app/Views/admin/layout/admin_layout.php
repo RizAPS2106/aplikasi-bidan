@@ -1,7 +1,7 @@
 <?= $this->include('layout/header') ?>
 
 <body>
-    <?= $this->include('layout/admin/admin_navbar') ?>
+    <?= $this->include('admin/layout/admin_navbar') ?>
 
     <header class="bg-light mb-3">
         <div class="container">

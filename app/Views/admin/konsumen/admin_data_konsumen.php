@@ -1,21 +1,14 @@
-<?= $this->extend('layout/admin/admin_layout') ?>
+<?= $this->extend('admin/layout/admin_layout') ?>
 
 <?= $this->section('content') ?>
 
-<?php if (session()->getFlashdata('pesan')) : ?>
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong><?= session()->getFlashdata('pesan') ?></strong>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-<?php endif; ?>
-
 <div class="col-auto mb-3">
-  <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fas fa-plus mx-1"></i>Tambah Data Konsumen</button>
+  <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fas fa-plus"></i>Tambah Data Konsumen</button>
 </div>
 
 <table class="table py-1 align-middle" id="konsumen_table">
-  <thead class="bg-success ">
-    <tr class="text-white">
+  <thead class="bg-success text-white">
+    <tr>
       <th>#</th>
       <th>Nama</th>
       <th>Alamat</th>
@@ -28,25 +21,25 @@
   <tbody>
     <?php
     $no = 0;
-    foreach ($konsumens as $konsumen) :
+    foreach ($konsumen as $konsumens) :
       $no++;
     ?>
       <tr>
         <td><?= $no; ?></td>
         <td>
-          <?= $konsumen['nama'] ?><br>
+          <?= $konsumens['nama'] ?><br>
         </td>
         <td>
-          <?= $konsumen['telepon'] ?><br>
+          <?= $konsumens['telepon'] ?><br>
         </td>
         <td>
-          <?= $konsumen['email'] ?><br>
+          <?= $konsumens['email'] ?><br>
         </td>
         <td>
           <center>
-            <a href="<?= base_url('admin/konsumen/' . $konsumen['id'] . '/preview') ?>" class="btn btn-sm btn-outline-secondary" target="_blank"><i class="fa fa-search-plus"></i> Detail</a>
-            <a href="javascript:;" class="btn btn-sm btn-outline-primary item_edit" data="<?php echo $konsumen['id']; ?>"><i class="far fa-edit"></i> Ubah</a>
-            <a href="javascript:;" class="btn btn-sm btn-outline-danger item_delete" data="<?= $konsumen['id']; ?>"><i class="far fa-trash-alt"></i> Hapus</a>
+            <a href="<?= base_url('admin/konsumen/' . $konsumens['id'] . '/preview') ?>" class="btn btn-sm btn-outline-secondary" target="_blank"><i class="fa fa-search-plus"></i> Detail</a>
+            <a href="javascript:;" class="btn btn-sm btn-outline-primary item_edit" data="<?php echo $konsumens['id']; ?>"><i class="far fa-edit"></i> Ubah</a>
+            <a href="javascript:;" class="btn btn-sm btn-outline-danger item_delete" data="<?= $konsumens['id']; ?>"><i class="far fa-trash-alt"></i> Hapus</a>
           </center>
         </td>
       </tr>
@@ -59,8 +52,8 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-success text-light">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Data Bidan</h5>
-        <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="createModalLabel">Tambah Data Konsumen</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="post" id="create_form">
         <?= csrf_field(); ?>
@@ -93,7 +86,7 @@
                 <input type="password" name="password" class="form-control" id="password" placeholder="Password">
               </div>
               <div class="col">
-                <input type="password" name="password_confirm" class="form-control" id="password_confirm" placeholder="Konfirmasi password">
+                <input type="password" name="konfirmasi_password" class="form-control" id="konfirmasi_password" placeholder="Konfirmasi password">
               </div>
             </div>
             <input type="hidden" id="password_invalid">
@@ -103,7 +96,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <input type="hidden" value="<?php echo base_url('admin/konsumen/create/'); ?>" id="create_url">
+          <input type="hidden" name="group_user" value="2">
+          <input type="hidden" value="<?= base_url('admin/user/create/'); ?>" id="create_url">
           <input type="submit" class="btn btn-success" value="Simpan" id="create">
         </div>
       </form>
@@ -116,13 +110,13 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-success text-light">
-        <h5 class="modal-title" id="exampleModalLabel">Ubah Data Bidan</h5>
-        <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="updateModalLabel">Ubah Data Bidan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="post" id="edit_form">
         <?= csrf_field(); ?>
         <div class="modal-body">
-          <input type="hidden" name="id" class="form-control" id="id">
+          <input type="hidden" name="id" class="form-control">
           <div class="form-group my-2">
             <label for="nama">Nama</label>
             <input type="text" name="nama" class="form-control" id="namas">
@@ -148,16 +142,16 @@
           <hr>
 
           <div class="form-group my-2">
-            <label type="button" for="password" id="ubah_password" class="w-100 dropdown-toggle">Ubah Password</label>
-            <div id="form_ubah_password" style="display: none;" class="mt-3">
-              <input type="password" name="first_password" class="form-control" id="first_passwords" placeholder="Password lama">
+            <label type="button" for="password" class="w-100 dropdown-toggle" id="ubah_password">Ubah Password</label>
+            <div id="form_ubah_password" class="mt-3" style="display: none;">
+              <input type="password" name="password_lama" class="form-control" id="password_lamas" placeholder="Password lama">
               <div>
                 <div class="row my-2">
                   <div class="col">
                     <input type="password" name="password" class="form-control" id="passwords" placeholder="Password baru">
                   </div>
                   <div class="col">
-                    <input type="password" name="password_confirm" class="form-control" id="password_confirms " placeholder="Konfirmasi password">
+                    <input type="password" name="konfirmasi_password" class="form-control" id="konfirmasi_passwords " placeholder="Konfirmasi password">
                   </div>
                 </div>
                 <input type="hidden" id="password_invalids">
@@ -169,7 +163,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <input type="hidden" value="<?php echo base_url('admin/konsumen/edit/'); ?>" id="edit_url">
+          <input type="hidden" value="<?= base_url('admin/user/edit/'); ?>" id="edit_url">
           <input type="submit" class="btn btn-success" value="Simpan" id="edit">
         </div>
       </form>

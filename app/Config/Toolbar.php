@@ -42,7 +42,6 @@ class Toolbar extends BaseConfig
         Files::class,
         Routes::class,
         Events::class,
-        \Myth\Auth\Collectors\Auth::class,
     ];
 
     /**
