@@ -1,4 +1,4 @@
-<?= $this->include('layout/admin/admin_header') ?>
+<?= $this->include('layout/header') ?>
 
 <body>
     <?= $this->include('layout/admin/admin_navbar') ?>
@@ -23,4 +23,4 @@
             </div>
         </div>
 
-        <?= $this->include('layout/admin/admin_footer') ?>
+        <?= $this->include('layout/footer') ?>

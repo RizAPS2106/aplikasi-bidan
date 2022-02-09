@@ -101,6 +101,87 @@ $('#konsumen_table').on('click', '.item_delete', function() {
     });
 });
 
+var base_url = window.location.origin;
+
+// Login Auth Script
+$('#auth_form').on("submit", function(event) {
+    event.preventDefault();
+
+    $.ajax({
+        url: $('#auth_url').val(),
+        type: "POST",
+        data: new FormData($('#auth_form')[0]),
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            if (data.includes('Konsumen')) {
+                swal({
+                    title: "Berhasil",
+                    text: data,
+                    icon: "success",
+                    buttons: {
+                        confirm: {
+                            text: 'Oke',
+                            className: 'sweet-button'
+                        }
+                    }
+                }).then(() => {
+                    $('#auth_form').trigger('reset');
+                    location.reload();
+                });
+            } else if (data.includes('Admin')){
+                location.replace(base_url+'/admin/dashboard');
+            } else if (data.includes('Bidan')) {
+                swal({
+                    title: "Berhasil",
+                    text: data,
+                    icon: "success",
+                    buttons: {
+                        confirm: {
+                            text: 'Oke',
+                            className: 'sweet-button'
+                        }
+                    }
+                }).then(() => {
+                    $('#auth_form').trigger('reset');
+                    location.reload();
+                });
+            } else {
+                var elementemail = document.getElementById("email");
+                var elementpassword = document.getElementById("password");
+
+                if (data.includes("Email")) {
+                    elementemail.classList.add("is-invalid");
+                } else {
+                    elementemail.classList.remove("is-invalid");
+                }
+
+                if (data.includes("Password")) {
+                    elementpassword.classList.add("is-invalid");
+                } else {
+                    elementpassword.classList.remove("is-invalid");
+                }
+                
+                swal({
+                    title: "Periksa Form",
+                    text: data,
+                    icon: "warning",
+                    buttons: {
+                        confirm: {
+                            text: 'Oke',
+                            className: 'sweet-button'
+                        }
+                    }
+                });
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert("Status: " + textStatus);
+            alert("Error: " + errorThrown);
+        }
+    });
+});
+
 // Tambah Data Script
     $('#create_form').on("submit", function(event) {
         event.preventDefault();
@@ -112,11 +193,46 @@ $('#konsumen_table').on('click', '.item_delete', function() {
             processData: false,
             contentType: false,
             beforeSend: function() {
-                $('#create').val("Menyimpan...");
+                if($('#create').val() == "Simpan"){
+                    $('#create').val("Menyimpan...");
+                }
             },
             success: function(data) {
-                if (data != 'Data Berhasil disimpan') {
-                    $('#create').val("Simpan");
+                if (data == 'Data Berhasil disimpan') {
+                    $('#updateModal').modal('hide');
+                    swal({
+                        title: "Berhasil",
+                        text: data,
+                        icon: "success",
+                        buttons: {
+                            confirm: {
+                                text: 'Oke',
+                                className: 'sweet-button'
+                            }
+                        }
+                    }).then(() => {
+                        $('#create_form').trigger('reset');
+                        location.reload();
+                    });
+                } else if(data == "Registrasi berhasil"){
+                    swal({
+                        title: "Berhasil",
+                        text: data,
+                        icon: "success",
+                        buttons: {
+                            confirm: {
+                                text: 'Oke',
+                                className: 'sweet-button'
+                            }
+                        }
+                    }).then(() => {
+                        $('#create_form').trigger('reset');
+                        location.reload();
+                    });
+                }else{
+                    if($('#create').val()== "Menyimpan..."){
+                        $('#create').val("Simpan");
+                    }
                     var elementnama = document.getElementById("nama");
                     var elementtelepon = document.getElementById("telepon");
                     var elementemail = document.getElementById("email");
@@ -163,7 +279,7 @@ $('#konsumen_table').on('click', '.item_delete', function() {
                         elementpassword_confirm.classList.remove("is-invalid");
                         elementpassword_invalid.classList.remove("is-invalid");
                     }
-
+                    
                     swal({
                         title: "Periksa Form",
                         text: data,
@@ -174,21 +290,6 @@ $('#konsumen_table').on('click', '.item_delete', function() {
                                 className: 'sweet-button'
                             }
                         }
-                    });
-                } else {
-                    swal({
-                        title: "Berhasil",
-                        text: data,
-                        icon: "success",
-                        buttons: {
-                            confirm: {
-                                text: 'Oke',
-                                className: 'sweet-button'
-                            }
-                        }
-                    }).then(() => {
-                        $('#create_form').trigger('reset');
-                        location.reload();
                     });
                 }
             },
@@ -264,7 +365,38 @@ var base_url = window.location.origin;
         return false;
     });
 
+    // Tampil Data Ubah Profil Script 
+
+    $('#ubah_profil').on('click', function() {
+        var id = $(this).attr('data');
+
+        var url = base_url + '/admin/profil/preview_edit';
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: "JSON",
+            data: {
+                id: id
+            },
+            success: function(data) {
+                $.each(data, function(id, nama, alamat, telepon) {
+                    $('#updateModal').modal('show');
+                    $('[name="id"]').val(data.id);
+                    $('[name="nama"]').val(data.nama);
+                    $('[name="telepon"]').val(data.telepon);
+                    $('[name="email"]').val(data.email);
+                });
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("Status: " + textStatus);
+                alert("Error: " + errorThrown);
+            }
+        });
+        return false;
+    });
+
 // Ketika modal ditutup
+
     $('#updateModal').on('hidden.bs.modal', function () {
         $('#create_form').trigger('reset');
     })
@@ -286,13 +418,13 @@ var base_url = window.location.origin;
             success: function(data) {
                 if (data != 'Data berhasil diubah') {
                     $('#edit').val("Ubah");
-                    var elementnama = document.getElementById("nama");
-                    var elementtelepon = document.getElementById("telepon");
-                    var elementemail = document.getElementById("email");
+                    var elementnama = document.getElementById("namas");
+                    var elementtelepon = document.getElementById("telepons");
+                    var elementemail = document.getElementById("emails");
                     var elementfirstpassword = document.getElementById("first_passwords");
                     var elementpassword = document.getElementById("passwords");
-                    var elementpassword_confirm = document.getElementById("password_confirm");
-                    var elementpassword_invalid = document.getElementById("password_invalid");
+                    var elementpassword_confirm = document.getElementById("password_confirms");
+                    var elementpassword_invalid = document.getElementById("password_invalids");
 
                     if (data.includes("nama")) {
                         elementnama.classList.add("is-invalid");
@@ -352,6 +484,7 @@ var base_url = window.location.origin;
                         }
                     });
                 } else {
+                    $('#updateModal').modal('hide');
                     swal({
                         title: "Berhasil",
                         text: data,

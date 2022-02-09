@@ -11,14 +11,16 @@
                         Data
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="<?= base_url('admin/profil'); ?>">Profil</a></li>
+                        <hr>
                         <li><a class="dropdown-item" href="<?= base_url('admin/bidan'); ?>">Data Bidan</a></li>
                         <li><a class="dropdown-item" href="<?= base_url('admin/konsumen'); ?>">Data Konsumen</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
-        <?php if (logged_in()) : ?>
-            <a class="link-light text-decoration-none" href="<?= "/logout" ?>">Logout</a>
+        <?php if (session()->get('logged_in') == true) : ?>
+            <a class="link-light text-decoration-none" href="<?= "/login/logout" ?>">Logout</a>
         <?php else : ?>
             <a class="link-light text-decoration-none" href="<?= "/login" ?>">Login</a>
         <?php endif; ?>
