@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
 // Ubah Password Toggle Script 
+
     $('#ubah_password').click(function(){
         $('#form_ubah_password').toggle();
     });
@@ -10,6 +11,95 @@ $(document).ready(function() {
     $('#bidan_table').DataTable();
     $('#konsumen_table').DataTable();
 
+// SweetAlert Hapus Data
+
+// SweetAlert Hapus Data Bidan
+$('#bidan_table').on('click', '.item_delete', function() {
+    
+    var id = $(this).attr('data');
+
+    var base_url = window.location.origin;
+
+    var url_delete =  base_url + '/admin/bidan/'+id+'/delete';
+
+    swal({
+        title: "Yakin akan dihapus?",
+        text: "Ketika sudah dihapus data tidak dapat kembali",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                url: url_delete,
+                success: function(data) {
+                    swal("Data berhasil dihapus", {
+                        icon: "success",
+                        buttons: {
+                            confirm: {
+                                text: 'Oke',
+                                className: 'sweet-button'
+                            }
+                        }
+                    }).then(() => {
+                        location.reload();
+                    });
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Status: " + textStatus);
+                    alert("Error: " + errorThrown);
+                }
+            });
+        } else {
+            swal("Data tidak jadi dihapus",{
+                buttons: false,
+                timer: 1000
+            });
+        }
+    });
+});
+
+// SweetAlert Hapus Data Konsumen
+$('#konsumen_table').on('click', '.item_delete', function() {
+    
+    var id = $(this).attr('data');
+
+    var base_url = window.location.origin;
+
+    var url_delete =  base_url + '/admin/bidan/'+id+'/delete';
+
+    swal({
+        title: "Yakin akan dihapus?",
+        text: "Ketika sudah dihapus data tidak dapat kembali",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                url: url_delete,
+                success: function(data) {
+                    swal("Data berhasil dihapus", {
+                        icon: "success",
+                    }).then(() => {
+                        location.reload();
+                    });
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Status: " + textStatus);
+                    alert("Error: " + errorThrown);
+                }
+            });
+        } else {
+            swal("Data tidak jadi dihapus",{
+                buttons: false,
+                timer: 1000
+            });
+        }
+    });
+});
 
 // Tambah Data Script
     $('#create_form').on("submit", function(event) {
@@ -32,6 +122,7 @@ $(document).ready(function() {
                     var elementemail = document.getElementById("email");
                     var elementpassword = document.getElementById("password");
                     var elementpassword_confirm = document.getElementById("password_confirm");
+                    var elementpassword_invalid = document.getElementById("password_invalid");
 
                     if (data.includes("nama")) {
                         elementnama.classList.add("is-invalid");
@@ -59,14 +150,18 @@ $(document).ready(function() {
 
                     if (data.includes("password")) {
                         elementpassword.classList.add("is-invalid");
+                        elementpassword_invalid.classList.add("is-invalid");
                     } else {
                         elementpassword.classList.remove("is-invalid");
+                        elementpassword_invalid.classList.remove("is-invalid");
                     }
 
                     if (data.includes("konfirmasi password")) {
                         elementpassword_confirm.classList.add("is-invalid");
+                        elementpassword_invalid.classList.add("is-invalid");
                     } else {
                         elementpassword_confirm.classList.remove("is-invalid");
+                        elementpassword_invalid.classList.remove("is-invalid");
                     }
 
                     swal({
@@ -81,7 +176,20 @@ $(document).ready(function() {
                         }
                     });
                 } else {
-                    location.reload();
+                    swal({
+                        title: "Berhasil",
+                        text: data,
+                        icon: "success",
+                        buttons: {
+                            confirm: {
+                                text: 'Oke',
+                                className: 'sweet-button'
+                            }
+                        }
+                    }).then(() => {
+                        $('#create_form').trigger('reset');
+                        location.reload();
+                    });
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -90,8 +198,6 @@ $(document).ready(function() {
             }
         });
     });
-
-
 
 // Tampil Data Ubah Bidan dan Ubah Konsumen Script
 
@@ -146,8 +252,8 @@ var base_url = window.location.origin;
                     $('#updateModal').modal('show');
                     $('[name="id"]').val(data.id);
                     $('[name="nama"]').val(data.nama);
-                    $('[name="alamat"]').val(data.alamat);
                     $('[name="telepon"]').val(data.telepon);
+                    $('[name="email"]').val(data.email);
                 });
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -158,6 +264,10 @@ var base_url = window.location.origin;
         return false;
     });
 
+// Ketika modal ditutup
+    $('#updateModal').on('hidden.bs.modal', function () {
+        $('#create_form').trigger('reset');
+    })
 
 // Ubah Data Script 
 
@@ -179,9 +289,10 @@ var base_url = window.location.origin;
                     var elementnama = document.getElementById("nama");
                     var elementtelepon = document.getElementById("telepon");
                     var elementemail = document.getElementById("email");
-                    var elementfirstpassword = document.getElementById("first_password");
-                    var elementpassword = document.getElementById("password");
+                    var elementfirstpassword = document.getElementById("first_passwords");
+                    var elementpassword = document.getElementById("passwords");
                     var elementpassword_confirm = document.getElementById("password_confirm");
+                    var elementpassword_invalid = document.getElementById("password_invalid");
 
                     if (data.includes("nama")) {
                         elementnama.classList.add("is-invalid");
@@ -215,14 +326,18 @@ var base_url = window.location.origin;
 
                     if (data.includes("password")) {
                         elementpassword.classList.add("is-invalid");
+                        elementpassword_invalid.classList.add("is-invalid");
                     } else {
                         elementpassword.classList.remove("is-invalid");
+                        elementpassword_invalid.classList.remove("is-invalid");
                     }
 
                     if (data.includes("konfirmasi password")) {
                         elementpassword_confirm.classList.add("is-invalid");
+                        elementpassword_invalid.classList.add("is-invalid");
                     } else {
                         elementpassword_confirm.classList.remove("is-invalid");
+                        elementpassword_invalid.classList.remove("is-invalid");
                     }
 
                     swal({
@@ -237,8 +352,20 @@ var base_url = window.location.origin;
                         }
                     });
                 } else {
-                    $("#create_form").trigger("reset");
-                    location.reload();
+                    swal({
+                        title: "Berhasil",
+                        text: data,
+                        icon: "success",
+                        buttons: {
+                            confirm: {
+                                text: 'Oke',
+                                className: 'sweet-button'
+                            }
+                        }
+                    }).then(() => {
+                        $('#create_form').trigger('reset');
+                        location.reload();
+                    });
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -249,6 +376,7 @@ var base_url = window.location.origin;
     });
 
 // Ketika refresh
+
     if (window.performance) {
         console.info("window.performance works fine on this browser");
     }

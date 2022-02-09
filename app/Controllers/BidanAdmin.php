@@ -2,9 +2,7 @@
 
 namespace App\Controllers;
 
-use \App\Models\BidanModel;
 use \App\Models\UsersModel;
-use CodeIgniter\Exceptions\PageNotFoundException;
 
 class BidanAdmin extends BaseController
 {
@@ -93,8 +91,6 @@ class BidanAdmin extends BaseController
 
             $message = 'Data Berhasil disimpan';
 
-            session()->setFlashData('pesan', $message);
-
             echo $message;
         } else {
             $message = $validation->getErrors();
@@ -115,10 +111,6 @@ class BidanAdmin extends BaseController
 
         $user = new UsersModel();
         $data['bidan'] = $user->where('id', $id)->first();
-
-        if (!$data['bidan']) {
-            throw PageNotFoundException::forPageNotFound();
-        }
 
         echo json_encode($data['bidan']);
     }
@@ -156,19 +148,24 @@ class BidanAdmin extends BaseController
                         'is_unique' => '{field} sudah terdaftar'
                     ]
                 ],
+                'first_password'  => [
+                    'label' => 'Password lama',
+                    'rules' => 'min_length[8]|permit_empty',
+                    'errors' => [
+                        'min_length' => 'Kolom {field} Minimal 8 karakter'
+                    ]
+                ],
                 'password'  => [
                     'rules' => 'min_length[8]|permit_empty',
                     'errors' => [
-                        'required' => 'Harap isi kolom {field}',
-                        'min_length' => 'Minimal 8 karakter'
+                        'min_length' => 'Kolom {field} Minimal 8 karakter'
                     ]
                 ],
                 'password_confirm'  => [
                     'label' => 'konfirmasi password',
                     'rules' => 'min_length[8]|matches[password]|permit_empty',
                     'errors' => [
-                        'required' => 'Harap isi kolom {field}',
-                        'min_length' => 'Minimal 8 karakter',
+                        'min_length' => 'Kolom {field} minimal 8 karakter',
                         'matches' => '{field} salah',
                     ]
                 ]
@@ -182,14 +179,10 @@ class BidanAdmin extends BaseController
                 $user->update($id, [
                     "nama" => $this->request->getPost('nama'),
                     "telepon" => $this->request->getPost('telepon'),
-                    "email" => $this->request->getPost('email'),
-                    "saldo" => 0,
-                    "group_user" => 3
+                    "email" => $this->request->getPost('email')
                 ]);
 
                 $message = 'Data berhasil diubah';
-
-                session()->setFlashData('pesan', $message);
 
                 echo $message;
             } else {
@@ -213,19 +206,15 @@ class BidanAdmin extends BaseController
                                     "nama" => $this->request->getPost('nama'),
                                     "telepon" => $this->request->getPost('telepon'),
                                     "email" => $this->request->getPost('email'),
-                                    "password" => md5($this->request->getPost('password')),
-                                    "saldo" => 0,
-                                    "group_user" => 3
+                                    "password" => md5($this->request->getPost('password'))
                                 ]);
 
                                 $message = 'Data berhasil diubah';
-
-                                session()->setFlashData('pesan', $message);
                             } else {
                                 $message = 'Password dan konfirmasi password tidak sesuai';
                             }
                         } else {
-                            $message = 'Jika ingin mengubah password silahkan isi semua kolom password, jika tidak kosongkan';
+                            $message = 'Jika ingin mengubah password silahkan isi semua kolom password, jika tidak kosongkan saja';
                         }
                     } else {
                         $message = 'Password lama tidak sesuai';

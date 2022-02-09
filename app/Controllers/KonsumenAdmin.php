@@ -2,31 +2,31 @@
 
 namespace App\Controllers;
 
-use \App\Models\KonsumenModel;
-use CodeIgniter\Exceptions\PageNotFoundException;
+use \App\Models\UsersModel;
 
 class KonsumenAdmin extends BaseController
 {
     public function index()
     {
-        $konsumen = new KonsumenModel();
-        $data['title'] = "Admin Konsumen";
-        $data['header'] = "Data Konsumen";
-        $data['konsumens'] = $konsumen->findAll();
+        $user = new UsersModel();
+        $data = [
+            'title' => "Admin konsumen",
+            'header' => "Data konsumen",
+            'konsumens' => $user->where('group_user', 1)->findAll()
+        ];
+
         echo view('admin/konsumen/admin_data_konsumen', $data);
     }
 
     public function preview($id)
     {
-        $konsumen = new KonsumenModel();
-        $data['konsumen'] = $konsumen->where('id', $id)->first();
+        $user = new UsersModel();
 
-        if (!$data['konsumen']) {
-            throw PageNotFoundException::forPageNotFound();
-        }
-
-        $data['title'] = "Admin Konsumen";
-        $data['header'] = "Data Konsumen";
+        $data = [
+            'title' => "Admin Konsumen",
+            'header' => "Detail Konsumen",
+            'konsumen' => $user->where('id', $id)->first()
+        ];
         echo view('admin/konsumen/admin_detail_konsumen', $data);
     }
 
@@ -39,18 +39,38 @@ class KonsumenAdmin extends BaseController
                     'rules' => 'required',
                     'errors' => ['required' => 'Harap isi kolom {field}']
                 ],
-                'alamat'  => [
-                    'rules' => 'required',
-                    'errors' => ['required' => 'Harap isi kolom {field}']
-                ],
                 'telepon'  => [
                     'label' => 'nomor telepon',
-                    'rules' => 'required|numeric|min_length[10]|is_unique[konsumen.telepon]|is_unique[konsumen.telepon]',
+                    'rules' => 'required|numeric|min_length[10]|is_unique[user.telepon]',
                     'errors' => [
                         'required' => 'Harap isi kolom {field}',
                         'numeric' => 'Harap isi kolom {field} dengan nomor',
                         'min_length' => '{field} minimal {param} digit',
                         'is_unique' => '{field} sudah terdaftar',
+                    ]
+                ],
+                'email'  => [
+                    'rules' => 'required|valid_email|is_unique[user.email]',
+                    'errors' => [
+                        'required' => 'Harap isi kolom {field}',
+                        'valid_email' => 'Harap isi email yang valid',
+                        'is_unique' => '{field} sudah terdaftar'
+                    ]
+                ],
+                'password'  => [
+                    'rules' => 'required|min_length[8]',
+                    'errors' => [
+                        'required' => 'Harap isi kolom {field}',
+                        'min_length' => 'Minimal 8 karakter'
+                    ]
+                ],
+                'password_confirm'  => [
+                    'label' => 'konfirmasi password',
+                    'rules' => 'required|min_length[8]|matches[password]',
+                    'errors' => [
+                        'required' => 'Harap isi kolom {field}',
+                        'min_length' => 'Minimal 8 karakter',
+                        'matches' => '{field} salah',
                     ]
                 ]
             ]
@@ -59,16 +79,17 @@ class KonsumenAdmin extends BaseController
         $isDataValid = $validation->withRequest($this->request)->run();
 
         if ($isDataValid) {
-            $konsumen = new KonsumenModel();
-            $konsumen->save([
+            $user = new UsersModel();
+            $user->save([
                 "nama" => $this->request->getPost('nama'),
-                "alamat" => $this->request->getPost('alamat'),
                 "telepon" => $this->request->getPost('telepon'),
+                "email" => $this->request->getPost('email'),
+                "password" => md5($this->request->getPost('password')),
+                "saldo" => 0,
+                "group_user" => 1
             ]);
 
             $message = 'Data Berhasil disimpan';
-
-            session()->setFlashData('pesan', $message);
 
             echo $message;
         } else {
@@ -88,12 +109,8 @@ class KonsumenAdmin extends BaseController
     {
         $id = $this->request->getGet('id');
 
-        $konsumen = new KonsumenModel();
-        $data['konsumen'] = $konsumen->where('id', $id)->first();
-
-        if (!$data['konsumen']) {
-            throw PageNotFoundException::forPageNotFound();
-        }
+        $user = new UsersModel();
+        $data['konsumen'] = $user->where('id', $id)->first();
 
         echo json_encode($data['konsumen']);
     }
@@ -102,8 +119,8 @@ class KonsumenAdmin extends BaseController
     {
         $id = $this->request->getPost('id');
 
-        $konsumen = new konsumenModel();
-        $data['konsumen'] = $konsumen->where('id', $id)->first();
+        $user = new UsersModel();
+        $data['konsumen'] = $user->where('id', $id)->first();
 
         $validation =  \Config\Services::validation();
         $validation->setRules(
@@ -113,18 +130,43 @@ class KonsumenAdmin extends BaseController
                     'rules' => 'required',
                     'errors' => ['required' => 'Harap isi kolom {field}']
                 ],
-                'alamat'  => [
-                    'rules' => 'required',
-                    'errors' => ['required' => 'Harap isi kolom {field}']
-                ],
                 'telepon'  => [
                     'label' => 'nomor telepon',
-                    'rules' => 'required|numeric|min_length[10]|is_unique[bidan.telepon]|is_unique[konsumen.telepon,id,{id}]',
+                    'rules' => 'required|numeric|min_length[10]|is_unique[user.telepon,id,{id}]',
                     'errors' => [
                         'required' => 'Harap isi kolom {field}',
                         'numeric' => 'Harap isi kolom {field} dengan nomor',
                         'min_length' => '{field} minimal {param} digit',
                         'is_unique' => '{field} sudah terdaftar',
+                    ]
+                ],
+                'email'  => [
+                    'rules' => 'required|valid_email|is_unique[user.email,id,{id}]',
+                    'errors' => [
+                        'required' => 'Harap isi kolom {field}',
+                        'valid_email' => 'Harap isi email yang valid',
+                        'is_unique' => '{field} sudah terdaftar'
+                    ]
+                ],
+                'first_password'  => [
+                    'label' => 'Password lama',
+                    'rules' => 'min_length[8]|permit_empty',
+                    'errors' => [
+                        'min_length' => 'Kolom {field} Minimal 8 karakter'
+                    ]
+                ],
+                'password'  => [
+                    'rules' => 'min_length[8]|permit_empty',
+                    'errors' => [
+                        'min_length' => 'Kolom {field} Minimal 8 karakter'
+                    ]
+                ],
+                'password_confirm'  => [
+                    'label' => 'konfirmasi password',
+                    'rules' => 'min_length[8]|matches[password]|permit_empty',
+                    'errors' => [
+                        'min_length' => 'Kolom {field} minimal 8 karakter',
+                        'matches' => '{field} salah',
                     ]
                 ]
             ]
@@ -133,17 +175,53 @@ class KonsumenAdmin extends BaseController
         $isDataValid = $validation->withRequest($this->request)->run();
 
         if ($isDataValid) {
-            $konsumen->update($id, [
-                "nama" => $this->request->getPost('nama'),
-                "alamat" => $this->request->getPost('alamat'),
-                "telepon" => $this->request->getPost('telepon')
-            ]);
+            if (empty($this->request->getPost('password')) && empty($this->request->getPost('first_password')) && empty($this->request->getPost('password_confirm'))) {
+                $user->update($id, [
+                    "nama" => $this->request->getPost('nama'),
+                    "telepon" => $this->request->getPost('telepon'),
+                    "email" => $this->request->getPost('email')
+                ]);
 
-            $message = 'Data berhasil diubah';
+                $message = 'Data berhasil diubah';
 
-            session()->setFlashData('pesan', $message);
+                echo $message;
+            } else {
+                $db = \Config\Database::connect();
+                $builder = $db->table('user');
+                $builder->select('password');
+                $builder->where('id', $id);
+                $builder->limit(1);
+                $query = $builder->get();
+                $result = $query->getResultArray();
+                foreach ($result as $rst) {
+                    $first_password = $rst['password'];
+                    $first_password_field = md5($this->request->getPost('first_password'));
+                    $password = $this->request->getPost('password');
+                    $password_confirm = $this->request->getPost('password_confirm');
 
-            echo $message;
+                    if ($first_password == $first_password_field) {
+                        if ($password != '' || $password_confirm != '') {
+                            if ($password == $password_confirm) {
+                                $user->update($id, [
+                                    "nama" => $this->request->getPost('nama'),
+                                    "telepon" => $this->request->getPost('telepon'),
+                                    "email" => $this->request->getPost('email'),
+                                    "password" => md5($this->request->getPost('password'))
+                                ]);
+
+                                $message = 'Data berhasil diubah';
+                            } else {
+                                $message = 'Password dan konfirmasi password tidak sesuai';
+                            }
+                        } else {
+                            $message = 'Jika ingin mengubah password silahkan isi semua kolom password, jika tidak kosongkan saja';
+                        }
+                    } else {
+                        $message = 'Password lama tidak sesuai';
+                    }
+                    echo $message;
+                }
+            }
         } else {
             $message = $validation->getErrors();
 
@@ -159,10 +237,9 @@ class KonsumenAdmin extends BaseController
 
     public function delete($id)
     {
-        $konsumen = new KonsumenModel();
-        $konsumen->delete($id);
-
+        $user = new UsersModel();
+        $user->delete($id);
         session()->setFlashData('pesan', 'Data berhasil dihapus');
-        return redirect('admin/konsumen');
+        return redirect('admin/bidan');
     }
 }
