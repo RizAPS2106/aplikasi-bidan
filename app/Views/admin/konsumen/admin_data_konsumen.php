@@ -3,10 +3,10 @@
 <?= $this->section('content') ?>
 
 <div class="col-auto mb-3">
-  <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fas fa-plus"></i>Tambah Data Konsumen</button>
+  <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fas fa-plus"></i> Tambah Data Konsumen</button>
 </div>
 
-<table class="table py-1 align-middle" id="konsumen_table">
+<table class="table py-1 align-middle" id="user_table">
   <thead class="bg-success text-white">
     <tr>
       <th>#</th>

@@ -59,16 +59,25 @@ class User extends BaseController
 
         if ($isDataValid) {
             $user = new UserModel();
-            $user->insert([
-                "nama" => $this->request->getPost('nama'),
-                "telepon" => $this->request->getPost('telepon'),
-                "email" => $this->request->getPost('email'),
-                "password" => md5($this->request->getPost('password')),
-                "group_user" => $this->request->getPost('group_user')
-            ]);
-
-            $message = 'Data berhasil disimpan';
-            echo $message;
+            if ($this->request->getPost('id_cabang') !== null) {
+                $user->insert([
+                    "id_cabang" => $this->request->getPost('id_cabang'),
+                    "nama" => $this->request->getPost('nama'),
+                    "telepon" => $this->request->getPost('telepon'),
+                    "email" => $this->request->getPost('email'),
+                    "password" => md5($this->request->getPost('password')),
+                    "group_user" => $this->request->getPost('group_user')
+                ]);
+            } else {
+                $user->insert([
+                    "nama" => $this->request->getPost('nama'),
+                    "telepon" => $this->request->getPost('telepon'),
+                    "email" => $this->request->getPost('email'),
+                    "password" => md5($this->request->getPost('password')),
+                    "group_user" => $this->request->getPost('group_user')
+                ]);
+            }
+            echo 'Data berhasil disimpan';
         } else {
             $message = $validation->getErrors();
 
@@ -76,7 +85,7 @@ class User extends BaseController
                 if ($msg == end($message)) {
                     echo ucfirst($msg . '.');
                 } else {
-                    echo ucfirst($msg . '.');
+                    echo ucfirst($msg . ', ');
                 }
             }
         }
@@ -87,7 +96,8 @@ class User extends BaseController
         $id = $this->request->getGet('id');
 
         $user = new UserModel();
-        $data['user'] = $user->where('id', $id)->first();
+
+        $data['user'] = $user->select('user.*,cabang.nama as nama_cabang')->join('cabang', 'cabang.id = user.id_cabang', 'LEFT')->where('user.id', $id)->first();
 
         echo json_encode($data['user']);
     }
@@ -160,6 +170,7 @@ class User extends BaseController
                 empty($this->request->getPost('konfirmasi_password'))
             ) {
                 $user->update($id, [
+                    "id_cabang" => $this->request->getPost('id_cabang'),
                     "nama" => $this->request->getPost('nama'),
                     "telepon" => $this->request->getPost('telepon'),
                     "email" => $this->request->getPost('email')
@@ -178,6 +189,7 @@ class User extends BaseController
                     if ($password != '' || $konfirmasi_password != '') {
                         if ($password == $konfirmasi_password) {
                             $user->update($id, [
+                                "id_cabang" => $this->request->getPost('id_cabang'),
                                 "nama" => $this->request->getPost('nama'),
                                 "telepon" => $this->request->getPost('telepon'),
                                 "email" => $this->request->getPost('email'),

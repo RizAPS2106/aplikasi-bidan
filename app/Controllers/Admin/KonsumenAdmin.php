@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
+use \App\Controllers\BaseController;
 use \App\Models\UserModel;
 
 class KonsumenAdmin extends BaseController
@@ -10,8 +11,8 @@ class KonsumenAdmin extends BaseController
     {
         $user = new UserModel();
         $data = [
-            'title' => "Admin konsumen",
-            'header' => "Data konsumen",
+            'title' => "Admin Konsumen",
+            'header' => "Data Konsumen",
             'konsumen' => $user->where('group_user', 2)->findAll()
         ];
 

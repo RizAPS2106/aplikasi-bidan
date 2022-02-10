@@ -39,8 +39,10 @@ class Login extends BaseController
                     'status_login' => 'login'
                 ]);
 
-                if ($data['group_user'] == 1) {
+                if ($data['group_user'] == 0) {
                     $message = "Admin";
+                } else if ($data['group_user'] == 1) {
+                    $message = "Owner";
                 } else if ($data['group_user'] == 2) {
                     $message = "Konsumen";
                 } else if ($data['group_user'] == 3) {

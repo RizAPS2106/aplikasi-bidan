@@ -14,8 +14,8 @@ $(document).ready(function() {
     }
 
 // DataTables
-    $('#bidan_table').DataTable();
-    $('#konsumen_table').DataTable();
+    $('#user_table').DataTable();
+    $('#cabang_table').DataTable();
 
 // Ubah Password Toggle Script 
     $('#ubah_password').click(function(){
@@ -23,74 +23,74 @@ $(document).ready(function() {
     });
 
 // Login Auth Script
-$('#auth_form').on("submit", function(event) {
-    event.preventDefault();
+    $('#auth_form').on("submit", function(event) {
+        event.preventDefault();
 
-    $.ajax({
-        url: $('#auth_url').val(),
-        type: "POST",
-        data: new FormData($('#auth_form')[0]),
-        processData: false,
-        contentType: false,
-        success: function(data) {
-            if (data.includes('Admin')){
-                location.replace(base_url+'/admin/dashboard');
-            } else if (data.includes('Konsumen')) {
-                swal({
-                    title: "Berhasil",
-                    text: data,
-                    icon: "success",
-                    buttons: {
-                        confirm: {
-                            text: 'Oke',
-                            className: 'sweet-button'
+        $.ajax({
+            url: $('#auth_url').val(),
+            type: "POST",
+            data: new FormData($('#auth_form')[0]),
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                if (data.includes('Admin')){
+                    location.replace(base_url+'/admin/dashboard');
+                } else if (data.includes('Konsumen')) {
+                    swal({
+                        title: "Berhasil",
+                        text: data,
+                        icon: "success",
+                        buttons: {
+                            confirm: {
+                                text: 'Oke',
+                                className: 'sweet-button'
+                            }
                         }
-                    }
-                }).then(() => {
-                    $('#auth_form').trigger('reset');
-                });
-            } else if (data.includes('Bidan')) {
-                swal({
-                    title: "Berhasil",
-                    text: data,
-                    icon: "success",
-                    buttons: {
-                        confirm: {
-                            text: 'Oke',
-                            className: 'sweet-button'
+                    }).then(() => {
+                        $('#auth_form').trigger('reset');
+                    });
+                } else if (data.includes('Bidan')) {
+                    swal({
+                        title: "Berhasil",
+                        text: data,
+                        icon: "success",
+                        buttons: {
+                            confirm: {
+                                text: 'Oke',
+                                className: 'sweet-button'
+                            }
                         }
-                    }
-                }).then(() => {
-                    $('#auth_form').trigger('reset');
-                });
-            } else {
-                var elementemail = document.getElementById("email");
-                var elementpassword = document.getElementById("password");
+                    }).then(() => {
+                        $('#auth_form').trigger('reset');
+                    });
+                } else {
+                    var elementemail = document.getElementById("email");
+                    var elementpassword = document.getElementById("password");
 
-                if (data.includes("Email")) {elementemail.classList.add("is-invalid");} 
-                else {elementemail.classList.remove("is-invalid");}
-                if (data.includes("Password")) {elementpassword.classList.add("is-invalid");} 
-                else {elementpassword.classList.remove("is-invalid");}
-                
-                swal({
-                    title: "Periksa Form",
-                    text: data,
-                    icon: "warning",
-                    buttons: {
-                        confirm: {
-                            text: 'Oke',
-                            className: 'sweet-button'
+                    if (data.includes("Email")) {elementemail.classList.add("is-invalid");} 
+                    else {elementemail.classList.remove("is-invalid");}
+                    if (data.includes("Password")) {elementpassword.classList.add("is-invalid");} 
+                    else {elementpassword.classList.remove("is-invalid");}
+                    
+                    swal({
+                        title: "Periksa Form",
+                        text: data,
+                        icon: "warning",
+                        buttons: {
+                            confirm: {
+                                text: 'Oke',
+                                className: 'sweet-button'
+                            }
                         }
-                    }
-                });
+                    });
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("Status: " + textStatus);
+                alert("Error: " + errorThrown);
             }
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            alert("Status: " + textStatus);
-            alert("Error: " + errorThrown);
-        }
+        });
     });
-});
 
 // Tambah Data Script
     $('#create_form').on("submit", function(event) {
@@ -132,25 +132,38 @@ $('#auth_form').on("submit", function(event) {
                     if($('#create').val() == "Menyimpan..."){$('#create').val("Simpan");}
                     else if($('#create').val() == "Mendaftar..."){$('#create').val("Daftar");}
 
-                    var elementnama = document.getElementById("nama");
-                    var elementtelepon = document.getElementById("telepon");
-                    var elementemail = document.getElementById("email");
-                    var elementpassword = document.getElementById("password");
-                    var elementkonfirmasi_password = document.getElementById("konfirmasi_password");
-                    var elementpassword_invalid = document.getElementById("password_invalid");
+                    if(($('#create_url').val()) != base_url+'/admin/cabang/create'){
+                        var elementnama = document.getElementById("nama");
+                        var elementtelepon = document.getElementById("telepon");
+                        var elementemail = document.getElementById("email");
+                        var elementpassword = document.getElementById("password");
+                        var elementkonfirmasi_password = document.getElementById("konfirmasi_password");
+                        var elementpassword_invalid = document.getElementById("password_invalid");
 
-                    if (data.includes("Nama")) {elementnama.classList.add("is-invalid");} 
-                    else {elementnama.classList.remove("is-invalid");}
-                    if (data.includes("Telepon")) {elementtelepon.classList.add("is-invalid");} 
-                    else {elementtelepon.classList.remove("is-invalid");}
-                    if (data.includes("Email")) {elementemail.classList.add("is-invalid");} 
-                    else {elementemail.classList.remove("is-invalid");}
-                    if (data.includes("Password")) {elementpassword.classList.add("is-invalid");
-                    elementpassword_invalid.classList.add("is-invalid");} 
-                    else {elementpassword.classList.remove("is-invalid");elementpassword_invalid.classList.remove("is-invalid");}
-                    if (data.includes("Konfirmasi password")) {elementkonfirmasi_password.classList.add("is-invalid");
-                    elementpassword_invalid.classList.add("is-invalid");} 
-                    else {elementkonfirmasi_password.classList.remove("is-invalid");elementpassword_invalid.classList.remove("is-invalid");}
+                        if (data.includes("Nama")) {elementnama.classList.add("is-invalid");} 
+                        else {elementnama.classList.remove("is-invalid");}
+                        if (data.includes("Nomor telepon")) {elementtelepon.classList.add("is-invalid");} 
+                        else {elementtelepon.classList.remove("is-invalid");}
+                        if (data.includes("Email")) {elementemail.classList.add("is-invalid");} 
+                        else {elementemail.classList.remove("is-invalid");}
+                        if (data.includes("Password")) {elementpassword.classList.add("is-invalid");
+                        elementpassword_invalid.classList.add("is-invalid");} 
+                        else {elementpassword.classList.remove("is-invalid");elementpassword_invalid.classList.remove("is-invalid");}
+                        if (data.includes("Konfirmasi password")) {elementkonfirmasi_password.classList.add("is-invalid");
+                        elementpassword_invalid.classList.add("is-invalid");} 
+                        else {elementkonfirmasi_password.classList.remove("is-invalid");elementpassword_invalid.classList.remove("is-invalid");}
+                    }else{
+                        var elementkode_cabang = document.getElementById("kode_cabang");
+                        var elementnama = document.getElementById("nama");
+                        var elementalamat = document.getElementById("alamat");
+
+                        if(data.includes("Kode cabang")){elementkode_cabang.classList.add("is-invalid");}
+                        else{elementkode_cabang.classList.remove("is-invalid");}
+                        if(data.includes("Nama")){elementnama.classList.add("is-invalid");}
+                        else{elementnama.classList.remove("is-invalid");}
+                        if(data.includes("Alamat")){elementalamat.classList.add("is-invalid");}
+                        else{elementalamat.classList.remove("is-invalid");}
+                    }
                     
                     swal({
                         title: "Periksa Form",
@@ -172,11 +185,21 @@ $('#auth_form').on("submit", function(event) {
         });
     });
 
-// Tampil Data User Script
+// Tampil Data Ubah User Script
     $('.item_edit').on('click',function() {
         var id = $(this).attr('data');
-        var url_preview_edit = base_url + '/admin/user/preview_edit';
-        
+
+        if (typeof(document.getElementsByClassName("table")[0]) !== 'undefined'){
+            var id_table = document.getElementsByClassName("table")[0].id;
+            if(id_table != 'cabang_table'){
+                var url_preview_edit = base_url + '/admin/user/preview_edit';
+            }else{
+                var url_preview_edit = base_url + '/admin/cabang/preview_edit';
+            }
+        }else{
+            var url_preview_edit = base_url + '/admin/user/preview_edit';
+        }
+
         $.ajax({
             type: "GET",
             url: url_preview_edit,
@@ -185,13 +208,24 @@ $('#auth_form').on("submit", function(event) {
                 id: id
             },
             success: function(data) {
-                $.each(data, function(id, nama, alamat, telepon) {
-                    $('#updateModal').modal('show');
-                    $('[name="id"]').val(data.id);
-                    $('[name="nama"]').val(data.nama);
-                    $('[name="telepon"]').val(data.telepon);
-                    $('[name="email"]').val(data.email);
-                });
+                if(id_table != 'cabang_table'){
+                    $.each(data, function(id, nama, alamat, telepon) {
+                        $('#updateModal').modal('show');
+                        $('[name="id"]').val(data.id);
+                        $('[name="nama"]').val(data.nama);
+                        $('[name="telepon"]').val(data.telepon);
+                        $('[name="email"]').val(data.email);
+                        $('[name="select_cabang"]').val(data.cabang);
+                    });
+                }else{
+                    $.each(data, function(id, kode_cabang, nama, alamat) {
+                        $('#updateModal').modal('show');
+                        $('[name="id"]').val(data.id);
+                        $('[name="kode_cabang"]').val(data.kode_cabang);
+                        $('[name="nama"]').val(data.nama);
+                        $('[name="alamat"]').val(data.alamat);
+                    });
+                }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 alert("Status: " + textStatus);
@@ -226,30 +260,44 @@ $('#auth_form').on("submit", function(event) {
             success: function(data) {
                 if (data != 'Data berhasil diubah') {
                     $('#edit').val("Ubah");
-                    var elementnama = document.getElementById("namas");
-                    var elementtelepon = document.getElementById("telepons");
-                    var elementemail = document.getElementById("emails");
-                    var elementpassword_lama = document.getElementById("password_lamas");
-                    var elementpassword = document.getElementById("passwords");
-                    var elementkonfirmasi_password = document.getElementById("konfirmasi_passwords");
-                    var elementpassword_invalid = document.getElementById("password_invalids");
 
-                    if (data.includes("Nama")) {elementnama.classList.add("is-invalid");} 
-                    else {elementnama.classList.remove("is-invalid");}
-                    if (data.includes("telepon")) {elementtelepon.classList.add("is-invalid");} 
-                    else {elementtelepon.classList.remove("is-invalid");}
-                    if (data.includes("email")) {elementemail.classList.add("is-invalid");} 
-                    else {elementemail.classList.remove("is-invalid");}
-                    if (data.includes("Password lama")) {elementpassword_lama.classList.add("is-invalid");} 
-                    else {elementpassword_lama.classList.remove("is-invalid");}
-                    if (data.includes("Password")) {elementpassword.classList.add("is-invalid");
-                    elementpassword_invalid.classList.add("is-invalid");} 
-                    else { elementpassword.classList.remove("is-invalid");
-                    elementpassword_invalid.classList.remove("is-invalid");}
-                    if (data.includes("Konfirmasi password")) {elementkonfirmasi_password.classList.add("is-invalid");
-                    elementpassword_invalid.classList.add("is-invalid");} 
-                    else {elementkonfirmasi_password.classList.remove("is-invalid");
-                    elementpassword_invalid.classList.remove("is-invalid");}
+                    if(($('#edit_url').val()) != base_url+'/admin/cabang/edit'){
+                        var elementnama = document.getElementById("namas");
+                        var elementtelepon = document.getElementById("telepons");
+                        var elementemail = document.getElementById("emails");
+                        var elementpassword_lama = document.getElementById("password_lamas");
+                        var elementpassword = document.getElementById("passwords");
+                        var elementkonfirmasi_password = document.getElementById("konfirmasi_passwords");
+                        var elementpassword_invalid = document.getElementById("password_invalids");
+
+                        if (data.includes("Nama")) {elementnama.classList.add("is-invalid");} 
+                        else {elementnama.classList.remove("is-invalid");}
+                        if (data.includes("Nomor telepon")) {elementtelepon.classList.add("is-invalid");} 
+                        else {elementtelepon.classList.remove("is-invalid");}
+                        if (data.includes("email")) {elementemail.classList.add("is-invalid");} 
+                        else {elementemail.classList.remove("is-invalid");}
+                        if (data.includes("Password lama")) {elementpassword_lama.classList.add("is-invalid");} 
+                        else {elementpassword_lama.classList.remove("is-invalid");}
+                        if (data.includes("Password")) {elementpassword.classList.add("is-invalid");
+                        elementpassword_invalid.classList.add("is-invalid");} 
+                        else { elementpassword.classList.remove("is-invalid");
+                        elementpassword_invalid.classList.remove("is-invalid");}
+                        if (data.includes("Konfirmasi password")) {elementkonfirmasi_password.classList.add("is-invalid");
+                        elementpassword_invalid.classList.add("is-invalid");} 
+                        else {elementkonfirmasi_password.classList.remove("is-invalid");
+                        elementpassword_invalid.classList.remove("is-invalid");}
+                    }else{
+                        var elementkode_cabang = document.getElementById("kode_cabangs");
+                        var elementnama = document.getElementById("namas");
+                        var elementalamat = document.getElementById("alamats");
+
+                        if(data.includes("Kode cabang")){elementkode_cabang.classList.add("is-invalid");}
+                        else{elementkode_cabang.classList.remove("is-invalid");}
+                        if(data.includes("Nama")){elementnama.classList.add("is-invalid");}
+                        else{elementnama.classList.remove("is-invalid");}
+                        if(data.includes("Alamat")){elementalamat.classList.add("is-invalid");}
+                        else{elementalamat.classList.remove("is-invalid");}
+                    }
 
                     swal({
                         title: "Periksa Form",

@@ -8,7 +8,10 @@
     <title><?= $title; ?></title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+
+    <!-- Bootstrap-select CSS -->
+    <link rel="stylesheet" type="text/css" href="/bootstrap-select/dist/css/bootstrap-select.min.css">
 
     <!-- FontAwesome CSS -->
     <link rel="stylesheet" type="text/css" href="/fontawesome/css/all.min.css">

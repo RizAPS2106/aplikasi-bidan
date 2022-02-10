@@ -1,18 +1,22 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
+use \App\Controllers\BaseController;
 use \App\Models\UserModel;
+use \App\Models\CabangModel;
 
 class BidanAdmin extends BaseController
 {
     public function index()
     {
         $user = new UserModel();
+        $cabang = new CabangModel();
         $data = [
             'title' => "Admin Bidan",
             'header' => "Data Bidan",
-            'bidan' => $user->where('group_user', 3)->findAll()
+            'bidan' => $user->where('group_user', 3)->findAll(),
+            'cabang' => $cabang->findAll()
         ];
 
         echo view('admin/bidan/admin_data_bidan', $data);

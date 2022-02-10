@@ -8,43 +8,74 @@ class User extends Migration
 {
     public function up()
     {
+        //Cabang
         $this->forge->addField([
             'id'          => [
                 'type'           => 'BIGINT',
                 'constraint'     => 11,
                 'auto_increment' => true
             ],
-            'nama'       => [
+            'kode_cabang'        => [
+                'type'           => 'VARCHAR',
+                'constraint'     => 10
+            ],
+            'nama'               => [
                 'type'           => 'VARCHAR',
                 'constraint'     => 100
             ],
-            'telepon' => [
+            'alamat'             => [
+                'type'           => 'TEXT',
+                'null'           => false
+            ],
+        ]);
+
+        $this->forge->addKey('id', TRUE);
+
+        $this->forge->createTable('cabang', TRUE);
+
+        // User
+        $this->forge->addField([
+            'id'                 => [
+                'type'           => 'BIGINT',
+                'constraint'     => 11,
+                'auto_increment' => true
+            ],
+            'id_cabang'          => [
+                'type'           => 'BIGINT',
+                'constraint'     => 11,
+                'null'           => true
+            ],
+            'nama'               => [
+                'type'           => 'VARCHAR',
+                'constraint'     => 100
+            ],
+            'telepon'            => [
                 'type'           => 'VARCHAR',
                 'constraint'     => 15
             ],
-            'email'      => [
+            'email'              => [
                 'type'           => 'VARCHAR',
                 'constraint'     => 100
             ],
-            'saldo'      => [
-                'type'           => 'decimal',
+            'saldo'              => [
+                'type'           => 'DECIMAl',
                 'constraint'     => 10, 2
             ],
-            'password' => [
-                'type'           => 'text',
+            'password'           => [
+                'type'           => 'TEXT',
                 'null'           => false
             ],
-            'status_login' => [
-                'type'           => "enum('login','logout')",
+            'status_login'       => [
+                'type'           => "ENUM('login','logout')",
                 'default'        => 'logout',
                 'null'           =>  false
             ],
-            'group_user' => [
-                'type'           => 'int',
+            'group_user'         => [
+                'type'           => 'INT',
                 'constraint'     => 10
             ],
-            'nama_user_create' => [
-                'type'           => 'varchar',
+            'created_by'   => [
+                'type'           => 'VARCHAR',
                 'constraint'     => 100,
                 'null'           => true
             ],
@@ -55,11 +86,14 @@ class User extends Migration
 
         $this->forge->addKey('id', TRUE);
 
+        $this->forge->addForeignKey('id_cabang', 'cabang', 'id');
+
         $this->forge->createTable('user', TRUE);
     }
 
     public function down()
     {
+        $this->forge->dropTable('cabang');
         $this->forge->dropTable('user');
     }
 }

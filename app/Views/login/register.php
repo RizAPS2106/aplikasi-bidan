@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <div class="form-group my-3 d-grid gap-2">
-                        <input type="hidden" name="group_user" value="1 ">
+                        <input type="hidden" name="group_user" value="0">
                         <input type="hidden" value="<?php echo base_url('register/register/'); ?>" id="create_url">
                         <input type="submit" class="btn btn-success" value="Daftar" id="create">
                     </div>

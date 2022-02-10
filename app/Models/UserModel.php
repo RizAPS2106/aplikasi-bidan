@@ -10,7 +10,7 @@ class UserModel extends Model
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = true;
-    protected $allowedFields = ['nama', 'telepon', 'email', 'saldo', 'password', 'status_login', 'group_user', 'nama_user_create', 'updated_at'];
+    protected $allowedFields = ['id_cabang', 'nama', 'telepon', 'email', 'saldo', 'password', 'status_login', 'group_user', 'nama_user_create', 'updated_at'];
 
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';

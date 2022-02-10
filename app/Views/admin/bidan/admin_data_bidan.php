@@ -3,10 +3,10 @@
 <?= $this->section('content') ?>
 
 <div class="mb-3">
-  <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fas fa-plus"></i>Tambah Data Bidan</button>
+  <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fas fa-plus"></i> Tambah Data Bidan</button>
 </div>
 
-<table class="table py-1 align-middle" id="bidan_table">
+<table class="table py-1 align-middle" id="user_table">
   <thead class="bg-success text-light">
     <tr>
       <th>#</th>
@@ -38,7 +38,7 @@
         <td>
           <center>
             <a href="<?= base_url('admin/bidan/' . $bidans['id'] . '/preview') ?>" class="btn btn-sm btn-outline-secondary" target="_blank"><i class="fas fa-search-plus"></i> Detail</a>
-            <a href="javascript:;" class="btn btn-sm btn-outline-primary item_edit" data="<?= $bidans['id']; ?>"><i class="far fa-edit"></i> Ubah</a>
+            <a href="javascript:; ?>" class="btn btn-sm btn-outline-primary item_edit" data="<?= $bidans['id']; ?>"><i class="far fa-edit"></i> Ubah</a>
             <a href="javascript:;" class="btn btn-sm btn-outline-danger item_delete" data="<?= $bidans['id']; ?>"><i class="far fa-trash-alt"></i> Hapus</a>
           </center>
         </td>
@@ -78,6 +78,15 @@
             <div class="invalid-feedback">
               Isi kolom email dengan valid
             </div>
+          </div>
+          <div class="form-group my-2">
+            <label for="select_cabang">Cabang</label>
+            <select name="id_cabang" id="select_cabang" class="selectpicker form-control" data-live-search="true">
+              <option disabled selected value> -- Pilih Cabang -- </option>
+              <?php foreach ($cabang as $cbg) : ?>
+                <option value="<?= $cbg['id'] ?>"><?= $cbg['id'] . ' - ' . ucfirst($cbg['nama']); ?></option>
+              <?php endforeach; ?>
+            </select>
           </div>
           <div class="form-group my-2">
             <label for="password">Password</label>
@@ -138,6 +147,15 @@
               Isi kolom email dengan valid
             </div>
           </div>
+          <div class="form-group my-2">
+            <label for="select_cabang">Cabang</label>
+            <select name="id_cabang" id="select_cabang" class="selectpicker form-control" data-live-search="true">
+              <option disabled selected value> -- Pilih Cabang -- </option>
+              <?php foreach ($cabang as $cbg) : ?>
+                <option value="<?= $cbg['id'] ?>"><?= $cbg['id'] . ' - ' . ucfirst($cbg['nama']); ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
 
           <hr>
 
@@ -151,7 +169,7 @@
                     <input type="password" name="password" class="form-control" id="passwords" placeholder="Password baru">
                   </div>
                   <div class="col">
-                    <input type="password" name="password_konfirmasi" class="form-control" id="password_konfirmasis" placeholder="Konfirmasi password">
+                    <input type="password" name="konfirmasi_password" class="form-control" id="konfirmasi_passwords" placeholder="Konfirmasi password">
                   </div>
                 </div>
                 <input type="hidden" id="password_invalids">
@@ -164,7 +182,7 @@
         </div>
         <div class="modal-footer">
           <input type="hidden" value="<?= base_url('admin/user/edit/'); ?>" id="edit_url">
-          <input type="submit" class="btn btn-success" value="Simpan" id="edit">
+          <input type="submit" class="btn btn-success" value="Ubah" id="edit">
         </div>
       </form>
     </div>

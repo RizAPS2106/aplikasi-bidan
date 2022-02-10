@@ -7,7 +7,7 @@
         <div class="card-body" style="text-align: left;">
             <div class="row">
                 <div class="col-auto">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Borobudur_Temple.jpg/320px-Borobudur_Temple.jpg" style="width: 20rem;" />
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Borobudur_Temple.jpg/320px-Borobudur_Temple.jpg" style="width: 30rem;" />
                 </div>
                 <div class=" col-auto">
                     <h3 class="h3"><?= $profil['nama'] ?></h3>

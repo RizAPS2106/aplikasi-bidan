@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Admin;
 
+use \App\Controllers\BaseController;
 use \App\Models\UserModel;
 
 class Admin extends BaseController
@@ -13,7 +14,7 @@ class Admin extends BaseController
         $data = [
             'title' => "Administrator",
             'header' => "Dashboard",
-            'admin' => $user->where('group_user', 1)->findAll(),
+            'owner' => $user->where('group_user', 1)->findAll(),
             'konsumen' => $user->where('group_user', 2)->findAll(),
             'bidan' => $user->where('group_user', 3)->findAll(),
         ];

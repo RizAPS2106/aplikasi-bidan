@@ -37,19 +37,30 @@ $routes->add('register', 'Register::index');
 $routes->add('register/register', 'Register::register');
 
 $routes->group('admin', ['filter' => 'auth'], function ($routes) {
-	$routes->get('dashboard', 'Admin::index');
-	$routes->get('profil', 'Admin::profil');
+	$routes->get('dashboard', 'Admin\Admin::index');
+	$routes->get('profil', 'Admin\Admin::profil');
 
-	$routes->get('bidan', 'BidanAdmin::index');
-	$routes->get('bidan/(:segment)/preview', 'BidanAdmin::preview/$1');
+	$routes->get('owner', 'Admin\OwnerAdmin::index');
+	$routes->get('owner/(:segment)/preview', 'Admin\OwnerAdmin::preview/$1');
 
-	$routes->get('konsumen', 'KonsumenAdmin::index');
-	$routes->get('konsumen/(:segment)/preview', 'KonsumenAdmin::preview/$1');
+	$routes->get('bidan', 'Admin\BidanAdmin::index');
+	$routes->get('bidan/(:segment)/preview', 'Admin\BidanAdmin::preview/$1');
+
+	$routes->get('konsumen', 'Admin\KonsumenAdmin::index');
+	$routes->get('konsumen/(:segment)/preview', 'Admin\KonsumenAdmin::preview/$1');
 
 	$routes->add('user/create', 'User::create');
 	$routes->get('user/preview_edit', 'User::preview_edit');
 	$routes->add('user/edit', 'User::edit');
 	$routes->add('user/(:segment)/delete', 'User::delete/$1');
+
+	$routes->get('cabang', 'Admin\CabangAdmin::index');
+	$routes->get('cabang/(:segment)/preview', 'Admin\CabangAdmin::preview/$1');
+
+	$routes->add('cabang/create', 'Cabang::create');
+	$routes->get('cabang/preview_edit', 'Cabang::preview_edit');
+	$routes->add('cabang/edit', 'Cabang::edit');
+	$routes->add('cabang/(:segment)/delete', 'Cabang::delete/$1');
 });
 /*
  * --------------------------------------------------------------------
