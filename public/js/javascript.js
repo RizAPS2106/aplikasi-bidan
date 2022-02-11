@@ -3,7 +3,7 @@ $(document).ready(function() {
 // Base Url    
     var base_url = window.location.origin;
 
-// Ketika refresh
+// Ketika Refresh
     if (window.performance) {
         console.info("window.performance works fine on this browser");
     }
@@ -12,6 +12,12 @@ $(document).ready(function() {
         $('#create_form').trigger('reset');
         $('#edit_form').trigger('reset');
     }
+
+// Konfigurasi Modal Untuk Select2    
+    $.fn.modal.Constructor.prototype._enforceFocus = function() {};
+
+// Select2
+    $('.select-live-search').select2();
 
 // DataTables
     $('#user_table').DataTable();
@@ -209,13 +215,13 @@ $(document).ready(function() {
             },
             success: function(data) {
                 if(id_table != 'cabang_table'){
-                    $.each(data, function(id, nama, alamat, telepon) {
+                    $.each(data, function(id, nama, id_cabang, alamat, telepon) {
                         $('#updateModal').modal('show');
                         $('[name="id"]').val(data.id);
                         $('[name="nama"]').val(data.nama);
                         $('[name="telepon"]').val(data.telepon);
                         $('[name="email"]').val(data.email);
-                        $('[name="select_cabang"]').val(data.cabang);
+                        $('[name="id_cabang"]').val(data.id_cabang).trigger('change');
                     });
                 }else{
                     $.each(data, function(id, kode_cabang, nama, alamat) {
@@ -238,10 +244,12 @@ $(document).ready(function() {
 // Ketika modal ditutup
     $('#createModal').on('hidden.bs.modal', function () {
         $('#create_form').trigger('reset');
+        $('.select-live-search').val("").trigger('change')
     })
 
     $('#updateModal').on('hidden.bs.modal', function () {
         $('#create_form').trigger('reset');
+        $('.select-live-search').val("").trigger('change')
     })
 
 // Ubah Data Script 

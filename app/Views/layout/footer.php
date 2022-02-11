@@ -4,14 +4,14 @@
 <!-- Bootstrap JavaScript-->
 <script type="text/javascript" src="/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- Bootstrap-select JavaScript -->
-<script type="text/javascript" src="/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-
 <!-- DataTables JavaScript -->
 <script type="text/javascript" src="/datatables/datatables.min.js"></script>
 
 <!-- SweetAlert JavaScript -->
 <script type="text/javascript" src="/sweetalert/sweetalert/sweetalert.min.js"></script>
+
+<!-- Select2 Javascript -->
+<script type="text/javascript" src="/select2/dist/js/select2.full.min.js"></script>
 
 <!-- Custom JavaScript -->
 <script type="text/javascript" src="/js/javascript.js"></script>
@@ -24,11 +24,6 @@
             return false;
         return true;
     }
-
-    // Live Select Option Cabang Script
-    $("#select_cabang").change(function() {
-        var select = $(this).val();
-    });
 </script>
 
 </body>

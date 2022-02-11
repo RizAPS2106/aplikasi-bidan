@@ -96,7 +96,7 @@
                     </div>
                     <div class="form-group my-2">
                         <label for="select_cabang">Cabang</label>
-                        <select name="id_cabang" id="select_cabang" class="selectpicker form-control" data-live-search="true">
+                        <select name="id_cabang" class="select-live-search" style="width: 100%;">
                             <option disabled selected value> -- Pilih Cabang -- </option>
                             <?php foreach ($cabang as $cbg) : ?>
                                 <option value="<?= $cbg['id'] ?>"><?= $cbg['id'] . ' - ' . ucfirst($cbg['nama']); ?></option>
@@ -149,7 +149,7 @@
                     </div>
                     <div class="form-group my-2">
                         <label for="select_cabang">Cabang</label>
-                        <select name="id_cabang" id="select_cabang" class="selectpicker form-control" data-live-search="true">
+                        <select name="id_cabang" class="select-live-search" style="width: 100%;">
                             <option disabled selected value> -- Pilih Cabang -- </option>
                             <?php foreach ($cabang as $cbg) : ?>
                                 <option value="<?= $cbg['id'] ?>"><?= $cbg['id'] . ' - ' . ucfirst($cbg['nama']); ?></option>
