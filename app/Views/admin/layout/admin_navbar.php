@@ -23,6 +23,11 @@
                         Cabang
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('admin/layanan'); ?>" role="button" aria-expanded="false">
+                        Layanan
+                    </a>
+                </li>
             </ul>
         </div>
         <?php if (session()->get('logged_in') == true) : ?>

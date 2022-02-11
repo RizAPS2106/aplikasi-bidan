@@ -29,7 +29,7 @@ class OwnerAdmin extends BaseController
         $data = [
             'title' => "Admin Owner",
             'header' => "Detail Owner",
-            'owner' => $user->where('id', $id)->first()
+            'owner' =>  $user->select('user.*,cabang.nama as nama_cabang')->join('cabang', 'cabang.id = user.id_cabang', 'LEFT')->where('user.id', $id)->first()
         ];
         echo view('admin/owner/admin_detail_owner', $data);
     }

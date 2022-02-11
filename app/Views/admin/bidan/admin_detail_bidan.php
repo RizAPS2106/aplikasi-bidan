@@ -11,8 +11,9 @@
                 </div>
                 <div class=" col-auto">
                     <h3 class="h3"><?= $bidan['nama'] ?></h3>
-                    <div>Email <b><?= $bidan['email'] ?></b></div>
-                    <div>Telepon <b><?= $bidan['telepon'] ?></b></div>
+                    <div>Email : <b><?= $bidan['email'] ?></b></div>
+                    <div>Telepon : <b><?= $bidan['telepon'] ?></b></div>
+                    <div>Cabang : <b><?= $bidan['nama_cabang'] ?></b></div>
                 </div>
             </div>
         </div>

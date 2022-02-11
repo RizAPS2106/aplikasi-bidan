@@ -61,9 +61,9 @@ class Cabang extends BaseController
         $id = $this->request->getGet('id');
 
         $cabang = new CabangModel();
-        $data['user'] = $cabang->where('id', $id)->first();
+        $data = $cabang->select('cabang.*,user.id as id_user,user.group_user')->join('user', 'user.id_cabang = cabang.id', 'LEFT')->where('cabang.id', $id)->where('user.group_user', 1)->first();
 
-        echo json_encode($data['user']);
+        echo json_encode($data);
     }
 
     public function edit()
@@ -71,7 +71,6 @@ class Cabang extends BaseController
         $id = $this->request->getPost('id');
 
         $cabang = new CabangModel();
-        $data = $cabang->where('id', $id)->first();
 
         $validation =  \Config\Services::validation();
         $validation->setRules(

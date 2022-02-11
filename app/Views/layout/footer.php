@@ -1,6 +1,9 @@
 <!-- JQuery -->
 <script type="text/javascript" src="/jquery/jquery.min.js"></script>
 
+<!-- JQuery Mask -->
+<script type="text/javascript" src="/jquery-mask/jquery.mask.js"></script>
+
 <!-- Bootstrap JavaScript-->
 <script type="text/javascript" src="/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -14,7 +17,7 @@
 <script type="text/javascript" src="/select2/dist/js/select2.full.min.js"></script>
 
 <!-- Custom JavaScript -->
-<script type="text/javascript" src="/js/javascript.js"></script>
+<script type="text/javascript" src="/js/script.js"></script>
 
 <!-- Number Only Script -->
 <script>
@@ -24,6 +27,10 @@
             return false;
         return true;
     }
+
+    $('.uang').mask('000.000.000.000', {
+        reverse: true
+    });
 </script>
 
 </body>

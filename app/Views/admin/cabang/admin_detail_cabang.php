@@ -11,8 +11,9 @@
                 </div>
                 <div class=" col-auto">
                     <h3 class="h3"><?= $cabang['nama'] ?></h3>
-                    <div>Kode Cabang <b><?= $cabang['kode_cabang'] ?></b></div>
-                    <div>Alamat <b><?= $cabang['alamat'] ?></b></div>
+                    <div>Pemilik : <b><?= $cabang['nama_user'] ?></b></div>
+                    <div>Kode Cabang : <b><?= $cabang['kode_cabang'] ?></b></div>
+                    <div>Alamat : <b><?= $cabang['alamat'] ?></b></div>
                 </div>
             </div>
         </div>

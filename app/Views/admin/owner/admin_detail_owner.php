@@ -11,8 +11,9 @@
                 </div>
                 <div class=" col-auto">
                     <h3 class="h3"><?= $owner['nama'] ?></h3>
-                    <div>Email <b><?= $owner['email'] ?></b></div>
-                    <div>Telepon <b><?= $owner['telepon'] ?></b></div>
+                    <div>Email : <b><?= $owner['email'] ?></b></div>
+                    <div>Telepon : <b><?= $owner['telepon'] ?></b></div>
+                    <div>Nama Cabang : <b><?= $owner['nama_cabang'] ?></b></div>
                 </div>
             </div>
         </div>

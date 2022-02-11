@@ -79,6 +79,15 @@
                             Isi kolom alamat
                         </div>
                     </div>
+                    <div class="form-group my-2">
+                        <label for="select_user">Pemilik</label>
+                        <select name="id_user" class="select-live-search" style="width: 100%;">
+                            <option disabled selected value> -- Pemilik -- </option>
+                            <?php foreach ($owner as $own) : ?>
+                                <option value="<?= $own['id'] ?>"><?= $own['id'] . ' - ' . ucfirst($own['nama']); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="group_user" value="3">
@@ -122,6 +131,15 @@
                         <div class="invalid-feedback">
                             Isi kolom alamat
                         </div>
+                    </div>
+                    <div class="form-group my-2">
+                        <label for="select_user">Pemilik</label>
+                        <select name="id_user" class="select-live-search" style="width: 100%;">
+                            <option disabled selected value> -- Pemilik -- </option>
+                            <?php foreach ($owner as $own) : ?>
+                                <option value="<?= $own['id'] ?>"><?= $own['id'] . ' - ' . ucfirst($own['nama']); ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -56,11 +56,16 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
 	$routes->get('cabang', 'Admin\CabangAdmin::index');
 	$routes->get('cabang/(:segment)/preview', 'Admin\CabangAdmin::preview/$1');
-
 	$routes->add('cabang/create', 'Cabang::create');
 	$routes->get('cabang/preview_edit', 'Cabang::preview_edit');
 	$routes->add('cabang/edit', 'Cabang::edit');
 	$routes->add('cabang/(:segment)/delete', 'Cabang::delete/$1');
+
+	$routes->get('layanan', 'Admin\LayananAdmin::index');
+	$routes->add('layanan/create', 'Layanan::create');
+	$routes->get('layanan/preview_edit', 'Layanan::preview_edit');
+	$routes->add('layanan/edit', 'Layanan::edit');
+	$routes->add('layanan/(:segment)/delete', 'Layanan::delete/$1');
 });
 /*
  * --------------------------------------------------------------------

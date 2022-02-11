@@ -29,7 +29,7 @@ class BidanAdmin extends BaseController
         $data = [
             'title' => "Admin Bidan",
             'header' => "Detail Bidan",
-            'bidan' => $user->where('id', $id)->first()
+            'bidan' => $user->select('user.*,cabang.nama as nama_cabang')->join('cabang', 'cabang.id = user.id_cabang', 'LEFT')->where('user.id', $id)->first()
         ];
         echo view('admin/bidan/admin_detail_bidan', $data);
     }

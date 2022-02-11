@@ -97,9 +97,9 @@ class User extends BaseController
 
         $user = new UserModel();
 
-        $data['user'] = $user->select('user.*,cabang.nama as nama_cabang')->join('cabang', 'cabang.id = user.id_cabang', 'LEFT')->where('user.id', $id)->first();
+        $data = $user->select('user.*,cabang.nama as nama_cabang')->join('cabang', 'cabang.id = user.id_cabang', 'LEFT')->where('user.id', $id)->first();
 
-        echo json_encode($data['user']);
+        echo json_encode($data);
     }
 
     public function edit()
