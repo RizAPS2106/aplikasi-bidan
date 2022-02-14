@@ -35,7 +35,7 @@ $(document).ready(function () {
 
   // Select2
   $(".select-live-search").select2({
-    theme: 'bootstrap-  5'
+    theme: 'bootstrap-5'
   });
 
   // DataTables
@@ -227,6 +227,8 @@ $(document).ready(function () {
         var url_preview_edit = base_url + "/admin/cabang/preview_edit";
       } else if(id_table == "layanan_table"){
         var url_preview_edit = base_url + "/admin/layanan/preview_edit"; 
+      } else {
+        var url_preview_edit = base_url + "/admin/user/preview_edit";
       }
     } else {
       var url_preview_edit = base_url + "/admin/user/preview_edit";
