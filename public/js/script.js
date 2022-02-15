@@ -1,9 +1,9 @@
 $(document).ready(function () {
 
-  window.onscroll = function() {stickyNavbar()};
-
   // Sticky Navbar
-  if(typeof document.getElementsByClassName("table")[0] !== "undefined"){
+  if(typeof document.getElementsByClassName("sub-navbar")[0] !== "undefined"){
+    window.onscroll = function() {stickyNavbar()};
+
     var navbar = document.getElementById("sticky-navbar");
 
     var navbar_offset = navbar.offsetTop;
