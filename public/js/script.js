@@ -1,5 +1,22 @@
 $(document).ready(function () {
 
+  window.onscroll = function() {stickyNavbar()};
+
+  // Get Element
+  var navbar = document.getElementById("sticky-navbar");
+
+  // Offset position
+  var navbar_offset = navbar.offsetTop;
+
+  // Window on scroll function
+  function stickyNavbar() {
+    if (window.pageYOffset >= navbar_offset) {
+      navbar.classList.add("sticky-navbar")
+    } else {
+      navbar.classList.remove("sticky-navbar");
+    }
+  }
+
   function rupiah(angka, prefix){
     var number_string = angka.replace(/[^,\d]/g, '').toString(),
     split   		= number_string.split(','),
