@@ -7,7 +7,7 @@
                 <h1>Masuk</h1>
             </center>
 
-            <form method="post" id='auth_form'>
+            <form method="post" id="auth_form">
                 <?= csrf_field(); ?>
                 <div class="my-3">
                     <div class="form-group my-2">

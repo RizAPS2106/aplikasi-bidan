@@ -2,21 +2,22 @@ $(document).ready(function () {
 
   window.onscroll = function() {stickyNavbar()};
 
-  // Get Element
-  var navbar = document.getElementById("sticky-navbar");
+  // Sticky Navbar
+  if(typeof document.getElementsByClassName("table")[0] !== "undefined"){
+    var navbar = document.getElementById("sticky-navbar");
 
-  // Offset position
-  var navbar_offset = navbar.offsetTop;
+    var navbar_offset = navbar.offsetTop;
 
-  // Window on scroll function
-  function stickyNavbar() {
-    if (window.pageYOffset >= navbar_offset) {
-      navbar.classList.add("sticky-navbar")
-    } else {
-      navbar.classList.remove("sticky-navbar");
+    function stickyNavbar() {
+      if (window.pageYOffset >= navbar_offset) {
+        navbar.classList.add("sticky-navbar")
+      } else {
+        navbar.classList.remove("sticky-navbar");
+      }
     }
   }
 
+  // Format Rupiah
   function rupiah(angka, prefix){
     var number_string = angka.replace(/[^,\d]/g, '').toString(),
     split   		= number_string.split(','),
@@ -77,7 +78,7 @@ $(document).ready(function () {
       contentType: false,
       success: function (data) {
         if (data.includes("Admin")) {
-          location.replace(base_url + "/admin/dashboard");
+          location.replace(base_url + "/admin/");
         } else if (data.includes("Owner") || data.includes("Konsumen") || data.includes("Bidan")) {
           swal({
             title: "Berhasil",

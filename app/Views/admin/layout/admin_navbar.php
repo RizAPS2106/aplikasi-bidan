@@ -31,9 +31,9 @@
             </ul>
         </div>
         <?php if (session()->get('logged_in') == true) : ?>
-            <a class="link-light text-decoration-none" href="<?= "/login/logout" ?>">Logout</a>
+            <a class="link-light text-decoration-none" href="<?= "/login/logout" ?>">Keluar</a>
         <?php else : ?>
-            <a class="link-light text-decoration-none" href="<?= "/login" ?>">Login</a>
+            <a class="link-light text-decoration-none" href="<?= "/login" ?>">Masuk</a>
         <?php endif; ?>
     </div>
 </nav>

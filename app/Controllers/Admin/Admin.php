@@ -12,7 +12,7 @@ class Admin extends BaseController
         $user = new UserModel();
 
         $data = [
-            'title' => "Administrator",
+            'title' => "Administrasi Kebidanan",
             'header' => "Dashboard",
             'owner' => $user->where('group_user', 1)->findAll(),
             'konsumen' => $user->where('group_user', 2)->findAll(),
