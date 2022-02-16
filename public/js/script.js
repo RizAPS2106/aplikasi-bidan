@@ -66,6 +66,17 @@ $(document).ready(function () {
     $("#form_ubah_password").toggle();
   });
 
+  // Register ke Login
+  $("#to_login").on("click", function (event){
+    localStorage.setItem('openModal', '#loginModal');
+    location.replace(base_url);
+  })
+  var modalId = localStorage.getItem('openModal');
+  if (modalId != null){
+    $(modalId).modal("show");
+    localStorage.removeItem('openModal');
+  }
+
   // Login Auth Script
   $("#auth_form").on("submit", function (event) {
     event.preventDefault();
@@ -449,4 +460,6 @@ $(document).ready(function () {
       }
     });
   });
+  
 });
+

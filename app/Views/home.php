@@ -125,12 +125,10 @@ function rupiah_norp($angka)
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-light text-light">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
             <form method="post" id="auth_form">
                 <?= csrf_field(); ?>
                 <div class="modal-body">
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button><br>
                     <h4 class="text-center text-success">Masuk</h4>
                     <?= csrf_field(); ?>
                     <div class="my-3">
@@ -154,10 +152,8 @@ function rupiah_norp($angka)
                             <input type="hidden" value="<?php echo base_url('login/auth/'); ?>" id="auth_url">
                             <input type="submit" class="btn btn-success" value="Masuk" id="auth">
                         </div>
-                        <div class="form-group my-2">
-                            <center>
-                                <label>Belum punya akun?</label><a href="<?= base_url('register'); ?>">Daftar</a>
-                            </center>
+                        <div class="form-group my-2 text-center">
+                            <label>Belum punya akun?</label><a href="<?= base_url('register'); ?>">Daftar</a>
                         </div>
                     </div>
                 </div>

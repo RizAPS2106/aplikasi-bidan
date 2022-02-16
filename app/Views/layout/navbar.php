@@ -16,7 +16,7 @@
             </div>
             <div class="col-4 top-navbar-list text-end">
                 <?php if (session()->get('logged_in') == true) : ?>
-                    <a type="button" class="btn btn-sm btn-outline-success text-decoration-none" href="<?= "/login/logout" ?>">Keluar</a>
+                    <a type="button" class="btn btn-sm btn-outline-success text-decoration-none" href="javascript:;" id="logout">Keluar</a>
                 <?php else : ?>
                     <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#loginModal">
                         Masuk

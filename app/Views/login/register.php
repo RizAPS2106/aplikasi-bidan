@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-6 mt-3">
-            <h1>Daftar</h1>
+            <h1 class="text-center text-success">Daftar</h1>
 
             <form method="post" id="create_form">
                 <?= csrf_field(); ?>
@@ -49,10 +49,8 @@
                         <input type="hidden" value="<?php echo base_url('register/register/'); ?>" id="create_url">
                         <input type="submit" class="btn btn-success" value="Daftar" id="create">
                     </div>
-                    <div class="form-group my-2">
-                        <center>
-                            <label>Sudah memiliki akun?</label><a href="<?= base_url('/'); ?>">Masuk</a>
-                        </center>
+                    <div class="form-group my-2 text-center">
+                        <label>Sudah memiliki akun?</label><a href="javascript:;" id="to_login">Masuk</a>
                     </div>
                 </div>
             </form>
