@@ -91,7 +91,7 @@ $(document).ready(function () {
               },
             },
           }).then(() => {
-            $("#auth_form").trigger("reset");
+            location.reload();
           });
         } else {
           var elementemail = document.getElementById("email");

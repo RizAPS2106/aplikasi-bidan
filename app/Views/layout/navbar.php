@@ -16,9 +16,11 @@
             </div>
             <div class="col-4 top-navbar-list text-end">
                 <?php if (session()->get('logged_in') == true) : ?>
-                    <a class="link-success text-decoration-none" href="<?= "/login/logout" ?>">Keluar</a>
+                    <a type="button" class="btn btn-sm btn-outline-success text-decoration-none" href="<?= "/login/logout" ?>">Keluar</a>
                 <?php else : ?>
-                    <a class="link-success text-decoration-none" href="<?= "/" ?>">Masuk</a>
+                    <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        Masuk
+                    </button>
                 <?php endif; ?>
             </div>
         </div>

@@ -38,7 +38,7 @@
         <td>
           <center>
             <a href="<?= base_url('admin/bidan/' . $bidans['id'] . '/preview') ?>" class="btn btn-sm btn-outline-secondary" target="_blank"><i class="fas fa-search-plus"></i> Detail</a>
-            <a href="javascript:; ?>" class="btn btn-sm btn-outline-primary item_edit" data="<?= $bidans['id']; ?>"><i class="far fa-edit"></i> Ubah</a>
+            <a href="javascript:;" class="btn btn-sm btn-outline-primary item_edit" data="<?= $bidans['id']; ?>"><i class="far fa-edit"></i> Ubah</a>
             <a href="javascript:;" class="btn btn-sm btn-outline-danger item_delete" data="<?= $bidans['id']; ?>"><i class="far fa-trash-alt"></i> Hapus</a>
           </center>
         </td>

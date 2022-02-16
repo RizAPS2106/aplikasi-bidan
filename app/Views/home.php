@@ -82,7 +82,7 @@ function rupiah_norp($angka)
         <div class="row">
             <?php foreach ($layanan as $layanans) : ?>
                 <div class="col-md-4">
-                    <div class="card border-success text-center mb-4">
+                    <div class=" card border-success text-center mb-4">
                         <div class="card-header">
                             <h3><strong><?= ucfirst($layanans['nama_layanan']); ?></strong></h3>
                             <span><?= rupiah($layanans['harga']); ?></span>
@@ -98,7 +98,7 @@ function rupiah_norp($angka)
                             </ul>
                         </div>
                         <div class="card-footer text-muted">
-                            <a href="#" class="btn btn-success w-100 my-2 rounded-pill">Pesan</a>
+                            <a href="#" class="btn btn-success w-100 my-2 rounded-pill" data="<?= session()->get('logged_in'); ?>">Pesan</a>
                         </div>
                     </div>
                 </div>
@@ -120,5 +120,143 @@ function rupiah_norp($angka)
         </div>
     </section>
 </div>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-light text-light">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" id="auth_form">
+                <?= csrf_field(); ?>
+                <div class="modal-body">
+                    <h4 class="text-center text-success">Masuk</h4>
+                    <?= csrf_field(); ?>
+                    <div class="my-3">
+                        <div class="form-group my-2">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" class="form-control" id="email">
+                            <div class="invalid-feedback">
+                                Isi kolom email dengan valid
+                            </div>
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="password">Password</label>
+                            <div class="col">
+                                <input type="password" name="password" class="form-control" id="password">
+                                <div class="invalid-feedback">
+                                    Isi kolom password dengan minimal 8 karakter
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group my-3 d-grid gap-2">
+                            <input type="hidden" value="<?php echo base_url('login/auth/'); ?>" id="auth_url">
+                            <input type="submit" class="btn btn-success" value="Masuk" id="auth">
+                        </div>
+                        <div class="form-group my-2">
+                            <center>
+                                <label>Belum punya akun?</label><a href="<?= base_url('register'); ?>">Daftar</a>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center text-lg-start bg-light text-success">
+    <!-- Section: Social media -->
+    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom border-top">
+        <!-- Left -->
+        <div class="me-5 d-none d-lg-block">
+            <span>Sosial Media Kami :</span>
+        </div>
+
+        <!-- Right -->
+        <div>
+            <a href="" class="me-4 text-success text-decoration-none">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="" class="me-4 text-success text-decoration-none">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="" class="me-4 text-success text-decoration-none">
+                <i class="fab fa-google"></i>
+            </a>
+            <a href="" class="me-4 text-success text-decoration-none">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="" class="me-4 text-success text-decoration-none">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="" class="me-4 text-success text-decoration-none">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Section: Links  -->
+    <section class="">
+        <div class="container text-center text-md-start mt-5">
+            <!-- Grid row -->
+            <div class="row mt-3">
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <!-- Content -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        <i class="fas fa-baby me-3"></i>Kebidanan
+                    </h6>
+                    <p class="text-justify">
+                        Here you can use rows and columns to organize your footer content. Lorem ipsum
+                        dolor sit amet, consectetur adipisicing elit.
+                    </p>
+                </div>
+
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Tautan Berguna
+                    </h6>
+                    <p>
+                        <a href="#!" class="text-reset">Link 1</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Link 2</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Link 3</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Link 4</a>
+                    </p>
+                </div>
+
+                <!-- Grid column -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Kontak
+                    </h6>
+                    <p><i class="fas fa-home me-3"></i> -, ----, --</p>
+                    <p>
+                        <i class="fas fa-envelope me-3"></i>
+                        info@example.com
+                    </p>
+                    <p><i class="fas fa-phone me-3"></i> + 00 000 000 01</p>
+                    <p><i class="fas fa-print me-3"></i> + 00 000 000 02</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Copyright -->
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+        © <?= date('Y'); ?> Copyright:
+        <a class="text-reset fw-bold" href="https://oranyesoftwarehouse.com/">Kebidanan.com</a>
+    </div>
+</footer>
 
 <?= $this->endSection(); ?>
