@@ -25,4 +25,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 
+    <!-- Datetime Picker CSS -->
+    <link rel="stylesheet" href="/datetimepicker/css/bootstrap-datetimepicker.css" />
+
 </head>

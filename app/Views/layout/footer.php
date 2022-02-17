@@ -16,6 +16,12 @@
 <!-- Select2 Javascript -->
 <script type="text/javascript" src="/select2/dist/js/select2.full.min.js"></script>
 
+<!-- Datetime Picker JavaScript -->
+<script src="/datetimepicker/js/bootstrap-datetimepicker.js"></script>
+
+<!-- Datetime Picker Languages -->
+<script src="/datetimepicker/js/locales/bootstrap-datetimepicker.id.js"></script>
+
 <!-- Custom JavaScript -->
 <script type="text/javascript" src="/js/script.js"></script>
 

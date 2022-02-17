@@ -69,6 +69,15 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 	$routes->add('layanan/edit', 'Layanan::edit');
 	$routes->add('layanan/(:segment)/delete', 'Layanan::delete/$1');
 });
+
+$routes->group('bidan', ['filter' => 'auth'], function ($routes) {
+	$routes->get('/', 'Bidan\Bidan::index');
+	$routes->get('profil', 'Bidan\Bidan::profil');
+});
+
+$routes->group('pesan', ['filter' => 'auth'], function ($routes) {
+	$routes->get('/', 'Order\Order::index');
+});
 /*
  * --------------------------------------------------------------------
  * Additional Routing

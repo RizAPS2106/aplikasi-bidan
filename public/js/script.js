@@ -1,8 +1,98 @@
 $(document).ready(function () {
 
+  // Base Url
+  var base_url = window.location.origin;
+
+  // Konfigurasi Modal Untuk Select2
+  $.fn.modal.Constructor.prototype._enforceFocus = function () { };
+
+  // Select2
+  $(".select2").select2({
+    theme: 'bootstrap-5'
+  });
+
+  // DataTables
+  $("#user_table").DataTable();
+  $("#cabang_table").DataTable();
+  $("#layanan_table").DataTable();
+
+  // Datetime Picker
+  $(".datetimepicker").datetimepicker({
+    language:'id'
+  });
+
+  // Ubah Password Toggle Script
+  $("#ubah_password").click(function () {
+    $("#form_ubah_password").toggle();
+  });
+
+  // Onsite/Homecare
+  $('input[type=radio][name=layanan_detail]').change(function() {
+    if (this.value == 'onsite') {
+      $('#form_alamat').hide();
+    }
+    else if (this.value == 'homecare') {
+      $('#form_alamat').show();
+    }
+  });
+
+  // Ketika Refresh
+  if (window.performance) {
+    console.info("window.performance works fine on this browser");
+  }
+  if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+    $("#create_form").trigger("reset");
+    $("#edit_form").trigger("reset");
+
+    $("#radio1").prop('checked',true);
+    $("#radio2").prop('checked',false);
+  }
+
+  // Format Rupiah
+  function rupiah(angka, prefix) {
+    var number_string = angka.replace(/[^,\d]/g, '').toString(),
+      split = number_string.split(','),
+      sisa = split[0].length % 3,
+      rupiah = split[0].substr(0, sisa),
+      ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+    // tambahkan titik jika yang di input sudah menjadi angka ribuan
+    if (ribuan) {
+      separator = sisa ? '.' : '';
+      rupiah += separator + ribuan.join('.');
+    }
+
+    rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+    return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+  }
+
+  // Memilih Layanan
+  let total_harga = 0;
+
+  $('#layanan').on('select2:select', function (e) {
+    var data_layanan = $('[name="layanan[]"]').val();
+    data_layanan.forEach((number, index) => {
+      const harga = $.parseJSON(number);
+      console.log('Index: ' + index + ' Value: ' + harga["harga"]);
+      total_harga += harga['harga'];
+      document.getElementById('harga_total').innerHTML = rupiah(total_harga.toString());
+    }); 
+  });
+
+  $('#layanan').on('select2:unselect', function (e) {
+    var data_layanan = $('[name="layanan[]"]').val();
+    data_layanan.forEach((number, index) => {
+      const harga = $.parseJSON(number);
+      console.log('Index: ' + index + ' Value: ' + harga["harga"]);
+      total_harga -= harga['harga'];
+      alert(total_harga);
+      document.getElementById('harga_total').innerHTML = rupiah(total_harga.toString());
+    }); 
+  });
+
   // Sticky Navbar
-  if(typeof document.getElementsByClassName("sub-navbar")[0] !== "undefined"){
-    window.onscroll = function() {stickyNavbar()};
+  if (typeof document.getElementsByClassName("sub-navbar")[0] !== "undefined") {
+    window.onscroll = function () { stickyNavbar() };
 
     var navbar = document.getElementById("sticky-navbar");
 
@@ -17,62 +107,24 @@ $(document).ready(function () {
     }
   }
 
-  // Format Rupiah
-  function rupiah(angka, prefix){
-    var number_string = angka.replace(/[^,\d]/g, '').toString(),
-    split   		= number_string.split(','),
-    sisa     		= split[0].length % 3,
-    rupiah     		= split[0].substr(0, sisa),
-    ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
-
-    // tambahkan titik jika yang di input sudah menjadi angka ribuan
-    if(ribuan){
-      separator = sisa ? '.' : '';
-      rupiah += separator + ribuan.join('.');
-    }
-
-    rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-    return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
-  }
-
-  // Base Url
-  var base_url = window.location.origin;
-  
-  // Ketika Refresh
-  if (window.performance) {
-    console.info("window.performance works fine on this browser");
-  }
-  console.info(performance.navigation.type);
-  if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+  // Ketika Modal Ditutup
+  $("#createModal").on("hidden.bs.modal", function () {
     $("#create_form").trigger("reset");
-    $("#edit_form").trigger("reset");
-  }
-
-  // Konfigurasi Modal Untuk Select2
-  $.fn.modal.Constructor.prototype._enforceFocus = function () {};
-
-  // Select2
-  $(".select-live-search").select2({
-    theme: 'bootstrap-5'
+    $(".select-live-search").val("").trigger("change");
   });
 
-  // DataTables
-  $("#user_table").DataTable();
-  $("#cabang_table").DataTable();
-  $("#layanan_table").DataTable();
-
-  // Ubah Password Toggle Script
-  $("#ubah_password").click(function () {
-    $("#form_ubah_password").toggle();
+  $("#updateModal").on("hidden.bs.modal", function () {
+    $("#create_form").trigger("reset");
+    $(".select-live-search").val("").trigger("change");
   });
 
   // Register ke Login
-  $("#to_login").on("click", function (event){
+  $("#to_login").on("click", function (event) {
     localStorage.setItem('openModal', '#loginModal');
     location.replace(base_url);
   })
   var modalId = localStorage.getItem('openModal');
-  if (modalId != null){
+  if (modalId != null) {
     $(modalId).modal("show");
     localStorage.removeItem('openModal');
   }
@@ -90,7 +142,9 @@ $(document).ready(function () {
       success: function (data) {
         if (data.includes("Admin")) {
           location.replace(base_url + "/admin/");
-        } else if (data.includes("Owner") || data.includes("Konsumen") || data.includes("Bidan")) {
+        } else if (data.includes("Bidan")){
+          location.replace(base_url + "/bidan/");
+        }else if (data.includes("Owner") || data.includes("Konsumen") || data.includes("Bidan")) {
           swal({
             title: "Berhasil",
             text: data,
@@ -136,6 +190,20 @@ $(document).ready(function () {
         alert("Status: " + textStatus);
         alert("Error: " + errorThrown);
       },
+    });
+  });
+
+  // Logout Script
+  $("#logout").on("click", function () {
+    swal({
+      title: "Keluar?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        location.replace("login/logout");
+      }
     });
   });
 
@@ -190,21 +258,21 @@ $(document).ready(function () {
             var elementnama = document.getElementById("nama");
             var elementalamat = document.getElementById("alamat");
 
-            if (data.includes("Kode cabang")) {elementkode_cabang.classList.add("is-invalid");} 
-            else {elementkode_cabang.classList.remove("is-invalid");}
-            if (data.includes("Nama")) {elementnama.classList.add("is-invalid");} 
-            else {elementnama.classList.remove("is-invalid");}
-            if (data.includes("Alamat")) {elementalamat.classList.add("is-invalid");} 
-            else {elementalamat.classList.remove("is-invalid");}
+            if (data.includes("Kode cabang")) { elementkode_cabang.classList.add("is-invalid"); }
+            else { elementkode_cabang.classList.remove("is-invalid"); }
+            if (data.includes("Nama")) { elementnama.classList.add("is-invalid"); }
+            else { elementnama.classList.remove("is-invalid"); }
+            if (data.includes("Alamat")) { elementalamat.classList.add("is-invalid"); }
+            else { elementalamat.classList.remove("is-invalid"); }
 
-          } else if($("#create_url").val() == base_url + "/admin/layanan/create"){
+          } else if ($("#create_url").val() == base_url + "/admin/layanan/create") {
             var elementnama = document.getElementById("nama_layanan");
             var elementharga = document.getElementById("harga");
 
-            if (data.includes("Nama Layanan")) {elementnama.classList.add("is-invalid");} 
-            else {elementnama.classList.remove("is-invalid");}
-            if (data.includes("Harga")) {elementharga.classList.add("is-invalid");} 
-            else {elementharga.classList.remove("is-invalid");}
+            if (data.includes("Nama Layanan")) { elementnama.classList.add("is-invalid"); }
+            else { elementnama.classList.remove("is-invalid"); }
+            if (data.includes("Harga")) { elementharga.classList.add("is-invalid"); }
+            else { elementharga.classList.remove("is-invalid"); }
 
           } else {
             var elementnama = document.getElementById("nama");
@@ -214,16 +282,16 @@ $(document).ready(function () {
             var elementkonfirmasi_password = document.getElementById("konfirmasi_password");
             var elementpassword_invalid = document.getElementById("password_invalid");
 
-            if (data.includes("Nama")) {elementnama.classList.add("is-invalid");} 
-            else {elementnama.classList.remove("is-invalid");}
-            if (data.includes("Nomor telepon")) {elementtelepon.classList.add("is-invalid");} 
-            else {elementtelepon.classList.remove("is-invalid");}
-            if (data.includes("Email")) {elementemail.classList.add("is-invalid");} 
-            else {elementemail.classList.remove("is-invalid");}
-            if (data.includes("Password")) {elementpassword.classList.add("is-invalid");elementpassword_invalid.classList.add("is-invalid");} 
-            else {elementpassword.classList.remove("is-invalid");elementpassword_invalid.classList.remove("is-invalid");}
-            if (data.includes("Konfirmasi password")) {elementkonfirmasi_password.classList.add("is-invalid");elementpassword_invalid.classList.add("is-invalid");} 
-            else {elementkonfirmasi_password.classList.remove("is-invalid");elementpassword_invalid.classList.remove("is-invalid");}
+            if (data.includes("Nama")) { elementnama.classList.add("is-invalid"); }
+            else { elementnama.classList.remove("is-invalid"); }
+            if (data.includes("Nomor telepon")) { elementtelepon.classList.add("is-invalid"); }
+            else { elementtelepon.classList.remove("is-invalid"); }
+            if (data.includes("Email")) { elementemail.classList.add("is-invalid"); }
+            else { elementemail.classList.remove("is-invalid"); }
+            if (data.includes("Password")) { elementpassword.classList.add("is-invalid"); elementpassword_invalid.classList.add("is-invalid"); }
+            else { elementpassword.classList.remove("is-invalid"); elementpassword_invalid.classList.remove("is-invalid"); }
+            if (data.includes("Konfirmasi password")) { elementkonfirmasi_password.classList.add("is-invalid"); elementpassword_invalid.classList.add("is-invalid"); }
+            else { elementkonfirmasi_password.classList.remove("is-invalid"); elementpassword_invalid.classList.remove("is-invalid"); }
           }
 
           swal({
@@ -254,8 +322,8 @@ $(document).ready(function () {
       var id_table = document.getElementsByClassName("table")[0].id;
       if (id_table == "cabang_table") {
         var url_preview_edit = base_url + "/admin/cabang/preview_edit";
-      } else if(id_table == "layanan_table"){
-        var url_preview_edit = base_url + "/admin/layanan/preview_edit"; 
+      } else if (id_table == "layanan_table") {
+        var url_preview_edit = base_url + "/admin/layanan/preview_edit";
       } else {
         var url_preview_edit = base_url + "/admin/user/preview_edit";
       }
@@ -280,7 +348,7 @@ $(document).ready(function () {
             $('[name="alamat"]').val(data.alamat);
             $('[name="id_user"]').val(data.id_user).trigger("change");
           });
-        } else if(id_table == "layanan_table") {
+        } else if (id_table == "layanan_table") {
           $.each(data, function (id, nama_layanan, harga) {
             $("#updateModal").modal("show");
             $('[name="id"]').val(data.id);
@@ -306,17 +374,6 @@ $(document).ready(function () {
     return false;
   });
 
-  // Ketika Modal Ditutup
-  $("#createModal").on("hidden.bs.modal", function () {
-    $("#create_form").trigger("reset");
-    $(".select-live-search").val("").trigger("change");
-  });
-
-  $("#updateModal").on("hidden.bs.modal", function () {
-    $("#create_form").trigger("reset");
-    $(".select-live-search").val("").trigger("change");
-  });
-
   // Ubah Data Script
   $("#edit_form").on("submit", function (event) {
     event.preventDefault();
@@ -339,21 +396,21 @@ $(document).ready(function () {
             var elementnama = document.getElementById("namas");
             var elementalamat = document.getElementById("alamats");
 
-            if (data.includes("Kode cabang")) {elementkode_cabang.classList.add("is-invalid");} 
-            else {elementkode_cabang.classList.remove("is-invalid");}
-            if (data.includes("Nama")) {elementnama.classList.add("is-invalid");} 
-            else {elementnama.classList.remove("is-invalid");}
-            if (data.includes("Alamat")) {elementalamat.classList.add("is-invalid");} 
-            else {elementalamat.classList.remove("is-invalid");}
+            if (data.includes("Kode cabang")) { elementkode_cabang.classList.add("is-invalid"); }
+            else { elementkode_cabang.classList.remove("is-invalid"); }
+            if (data.includes("Nama")) { elementnama.classList.add("is-invalid"); }
+            else { elementnama.classList.remove("is-invalid"); }
+            if (data.includes("Alamat")) { elementalamat.classList.add("is-invalid"); }
+            else { elementalamat.classList.remove("is-invalid"); }
 
-          } else if($("#edit_url").val() == base_url + "/admin/layanan/edit") {
+          } else if ($("#edit_url").val() == base_url + "/admin/layanan/edit") {
             var elementnama = document.getElementById("nama_layanans");
             var elementharga = document.getElementById("hargas");
 
-            if (data.includes("Nama Layanan")) {elementnama.classList.add("is-invalid");} 
-            else {elementnama.classList.remove("is-invalid");}
-            if (data.includes("Harga")) {elementharga.classList.add("is-invalid");} 
-            else {elementharga.classList.remove("is-invalid");}
+            if (data.includes("Nama Layanan")) { elementnama.classList.add("is-invalid"); }
+            else { elementnama.classList.remove("is-invalid"); }
+            if (data.includes("Harga")) { elementharga.classList.add("is-invalid"); }
+            else { elementharga.classList.remove("is-invalid"); }
 
           } else {
             var elementnama = document.getElementById("namas");
@@ -368,18 +425,18 @@ $(document).ready(function () {
             var elementpassword_invalid =
               document.getElementById("password_invalids");
 
-            if (data.includes("Nama")) {elementnama.classList.add("is-invalid");} 
-            else {elementnama.classList.remove("is-invalid");}
-            if (data.includes("Nomor telepon")) {elementtelepon.classList.add("is-invalid");} 
-            else {elementtelepon.classList.remove("is-invalid");}
-            if (data.includes("email")) {elementemail.classList.add("is-invalid");} 
-            else {elementemail.classList.remove("is-invalid");}
-            if (data.includes("Password lama")) {elementpassword_lama.classList.add("is-invalid");} 
-            else {elementpassword_lama.classList.remove("is-invalid");}
-            if (data.includes("Password")) {elementpassword.classList.add("is-invalid");elementpassword_invalid.classList.add("is-invalid");} 
-            else {elementpassword.classList.remove("is-invalid");elementpassword_invalid.classList.remove("is-invalid");}
-            if (data.includes("Konfirmasi password")) {elementkonfirmasi_password.classList.add("is-invalid");elementpassword_invalid.classList.add("is-invalid");} 
-            else {elementkonfirmasi_password.classList.remove("is-invalid");elementpassword_invalid.classList.remove("is-invalid");}
+            if (data.includes("Nama")) { elementnama.classList.add("is-invalid"); }
+            else { elementnama.classList.remove("is-invalid"); }
+            if (data.includes("Nomor telepon")) { elementtelepon.classList.add("is-invalid"); }
+            else { elementtelepon.classList.remove("is-invalid"); }
+            if (data.includes("email")) { elementemail.classList.add("is-invalid"); }
+            else { elementemail.classList.remove("is-invalid"); }
+            if (data.includes("Password lama")) { elementpassword_lama.classList.add("is-invalid"); }
+            else { elementpassword_lama.classList.remove("is-invalid"); }
+            if (data.includes("Password")) { elementpassword.classList.add("is-invalid"); elementpassword_invalid.classList.add("is-invalid"); }
+            else { elementpassword.classList.remove("is-invalid"); elementpassword_invalid.classList.remove("is-invalid"); }
+            if (data.includes("Konfirmasi password")) { elementkonfirmasi_password.classList.add("is-invalid"); elementpassword_invalid.classList.add("is-invalid"); }
+            else { elementkonfirmasi_password.classList.remove("is-invalid"); elementpassword_invalid.classList.remove("is-invalid"); }
           }
 
           swal({
@@ -422,8 +479,20 @@ $(document).ready(function () {
   // Hapus Data Script
   $(".item_delete").on("click", function () {
     var id = $(this).attr("data");
-    var url_delete = base_url + "/admin/user/" + id + "/delete";
 
+    if (typeof document.getElementsByClassName("table")[0] !== "undefined") {
+      var id_table = document.getElementsByClassName("table")[0].id;
+      if (id_table == "cabang_table") {
+        var url_delete = base_url + "/admin/cabang/" + id + "/delete";
+      } else if (id_table == "layanan_table") {
+        var url_delete = base_url + "/admin/layanan/" + id + "/delete";
+      } else {
+        var url_delete = base_url + "/admin/user/" + id + "/delete";
+      }
+    } else {
+      var url_delete = base_url + "/admin/user/" + id + "/delete";
+    }
+    
     swal({
       title: "Yakin akan dihapus?",
       text: "Ketika sudah dihapus data tidak dapat kembali",
@@ -462,4 +531,3 @@ $(document).ready(function () {
   });
   
 });
-
