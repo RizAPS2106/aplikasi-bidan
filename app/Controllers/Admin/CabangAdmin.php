@@ -13,7 +13,7 @@ class CabangAdmin extends BaseController
         $cabang = new CabangModel();
         $user = new UserModel();
         $data = [
-            'title' => "Admin Cabang",
+            'title' => "Administrasi Cabang",
             'header' => "Data Cabang",
             'cabang' => $cabang->findAll(),
             'owner' => $user->where('group_user', 1)->findAll()
@@ -26,8 +26,8 @@ class CabangAdmin extends BaseController
     {
         $cabang = new CabangModel();
         $data = [
-            'title' => "Admin Cabang",
-            'header' => "Detail Cabang",
+            'title' => "Administrasi Cabang",
+            'header' => "Detail Data Cabang",
             'cabang' => $cabang->select('cabang.*,user.id as id_user,user.nama as nama_user,user.group_user')->join('user', 'user.id_cabang = cabang.id', 'LEFT')->where('cabang.id', $id)->where('user.group_user', 1)->first()
         ];
 

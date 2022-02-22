@@ -9,7 +9,9 @@ class Login extends BaseController
     public function index()
     {
         helper(['form']);
+
         $data = ['title' => 'Masuk'];
+
         echo view('login/login', $data);
     }
 
@@ -17,22 +19,21 @@ class Login extends BaseController
     {
         $user = new UserModel();
 
-        $email = $this->request->getVar('email');
+        $email_field = $this->request->getVar('email');
         $password_field = md5($this->request->getVar('password'));
 
-        $data = $user->where('email', $email)->first();
+        $data = $user->where('email', $email_field)->first();
         if ($data) {
             $password = $data['password'];
 
             if ($password_field == $password) {
                 $session_data = [
-                    'id'            => $data['id'],
-                    'nama'          => $data['nama'],
-                    'email'         => $data['email'],
-                    'group_user'    => $data['group_user'],
-                    'logged_in'     => TRUE
+                    'id_user'    => $data['id'],
+                    'nama_user'  => $data['nama'],
+                    'email_user' => $data['email'],
+                    'group_user' => $data['group_user'],
+                    'logged_in'  => TRUE
                 ];
-
                 session()->set($session_data);
 
                 $user->update($data['id'], [
@@ -60,10 +61,10 @@ class Login extends BaseController
 
     public function logout()
     {
-        $id = session()->get('id');
+        $id_user = session()->get('id_user');
 
         $user = new UserModel();
-        $user->update($id, [
+        $user->update($id_user, [
             'status_login' => 'logout'
         ]);
 

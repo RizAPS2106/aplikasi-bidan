@@ -17,7 +17,7 @@
                     </div>
                     <div class="form-group my-2">
                         <label for="telepon">Telepon</label>
-                        <input type="text" name="telepon" class="form-control" onkeypress="return isNumberKey(event)" id="telepon">
+                        <input type="text" name="telepon" class="form-control" id="telepon" onkeypress="return isNumberKey(event)">
                         <div class="invalid-feedback">
                             Isi kolom nomor telepon dengan nomor minimal 10 digit.
                         </div>
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <div class="form-group my-3 d-grid gap-2">
-                        <input type="hidden" name="group_user" value="0">
+                        <input type="hidden" name="group_user" value="2">
                         <input type="hidden" value="<?php echo base_url('register/register/'); ?>" id="create_url">
                         <input type="submit" class="btn btn-success" value="Daftar" id="create">
                     </div>

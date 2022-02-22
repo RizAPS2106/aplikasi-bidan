@@ -14,7 +14,7 @@
                     <div>Email <b><?= $profil['email'] ?></b></div>
                     <div>Telepon <b><?= $profil['telepon'] ?></b></div>
 
-                    <a href="javascript:;" class="btn btn-sm btn-success my-3 item_edit" data="<?= session()->get('id'); ?>">Ubah profil</a>
+                    <a href="javascript:;" class="btn btn-sm btn-success my-3 item_edit" data="<?= session()->get('id_user'); ?>">Ubah profil</a>
                 </div>
 
                 <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">

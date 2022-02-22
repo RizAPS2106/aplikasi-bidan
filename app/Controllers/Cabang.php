@@ -89,7 +89,7 @@ class Cabang extends BaseController
                     'rules' => 'required',
                     'errors' => ['required' => 'Harap isi kolom {field}']
                 ],
-                'alamat'  => [
+                'alamat' => [
                     'label' => 'Alamat',
                     'rules' => 'required',
                     'errors' => ['required' => 'Harap isi kolom {field}',]
@@ -104,6 +104,7 @@ class Cabang extends BaseController
                 "nama" => $this->request->getPost('nama'),
                 "alamat" => $this->request->getPost('alamat')
             ]);
+
             echo 'Data berhasil diubah';
         } else {
             $message = $validation->getErrors();

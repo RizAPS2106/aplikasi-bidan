@@ -9,13 +9,13 @@ class Home extends BaseController
 {
     public function index()
     {
-        $cabang = new CabangModel();
         $layanan = new LayananModel();
+        $cabang = new CabangModel();
 
         $data = [
             'title' => 'Beranda',
-            'cabang' => $cabang->findAll(),
-            'layanan' => $layanan->findAll()
+            'layanan' => $layanan->findAll(),
+            'cabang' => $cabang->findAll()
         ];
 
         return view('home', $data);

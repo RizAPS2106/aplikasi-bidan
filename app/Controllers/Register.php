@@ -9,7 +9,9 @@ class Register extends BaseController
     public function index()
     {
         helper(['form']);
+
         $data = ['title' => 'Daftar'];
+
         echo view('login/register', $data);
     }
 
@@ -23,7 +25,7 @@ class Register extends BaseController
                     'rules' => 'required',
                     'errors' => ['required' => 'Harap isi kolom {field}']
                 ],
-                'telepon'  => [
+                'telepon' => [
                     'label' => 'Telepon',
                     'rules' => 'required|numeric|min_length[10]|is_unique[user.telepon]',
                     'errors' => [
@@ -33,7 +35,7 @@ class Register extends BaseController
                         'is_unique' => '{field} sudah terdaftar',
                     ]
                 ],
-                'email'  => [
+                'email' => [
                     'label' => 'Email',
                     'rules' => 'required|valid_email|is_unique[user.email]',
                     'errors' => [
@@ -42,7 +44,7 @@ class Register extends BaseController
                         'is_unique' => '{field} sudah terdaftar'
                     ]
                 ],
-                'password'  => [
+                'password' => [
                     'label' => 'Password',
                     'rules' => 'required|min_length[8]',
                     'errors' => [
@@ -50,7 +52,7 @@ class Register extends BaseController
                         'min_length' => 'Minimal 8 karakter'
                     ]
                 ],
-                'konfirmasi_password'  => [
+                'konfirmasi_password' => [
                     'label' => 'Konfirmasi password',
                     'rules' => 'required|min_length[8]|matches[password]',
                     'errors' => [
@@ -59,7 +61,7 @@ class Register extends BaseController
                         'matches' => '{field} salah',
                     ]
                 ],
-                'group_user'  => 'required'
+                'group_user' => 'required'
             ]
         );
 
@@ -75,9 +77,7 @@ class Register extends BaseController
                 "group_user" => $this->request->getPost('group_user'),
             ]);
 
-            $message = 'Registrasi berhasil';
-
-            echo $message;
+            echo 'Registrasi berhasil';
         } else {
             $message = $validation->getErrors();
 

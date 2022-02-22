@@ -91,7 +91,7 @@ class Order extends Migration
                 'null'           => true
             ],
             'tracking'             => [
-                'type'           => "ENUM('menuju_lokasi,progress,done')"
+                'type'           => "ENUM('menuju_lokasi','progress','done')"
             ]
         ]);
 

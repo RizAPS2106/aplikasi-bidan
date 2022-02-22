@@ -16,7 +16,19 @@
             </div>
             <div class="col-4 top-navbar-list text-end">
                 <?php if (session()->get('logged_in') == true) : ?>
-                    <a type="button" class="btn btn-sm btn-outline-success text-decoration-none" href="javascript:;" id="logout">Keluar</a>
+                    <li class="list-unstyled">
+                        <div class="dropdown">
+                            <a class="text-decoration-none link-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <?= session()->get('nama_user') ?> <i class="fas fa-user-circle"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item" href="<?= base_url('konsumen/profil'); ?>" target="_blank">Profil</a></li>
+                                <li><a class="dropdown-item" href="#">Riwayat Pesanan</a></li>
+                                <li><a class="dropdown-item link-danger" href="#" id="logout"> Keluar</a></li>
+                            </ul>
+                        </div>
+                    </li>
                 <?php else : ?>
                     <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#loginModal">
                         Masuk
@@ -50,6 +62,13 @@
                         Cabang
                     </a>
                 </li>
+                <?php if (session()->get('logged_in') == true) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Riwayat Pesanan
+                        </a>
+                    </li>
+                <?php } ?>
             </ul>
         </div>
     </div>

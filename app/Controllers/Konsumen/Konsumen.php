@@ -1,29 +1,12 @@
 <?php
 
-namespace App\Controllers\Bidan;
+namespace App\Controllers\Konsumen;
 
 use \App\Controllers\BaseController;
 use \App\Models\UserModel;
-use \App\Models\OrderModel;
 
-class Bidan extends BaseController
+class Konsumen extends BaseController
 {
-    public function index()
-    {
-        $order = new OrderModel();
-
-        $data = [
-            'title' => "Bidan",
-            'header' => "Dashboard",
-            'order' => $order->select('order.*,detail_order.*,user.*,user.id as id_user')
-                ->join('detail_order', 'detail_order.invoice = order.invoice', 'LEFT')
-                ->join('user', 'user.id = detail_order.id_user', 'LEFT')
-                ->findAll()
-        ];
-
-        echo view('bidan/bidan_dashboard', $data);
-    }
-
     public function profil()
     {
         $user = new UserModel();
@@ -31,23 +14,11 @@ class Bidan extends BaseController
         $id_user = session()->get('id_user');
 
         $data = [
-            'title' => "Profil Bidan",
-            'header' => "Profil",
+            'title' => "Profil",
             'profil' => $user->where('id', $id_user)->first()
         ];
 
-        echo view('bidan/bidan_profil', $data);
-    }
-
-    public function profil_preview_edit()
-    {
-        $user = new UserModel();
-
-        $id_user = session()->get('id_user');
-
-        $data = $user->where('id', $id_user)->first();
-
-        echo json_encode($data);
+        echo view('profil', $data);
     }
 
     public function profil_edit()
@@ -65,7 +36,7 @@ class Bidan extends BaseController
                     'rules' => 'required',
                     'errors' => ['required' => 'Harap isi kolom {field}']
                 ],
-                'telepon'  => [
+                'telepon' => [
                     'label' => 'nomor telepon',
                     'rules' => 'required|numeric|min_length[10]|is_unique[user.telepon,id,{id}]',
                     'errors' => [
@@ -75,7 +46,7 @@ class Bidan extends BaseController
                         'is_unique' => '{field} sudah terdaftar',
                     ]
                 ],
-                'email'  => [
+                'email' => [
                     'rules' => 'required|valid_email|is_unique[user.email,id,{id}]',
                     'errors' => [
                         'required' => 'Harap isi kolom {field}',
@@ -83,14 +54,14 @@ class Bidan extends BaseController
                         'is_unique' => '{field} sudah terdaftar'
                     ]
                 ],
-                'first_password'  => [
+                'first_password' => [
                     'label' => 'Password lama',
                     'rules' => 'min_length[8]|permit_empty',
                     'errors' => [
                         'min_length' => 'Kolom {field} Minimal 8 karakter'
                     ]
                 ],
-                'password'  => [
+                'password' => [
                     'rules' => 'min_length[8]|permit_empty',
                     'errors' => [
                         'min_length' => 'Kolom {field} Minimal 8 karakter'
@@ -145,6 +116,65 @@ class Bidan extends BaseController
                 }
                 echo $message;
             }
+        } else {
+            $message = $validation->getErrors();
+
+            foreach ($message as $msg) {
+                if ($msg == end($message)) {
+                    echo $msg . '.';
+                } else {
+                    echo $msg . ', ';
+                }
+            }
+        }
+    }
+
+    public function saldo()
+    {
+        $user = new UserModel();
+
+        $id_user = session()->get('id_user');
+
+        $data = [
+            'title' => "Profil",
+            'profil' => $user->where('id', $id_user)->first()
+        ];
+
+        echo view('saldo', $data);
+    }
+
+    public function saldo_add()
+    {
+        $id_user = session()->get('id_user');
+
+        $user = new UserModel();
+        $data = $user->where('id', $id_user)->first();
+
+        $validation =  \Config\Services::validation();
+        $validation->setRules(
+            [
+                'saldo' => [
+                    'label' => 'Tambah saldo',
+                    'rules' => 'required|greater_than[0]',
+                    'errors' => [
+                        'required' => 'Harap isi kolom {field}',
+                        'greater_than' => 'Harap isi kolom {field} dengan angka yang lebih besar dari 0'
+                    ]
+                ]
+            ]
+        );
+
+        $saldo_lama = $data['saldo'];
+        $saldo_baru = (int)$saldo_lama + (int)str_replace(".", "", $this->request->getPost('saldo'));
+
+        $isDataValid = $validation->withRequest($this->request)->run();
+
+        if ($isDataValid) {
+            $user->update($id_user, [
+                "saldo" => $saldo_baru
+            ]);
+
+            echo "Saldo berhasil ditambahkan";
         } else {
             $message = $validation->getErrors();
 

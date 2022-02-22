@@ -38,6 +38,14 @@ $routes->add('login/auth', 'Login::auth');
 $routes->get('register', 'Register::index');
 $routes->add('register/register', 'Register::register');
 
+$routes->group('konsumen', ['filter' => 'auth'], function ($routes) {
+	$routes->get('/', 'Konsumen\Konsumen::profil');
+	$routes->get('profil', 'Konsumen\Konsumen::profil');
+	$routes->add('profil/edit', 'Konsumen\Konsumen::profil_edit');
+	$routes->add('saldo', 'Konsumen\Konsumen::saldo');
+	$routes->add('saldo/add', 'Konsumen\Konsumen::saldo_add');
+});
+
 $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 	$routes->get('/', 'Admin\Admin::index');
 	$routes->get('profil', 'Admin\Admin::profil');
@@ -76,7 +84,10 @@ $routes->group('bidan', ['filter' => 'auth'], function ($routes) {
 });
 
 $routes->group('pesan', ['filter' => 'auth'], function ($routes) {
-	$routes->get('/', 'Order\Order::index');
+	$routes->get('/', 'Order::index');
+	$routes->add('create', 'Order::create');
+	$routes->add('create/addalamat', 'Order::alamat_add');
+	$routes->add('create/pickalamat', 'Order::alamat_pick');
 });
 /*
  * --------------------------------------------------------------------

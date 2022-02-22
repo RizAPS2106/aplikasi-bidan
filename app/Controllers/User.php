@@ -16,7 +16,7 @@ class User extends BaseController
                     'rules' => 'required',
                     'errors' => ['required' => 'Harap isi kolom {field}']
                 ],
-                'telepon'  => [
+                'telepon' => [
                     'label' => 'Nomor telepon',
                     'rules' => 'required|numeric|min_length[10]|is_unique[user.telepon]',
                     'errors' => [
@@ -26,7 +26,7 @@ class User extends BaseController
                         'is_unique' => '{field} sudah terdaftar',
                     ]
                 ],
-                'email'  => [
+                'email' => [
                     'label' => 'Email',
                     'rules' => 'required|valid_email|is_unique[user.email]',
                     'errors' => [
@@ -35,7 +35,7 @@ class User extends BaseController
                         'is_unique' => '{field} sudah terdaftar'
                     ]
                 ],
-                'password'  => [
+                'password' => [
                     'label' => 'Password',
                     'rules' => 'required|min_length[8]',
                     'errors' => [
@@ -43,7 +43,7 @@ class User extends BaseController
                         'min_length' => 'Minimal 8 karakter'
                     ]
                 ],
-                'konfirmasi_password'  => [
+                'konfirmasi_password' => [
                     'label' => 'Konfirmasi password',
                     'rules' => 'required|min_length[8]|matches[password]',
                     'errors' => [
@@ -77,6 +77,7 @@ class User extends BaseController
                     "group_user" => $this->request->getPost('group_user')
                 ]);
             }
+
             echo 'Data berhasil disimpan';
         } else {
             $message = $validation->getErrors();
@@ -104,22 +105,21 @@ class User extends BaseController
 
     public function edit()
     {
-        $id = $this->request->getPost('id');
+        $id_user = $this->request->getPost('id');
 
         $user = new UserModel();
-        $data = $user->where('id', $id)->first();
+        $data = $user->where('id', $id_user)->first();
 
         $validation =  \Config\Services::validation();
         $validation->setRules(
             [
                 'id' => 'required',
                 'nama' => [
-                    'label' => 'Nama',
                     'rules' => 'required',
                     'errors' => ['required' => 'Harap isi kolom {field}']
                 ],
-                'telepon'  => [
-                    'label' => 'Nomor telepon',
+                'telepon' => [
+                    'label' => 'nomor telepon',
                     'rules' => 'required|numeric|min_length[10]|is_unique[user.telepon,id,{id}]',
                     'errors' => [
                         'required' => 'Harap isi kolom {field}',
@@ -128,8 +128,7 @@ class User extends BaseController
                         'is_unique' => '{field} sudah terdaftar',
                     ]
                 ],
-                'email'  => [
-                    'label' => 'Email',
+                'email' => [
                     'rules' => 'required|valid_email|is_unique[user.email,id,{id}]',
                     'errors' => [
                         'required' => 'Harap isi kolom {field}',
@@ -137,22 +136,21 @@ class User extends BaseController
                         'is_unique' => '{field} sudah terdaftar'
                     ]
                 ],
-                'password_lama'  => [
+                'first_password' => [
                     'label' => 'Password lama',
                     'rules' => 'min_length[8]|permit_empty',
                     'errors' => [
                         'min_length' => 'Kolom {field} Minimal 8 karakter'
                     ]
                 ],
-                'password'  => [
-                    'label' => 'Password',
+                'password' => [
                     'rules' => 'min_length[8]|permit_empty',
                     'errors' => [
                         'min_length' => 'Kolom {field} Minimal 8 karakter'
                     ]
                 ],
-                'konfirmasi_password'  => [
-                    'label' => 'Konfirmasi password',
+                'password_confirm'  => [
+                    'label' => 'konfirmasi password',
                     'rules' => 'min_length[8]|matches[password]|permit_empty',
                     'errors' => [
                         'min_length' => 'Kolom {field} minimal 8 karakter',
@@ -164,32 +162,24 @@ class User extends BaseController
         $isDataValid = $validation->withRequest($this->request)->run();
 
         if ($isDataValid) {
-            if (
-                empty($this->request->getPost('password')) &&
-                empty($this->request->getPost('password_lama')) &&
-                empty($this->request->getPost('konfirmasi_password'))
-            ) {
-                $user->update($id, [
-                    "id_cabang" => $this->request->getPost('id_cabang'),
+            $first_password_data = $data['password'];
+            $first_password = $this->request->getPost('first_password');
+            $password = $this->request->getPost('password');
+            $password_confirm = $this->request->getPost('password_confirm');
+
+            if (empty($password) && empty($first_password) && empty($password_confirm)) {
+                $user->update($id_user, [
                     "nama" => $this->request->getPost('nama'),
                     "telepon" => $this->request->getPost('telepon'),
                     "email" => $this->request->getPost('email')
                 ]);
 
-                $message = 'Data berhasil diubah';
-
-                echo $message;
+                echo 'Data berhasil diubah';
             } else {
-                $password_lama = $data['password'];
-                $password_lama_field = md5($this->request->getPost('password_lama'));
-                $password = $this->request->getPost('password');
-                $konfirmasi_password = $this->request->getPost('konfirmasi_password');
-
-                if ($password_lama == $password_lama_field) {
-                    if ($password != '' || $konfirmasi_password != '') {
-                        if ($password == $konfirmasi_password) {
-                            $user->update($id, [
-                                "id_cabang" => $this->request->getPost('id_cabang'),
+                if (md5($first_password) == $first_password_data) {
+                    if ($password != '' || $password_confirm != '') {
+                        if ($password == $password_confirm) {
+                            $user->update($id_user, [
                                 "nama" => $this->request->getPost('nama'),
                                 "telepon" => $this->request->getPost('telepon'),
                                 "email" => $this->request->getPost('email'),
@@ -198,7 +188,7 @@ class User extends BaseController
 
                             $message = 'Data berhasil diubah';
                         } else {
-                            $message = 'Password dan Konfirmasi password tidak sesuai';
+                            $message = 'Password dan konfirmasi password tidak sesuai';
                         }
                     } else {
                         $message = 'Jika ingin mengubah password silahkan isi semua kolom password, jika tidak kosongkan saja';
@@ -206,16 +196,16 @@ class User extends BaseController
                 } else {
                     $message = 'Password lama tidak sesuai';
                 }
-                echo $message;
+                echo $first_password;
             }
         } else {
             $message = $validation->getErrors();
 
             foreach ($message as $msg) {
                 if ($msg == end($message)) {
-                    echo ucfirst($msg . '.');
+                    echo $msg . '.';
                 } else {
-                    echo ucfirst($msg . ', ');
+                    echo $msg . ', ';
                 }
             }
         }

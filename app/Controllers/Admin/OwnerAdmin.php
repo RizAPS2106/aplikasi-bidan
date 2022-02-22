@@ -13,7 +13,7 @@ class OwnerAdmin extends BaseController
         $user = new UserModel();
         $cabang = new CabangModel();
         $data = [
-            'title' => "Admin Owner",
+            'title' => "Administrasi Owner",
             'header' => "Data Owner",
             'owner' => $user->where('group_user', 1)->findAll(),
             'cabang' => $cabang->findAll()
@@ -27,10 +27,11 @@ class OwnerAdmin extends BaseController
         $user = new UserModel();
 
         $data = [
-            'title' => "Admin Owner",
-            'header' => "Detail Owner",
+            'title' => "Administrasi Owner",
+            'header' => "Detail Data Owner",
             'owner' =>  $user->select('user.*,cabang.nama as nama_cabang')->join('cabang', 'cabang.id = user.id_cabang', 'LEFT')->where('user.id', $id)->first()
         ];
+
         echo view('admin/owner/admin_detail_owner', $data);
     }
 }

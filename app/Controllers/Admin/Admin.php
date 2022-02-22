@@ -26,12 +26,12 @@ class Admin extends BaseController
     {
         $user = new UserModel();
 
-        $id = session()->get('id');
+        $id_user = session()->get('id_user');
 
         $data = [
             'title' => "Profil Administrator",
             'header' => "Profil",
-            'profil' => $user->where('id', $id)->first()
+            'profil' => $user->where('id', $id_user)->first()
         ];
 
         echo view('admin/admin_profil', $data);
@@ -41,19 +41,19 @@ class Admin extends BaseController
     {
         $user = new UserModel();
 
-        $id = session()->get('id');
+        $id_user = session()->get('id_user');
 
-        $data = $user->where('id', $id)->first();
+        $data = $user->where('id', $id_user)->first();
 
         echo json_encode($data);
     }
 
     public function profil_edit()
     {
-        $id = $this->request->getPost('id');
+        $id_user = $this->request->getPost('id');
 
         $user = new UserModel();
-        $data['user'] = $user->where('id', $id)->first();
+        $data = $user->where('id', $id_user)->first();
 
         $validation =  \Config\Services::validation();
         $validation->setRules(
@@ -104,56 +104,44 @@ class Admin extends BaseController
                 ]
             ]
         );
-
         $isDataValid = $validation->withRequest($this->request)->run();
 
         if ($isDataValid) {
-            if (empty($this->request->getPost('password')) && empty($this->request->getPost('first_password')) && empty($this->request->getPost('password_confirm'))) {
-                $user->update($id, [
+            $first_password_data = $data['password'];
+            $first_password = $this->request->getPost('first_password');
+            $password = $this->request->getPost('password');
+            $password_confirm = $this->request->getPost('password_confirm');
+
+            if (empty($password) && empty($first_password) && empty($password_confirm)) {
+                $user->update($id_user, [
                     "nama" => $this->request->getPost('nama'),
                     "telepon" => $this->request->getPost('telepon'),
                     "email" => $this->request->getPost('email')
                 ]);
 
-                $message = 'Data berhasil diubah';
-
-                echo $message;
+                echo 'Data berhasil diubah';
             } else {
-                $db = \Config\Database::connect();
-                $builder = $db->table('user');
-                $builder->select('password');
-                $builder->where('id', $id);
-                $builder->limit(1);
-                $query = $builder->get();
-                $result = $query->getResultArray();
-                foreach ($result as $rst) {
-                    $first_password = $rst['password'];
-                    $first_password_field = md5($this->request->getPost('first_password'));
-                    $password = $this->request->getPost('password');
-                    $password_confirm = $this->request->getPost('password_confirm');
+                if (md5($first_password) == $first_password_data) {
+                    if ($password != '' || $password_confirm != '') {
+                        if ($password == $password_confirm) {
+                            $user->update($id_user, [
+                                "nama" => $this->request->getPost('nama'),
+                                "telepon" => $this->request->getPost('telepon'),
+                                "email" => $this->request->getPost('email'),
+                                "password" => md5($this->request->getPost('password'))
+                            ]);
 
-                    if ($first_password == $first_password_field) {
-                        if ($password != '' || $password_confirm != '') {
-                            if ($password == $password_confirm) {
-                                $user->update($id, [
-                                    "nama" => $this->request->getPost('nama'),
-                                    "telepon" => $this->request->getPost('telepon'),
-                                    "email" => $this->request->getPost('email'),
-                                    "password" => md5($this->request->getPost('password'))
-                                ]);
-
-                                $message = 'Data berhasil diubah';
-                            } else {
-                                $message = 'Password dan konfirmasi password tidak sesuai';
-                            }
+                            $message = 'Data berhasil diubah';
                         } else {
-                            $message = 'Jika ingin mengubah password silahkan isi semua kolom password, jika tidak kosongkan saja';
+                            $message = 'Password dan konfirmasi password tidak sesuai';
                         }
                     } else {
-                        $message = 'Password lama tidak sesuai';
+                        $message = 'Jika ingin mengubah password silahkan isi semua kolom password, jika tidak kosongkan saja';
                     }
-                    echo $message;
+                } else {
+                    $message = 'Password lama tidak sesuai';
                 }
+                echo $message;
             }
         } else {
             $message = $validation->getErrors();

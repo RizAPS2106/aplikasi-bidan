@@ -13,7 +13,7 @@ class BidanAdmin extends BaseController
         $user = new UserModel();
         $cabang = new CabangModel();
         $data = [
-            'title' => "Admin Bidan",
+            'title' => "Administrasi Bidan",
             'header' => "Data Bidan",
             'bidan' => $user->where('group_user', 3)->findAll(),
             'cabang' => $cabang->findAll()
@@ -27,8 +27,8 @@ class BidanAdmin extends BaseController
         $user = new UserModel();
 
         $data = [
-            'title' => "Admin Bidan",
-            'header' => "Detail Bidan",
+            'title' => "Administrasi Bidan",
+            'header' => "Detail Data Bidan",
             'bidan' => $user->select('user.*,cabang.nama as nama_cabang')->join('cabang', 'cabang.id = user.id_cabang', 'LEFT')->where('user.id', $id)->first()
         ];
         echo view('admin/bidan/admin_detail_bidan', $data);

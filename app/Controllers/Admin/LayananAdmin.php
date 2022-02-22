@@ -11,8 +11,8 @@ class LayananAdmin extends BaseController
     {
         $layanan = new LayananModel();
         $data = [
-            'title' => "Admin Konsumen",
-            'header' => "Data Konsumen",
+            'title' => "Administrasi Layanan",
+            'header' => "Data Layanan",
             'layanan' => $layanan->findAll()
         ];
 

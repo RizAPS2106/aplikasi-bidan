@@ -16,7 +16,7 @@ class Layanan extends BaseController
                     'rules' => 'required',
                     'errors' => ['required' => 'Harap isi kolom {field}']
                 ],
-                'harga'  => [
+                'harga' => [
                     'label' => 'Harga',
                     'rules' => 'required|numeric',
                     'errors' => [
@@ -93,7 +93,6 @@ class Layanan extends BaseController
 
         if ($isDataValid) {
             $layanan->update($id, [
-                "id_cabang" => $this->request->getPost('id_cabang'),
                 "nama_layanan" => $this->request->getPost('nama_layanan'),
                 "harga" => $harga,
             ]);

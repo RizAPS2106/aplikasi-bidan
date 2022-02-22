@@ -29,3 +29,5 @@
     <link rel="stylesheet" href="/datetimepicker/css/bootstrap-datetimepicker.css" />
 
 </head>
+
+<?php date_default_timezone_set('Asia/Jakarta'); ?>

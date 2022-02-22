@@ -11,7 +11,7 @@ class KonsumenAdmin extends BaseController
     {
         $user = new UserModel();
         $data = [
-            'title' => "Admin Konsumen",
+            'title' => "Administrasi Konsumen",
             'header' => "Data Konsumen",
             'konsumen' => $user->where('group_user', 2)->findAll()
         ];
@@ -24,8 +24,8 @@ class KonsumenAdmin extends BaseController
         $user = new UserModel();
 
         $data = [
-            'title' => "Admin Konsumen",
-            'header' => "Detail Konsumen",
+            'title' => "Administrasi Konsumen",
+            'header' => "Detail Data Konsumen",
             'konsumen' => $user->where('id', $id)->first()
         ];
         echo view('admin/konsumen/admin_detail_konsumen', $data);
