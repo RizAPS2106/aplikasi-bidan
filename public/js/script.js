@@ -12,12 +12,12 @@ $(document).ready(function () {
     $("#radio2").prop('checked',false);
     
     $("#layanan").val('').change();
-  
+    $('#id_alamat').val($('#id_alamat option:first-child').val()).trigger('change');
+
     $('#total_harga').val('');
 
-    $('#password_lamas').prop('disabled',true);
-    $('#passwords').prop('disabled',true);
-    $('#konfirmasi_passwords').prop('disabled',true);
+    $('.profil_field').prop('readonly',true);
+    $('.profil_password_field').prop('disabled',true);
   }
 
   // Format Rupiah
@@ -119,7 +119,7 @@ $(document).ready(function () {
   $('#id_alamat').on('select2:select', function (e) {
     var data_layanan = {"id_alamat" : $('#id_alamat').val()};
     $.ajax({
-      url: base_url+'/pesan/create/pickalamat',
+      url: base_url+'/konsumen/alamat/pick',
       type: "POST",
       data: data_layanan,
       error: function (XMLHttpRequest, textStatus, errorThrown) {

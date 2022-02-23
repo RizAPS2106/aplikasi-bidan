@@ -3,17 +3,38 @@
 <?= $this->section('content') ?>
 
 <center>
-    <div class="card" style="width: auto;height :auto">
+    <div class="card">
         <div class="card-body text-start">
             <div class="row">
                 <div class="col-auto">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Borobudur_Temple.jpg/320px-Borobudur_Temple.jpg" style="width: 30rem;">
+                    <img src="/img/notfound.png" width="300" height="300">
                 </div>
-                <div class=" col-auto">
-                    <h3 class="h3"><?= $bidan['nama'] ?></h3>
-                    <div>Email : <b><?= $bidan['email'] ?></b></div>
-                    <div>Telepon : <b><?= $bidan['telepon'] ?></b></div>
-                    <div>Cabang : <b><?= $bidan['nama_cabang'] ?></b></div>
+                <div class="col mt-auto mb-auto ">
+                    <h3 class="h3 text-success"><b><?= ucfirst($bidan['nama']) ?></b></h3>
+
+                    <table class="table mt-3">
+                        <tr>
+                            <th>Email</th>
+                            <td> : </td>
+                            <td><?= $bidan['email'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>Telepon</th>
+                            <td> : </td>
+                            <td><?= $bidan['telepon'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>Cabang</th>
+                            <td> : </td>
+                            <td>
+                                <?php if ($bidan['nama_cabang'] != null) {
+                                    echo $bidan['nama_cabang'];
+                                } else {
+                                    echo '-';
+                                } ?>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

@@ -18,7 +18,7 @@ function rupiah_norp($angka)
 
     <div class="row">
         <div class="col-4">
-            <div class="card border-success" style="height:35rem;">
+            <div class="card border-success" style="height:33rem;">
                 <div class="card-body">
                     <center>
                         <img src="/img/notfound.png" width="200" height="200" alt="...">
@@ -27,8 +27,11 @@ function rupiah_norp($angka)
                         <a href="<?= base_url('konsumen'); ?>" class="text-decoration-none">
                             <li class="list-group-item link-success" aria-current="true">Profil</li>
                         </a>
-                        <a href="<?= base_url('konsumen/saldo'); ?>" class="text-decoration-none">
-                            <li class="list-group-item bg-success text-light">Saldo</li>
+
+                        <li class="list-group-item bg-success text-light">Saldo</li>
+
+                        <a href="<?= base_url('konsumen/alamat'); ?>" class="text-decoration-none link-success">
+                            <li class="list-group-item">Alamat</li>
                         </a>
                         <a href="#" class="text-decoration-none link-success">
                             <li class="list-group-item">Riwayat Pemesanan</li>

@@ -17,7 +17,7 @@ class User extends BaseController
                     'errors' => ['required' => 'Harap isi kolom {field}']
                 ],
                 'telepon' => [
-                    'label' => 'Nomor telepon',
+                    'label' => 'Telepon',
                     'rules' => 'required|numeric|min_length[10]|is_unique[user.telepon]',
                     'errors' => [
                         'required' => 'Harap isi kolom {field}',

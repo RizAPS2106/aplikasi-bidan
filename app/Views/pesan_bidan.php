@@ -74,7 +74,7 @@ if ($invoice['max_invoice'] == null) {
                         <div class="col">
                             <select class="select2 form-control" name="id_alamat" id="id_alamat">
                                 <?php if ($alamat != null) { ?>
-                                    <option value='<?= $alamat['id']; ?>'><?= ucfirst($alamat['alamat']) ?></option>
+                                    <option value='<?= $alamat['id']; ?>' selected><?= ucfirst($alamat['alamat']) ?></option>
                                 <?php } ?>
                                 <?php foreach ($alamat_disable as $alamats) : ?>
                                     <option value='<?= $alamats['id']; ?>'><?= ucfirst($alamats['alamat']) ?></option>
@@ -109,7 +109,7 @@ if ($invoice['max_invoice'] == null) {
                 <h5 class="modal-title" id="alamatModalLabel">Tambah Alamat</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" action="<?= base_url('pesan/create/addalamat'); ?>">
+            <form method="POST" id="addalamat_form">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="alamat" class="form-label">Alamat Lengkap</label>
@@ -117,13 +117,12 @@ if ($invoice['max_invoice'] == null) {
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" value="<?= base_url('pesan/create/addalamat'); ?>" id="addalamat_url">
+                    <input type="hidden" value="<?= base_url('konsumen/alamat/add'); ?>" id="addalamat_url">
                     <input type="submit" class="btn btn-success" value="Tambahkan Alamat" id="addalamat">
                 </div>
             </form>
         </div>
     </div>
 </div>
-
 
 <?= $this->include('layout/footer'); ?>

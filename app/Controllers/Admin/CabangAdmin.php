@@ -12,6 +12,7 @@ class CabangAdmin extends BaseController
     {
         $cabang = new CabangModel();
         $user = new UserModel();
+
         $data = [
             'title' => "Administrasi Cabang",
             'header' => "Data Cabang",
@@ -25,6 +26,7 @@ class CabangAdmin extends BaseController
     public function preview($id)
     {
         $cabang = new CabangModel();
+
         $data = [
             'title' => "Administrasi Cabang",
             'header' => "Detail Data Cabang",

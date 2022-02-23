@@ -99,7 +99,9 @@ function rupiah_norp($angka)
                         </div>
                         <div class="card-footer text-muted">
                             <?php if (session()->get('logged_in') == true) { ?>
-                                <a href="<?= base_url('pesan'); ?>" class="btn btn-success w-100 my-2 rounded-pill" target="_blank">Pesan</a>
+                                <?php if (session()->get('group_user') == 2) { ?>
+                                    <a href="<?= base_url('pesan'); ?>" class="btn btn-success w-100 my-2 rounded-pill" target="_blank">Pesan</a>
+                                <?php } ?>
                             <?php } else { ?>
                                 <button type="button" class="btn btn-sm btn-success w-100 my-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#loginModal">
                                     Pesan

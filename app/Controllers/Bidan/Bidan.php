@@ -4,20 +4,26 @@ namespace App\Controllers\Bidan;
 
 use \App\Controllers\BaseController;
 use \App\Models\UserModel;
+use \App\Models\CabangModel;
 use \App\Models\OrderModel;
+use \App\Models\DetailOrderModel;
 
 class Bidan extends BaseController
 {
     public function index()
     {
         $order = new OrderModel();
+        $detail_order = new DetailOrderModel();
 
         $data = [
             'title' => "Bidan",
             'header' => "Dashboard",
-            'order' => $order->select('order.*,detail_order.*,user.*,user.id as id_user')
+            'order' => $order->select('order.*,detail_order.*,user.*,user.id as id_user,layanan.*,GROUP_CONCAT(layanan.nama_layanan) as list_layanan')
                 ->join('detail_order', 'detail_order.invoice = order.invoice', 'LEFT')
                 ->join('user', 'user.id = detail_order.id_user', 'LEFT')
+                ->join('layanan', 'layanan.id = detail_order.id_layanan', 'LEFT')
+                ->join('master_alamat', 'master_alamat.id = detail_order.id_alamat', 'LEFT')
+                ->groupBy('detail_order.invoice')
                 ->findAll()
         ];
 
@@ -27,13 +33,15 @@ class Bidan extends BaseController
     public function profil()
     {
         $user = new UserModel();
+        $cabang = new CabangModel();
 
         $id_user = session()->get('id_user');
 
         $data = [
             'title' => "Profil Bidan",
             'header' => "Profil",
-            'profil' => $user->where('id', $id_user)->first()
+            'profil' => $user->select('user.*,cabang.nama as nama_cabang')->join('cabang', 'cabang.id = user.id_cabang', 'LEFT')->where('user.id', $id_user)->first(),
+            'cabang' => $cabang->findAll(),
         ];
 
         echo view('bidan/bidan_profil', $data);

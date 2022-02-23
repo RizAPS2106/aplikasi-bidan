@@ -44,6 +44,9 @@ $routes->group('konsumen', ['filter' => 'auth'], function ($routes) {
 	$routes->add('profil/edit', 'Konsumen\Konsumen::profil_edit');
 	$routes->add('saldo', 'Konsumen\Konsumen::saldo');
 	$routes->add('saldo/add', 'Konsumen\Konsumen::saldo_add');
+	$routes->add('alamat', 'Konsumen\Konsumen::alamat');
+	$routes->add('alamat/add', 'Konsumen\Konsumen::alamat_add');
+	$routes->add('alamat/pick', 'Konsumen\Konsumen::alamat_pick');
 });
 
 $routes->group('admin', ['filter' => 'auth'], function ($routes) {

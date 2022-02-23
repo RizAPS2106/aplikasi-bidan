@@ -3,17 +3,32 @@
 <?= $this->section('content') ?>
 
 <center>
-    <div class="card" style="width: auto;height :auto">
+    <div class="card">
         <div class="card-body text-start">
             <div class="row">
                 <div class="col-auto">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Borobudur_Temple.jpg/320px-Borobudur_Temple.jpg" style="width: 30rem;">
+                    <img src="/img/notfound.png" width="300" height="300">
                 </div>
-                <div class=" col-auto">
-                    <h3 class="h3"><?= $cabang['nama'] ?></h3>
-                    <div>Pemilik : <b><?= $cabang['nama_user'] ?></b></div>
-                    <div>Kode Cabang : <b><?= $cabang['kode_cabang'] ?></b></div>
-                    <div>Alamat : <b><?= $cabang['alamat'] ?></b></div>
+                <div class="col mt-auto mb-auto ">
+                    <h3 class="h3 text-success"><b><?= ucfirst($cabang['nama']) ?></b></h3>
+
+                    <table class="table mt-3">
+                        <tr>
+                            <th>Owner</th>
+                            <td> : </td>
+                            <td><?= ucfirst($cabang['nama_user']) ?></td>
+                        </tr>
+                        <tr>
+                            <th>Kode Cabang</th>
+                            <td> : </td>
+                            <td><?= $cabang['kode_cabang'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>Alamat</th>
+                            <td> : </td>
+                            <td><?= ucfirst($cabang['alamat']) ?></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

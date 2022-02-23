@@ -1,18 +1,62 @@
+<?php
+function rupiah($angka)
+{
+    $hasil_rupiah = "Rp. " . number_format($angka, 2, ',', '.');
+    return $hasil_rupiah;
+}
+
+function rupiah_norp($angka)
+{
+    $hasil_rupiah = number_format($angka, 2, ',', '.');
+    return $hasil_rupiah;
+}
+?>
+
 <?= $this->extend('admin/layout/admin_layout') ?>
 
 <?= $this->section('content') ?>
 
 <center>
-    <div class="card" style="width: auto;height :auto">
+    <div class="card">
         <div class="card-body text-start">
             <div class="row">
                 <div class="col-auto">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Borobudur_Temple.jpg/320px-Borobudur_Temple.jpg" style="width: 30rem;">
+                    <img src="/img/notfound.png" width="300" height="300">
                 </div>
-                <div class=" col-auto">
-                    <h3 class="h3"><?= $konsumen['nama'] ?></h3>
-                    <div>Email <b><?= $konsumen['email'] ?></b></div>
-                    <div>Telepon <b><?= $konsumen['telepon'] ?></b></div>
+                <div class="col mt-auto mb-auto ">
+                    <h3 class="h3 text-success"><b><?= ucfirst($konsumen['nama']) ?></b></h3>
+
+                    <table class="table mt-3">
+                        <tr>
+                            <th>Email</th>
+                            <td> : </td>
+                            <td><?= $konsumen['email'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>Telepon</th>
+                            <td> : </td>
+                            <td><?= $konsumen['telepon'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>Saldo</th>
+                            <td> : </td>
+                            <td><?= rupiah($konsumen['saldo']) ?></td>
+                        </tr>
+                        <tr>
+                            <th>Alamat</th>
+                            <td> : </td>
+                            <td>
+                                <?php if ($alamat != null) { ?>
+                                    <text><u><?= $alamat['alamat'] ?></u> / </text>
+                                <?php } else {
+                                    echo '-';
+                                } ?>
+                                <?php foreach ($alamat_disable as $alamats) :
+                                    echo $alamats['alamat'] . ' / ';
+                                endforeach ?>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

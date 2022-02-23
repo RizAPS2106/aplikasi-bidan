@@ -13,6 +13,7 @@
       <th>Nama</th>
       <th>Alamat</th>
       <th>Telepon</th>
+      <th>Email</th>
       <th>
         <center>Aksi</center>
       </th>
@@ -28,6 +29,13 @@
         <td><?= $no; ?></td>
         <td>
           <?= $konsumens['nama'] ?><br>
+        </td>
+        <td>
+          <?php if ($konsumens['alamat'] != '') {
+            echo $konsumens['alamat'];
+          } else {
+            echo '-';
+          } ?>
         </td>
         <td>
           <?= $konsumens['telepon'] ?><br>
@@ -164,7 +172,7 @@
         </div>
         <div class="modal-footer">
           <input type="hidden" value="<?= base_url('admin/user/edit/'); ?>" id="edit_url">
-          <input type="submit" class="btn btn-success" value="Simpan" id="edit">
+          <input type="submit" class="btn btn-success" value="Ubah" id="edit">
         </div>
       </form>
     </div>

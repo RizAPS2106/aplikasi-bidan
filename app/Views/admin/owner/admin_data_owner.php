@@ -107,7 +107,7 @@
                 <div class="modal-footer">
                     <input type="hidden" name="group_user" value="1">
                     <input type="hidden" value="<?= base_url('admin/user/create/'); ?>" id="create_url">
-                    <input type="submit" class="btn btn-success" value="Simpan" id="create">
+                    <input type="submit" class="btn btn-success" value="Ubah" id="create">
                 </div>
             </form>
         </div>
@@ -182,7 +182,7 @@
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" value="<?= base_url('admin/user/edit/'); ?>" id="edit_url">
-                    <input type="submit" class="btn btn-success" value="Simpan" id="edit">
+                    <input type="submit" class="btn btn-success" value="Ubah" id="edit">
                 </div>
             </form>
         </div>

@@ -10,6 +10,7 @@ class LayananAdmin extends BaseController
     public function index()
     {
         $layanan = new LayananModel();
+
         $data = [
             'title' => "Administrasi Layanan",
             'header' => "Data Layanan",

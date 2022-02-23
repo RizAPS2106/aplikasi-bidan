@@ -14,7 +14,7 @@ function rupiah_norp($angka)
 
 <?= $this->include('layout/header'); ?>
 
-<div class="container my-5">
+<div class="container mt-5">
 
     <div class="row">
         <div class="col-4">
@@ -24,9 +24,14 @@ function rupiah_norp($angka)
                         <img src="/img/notfound.png" width="200" height="200" alt="...">
                     </center>
                     <ul class="list-group">
+
                         <li class="list-group-item bg-success text-light" aria-current="true">Profil</li>
+
                         <a href="<?= base_url('konsumen/saldo'); ?>" class="text-decoration-none link-success">
                             <li class="list-group-item">Saldo</li>
+                        </a>
+                        <a href="<?= base_url('konsumen/alamat'); ?>" class="text-decoration-none link-success">
+                            <li class="list-group-item">Alamat</li>
                         </a>
                         <a href="#" class="text-decoration-none link-success">
                             <li class="list-group-item">Riwayat Pemesanan</li>
@@ -38,6 +43,7 @@ function rupiah_norp($angka)
         <div class="col-8">
             <div class="card border-success h-100">
                 <div class="card-body">
+                    <h4 class="h4 text-success">Profil</h4>
                     <form method="post" id="edit_form">
                         <?= csrf_field(); ?>
                         <div class="modal-body">

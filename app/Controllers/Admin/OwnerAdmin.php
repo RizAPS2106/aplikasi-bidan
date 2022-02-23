@@ -12,6 +12,7 @@ class OwnerAdmin extends BaseController
     {
         $user = new UserModel();
         $cabang = new CabangModel();
+
         $data = [
             'title' => "Administrasi Owner",
             'header' => "Data Owner",

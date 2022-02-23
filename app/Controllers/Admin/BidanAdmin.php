@@ -12,6 +12,7 @@ class BidanAdmin extends BaseController
     {
         $user = new UserModel();
         $cabang = new CabangModel();
+
         $data = [
             'title' => "Administrasi Bidan",
             'header' => "Data Bidan",
@@ -31,6 +32,7 @@ class BidanAdmin extends BaseController
             'header' => "Detail Data Bidan",
             'bidan' => $user->select('user.*,cabang.nama as nama_cabang')->join('cabang', 'cabang.id = user.id_cabang', 'LEFT')->where('user.id', $id)->first()
         ];
+
         echo view('admin/bidan/admin_detail_bidan', $data);
     }
 }
