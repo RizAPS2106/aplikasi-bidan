@@ -1,5 +1,13 @@
 $(document).ready(function () {
 
+  setInterval(function() {
+    moment.locale('id');
+    var momentNow = moment();
+    console.log(momentNow);
+    $('#date-part').html(momentNow.format('dddd') + ' , ' + momentNow.format('DD MMMM YYYY') + ' ');
+    $('#time-part').html(momentNow.format('hh:mm:ss A'));
+  }, 100);
+
   // Ketika Refresh
   if (window.performance) {
     console.info("window.performance works fine on this browser");
@@ -276,6 +284,18 @@ $(document).ready(function () {
             $("#create").val("Daftar");
           }
 
+          swal({
+            title: "Periksa Form",
+            text: data,
+            icon: "warning",
+            buttons: {
+              confirm: {
+                text: "Oke",
+                className: "sweet-button",
+              },
+            },
+          });
+
           if ($("#create_url").val() == base_url + "/admin/cabang/create") {
 
             if (data.includes("Kode cabang")) { $("#kode_cabang").addClass("is-invalid"); }
@@ -306,18 +326,6 @@ $(document).ready(function () {
             else { $("#konfirmasi_password").remmoveClass("is-invalid"); $("#password_invalid").removeClass("is-invalid"); }
           
           }
-
-          swal({
-            title: "Periksa Form",
-            text: data,
-            icon: "warning",
-            buttons: {
-              confirm: {
-                text: "Oke",
-                className: "sweet-button",
-              },
-            },
-          });
         }
       },
       error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -428,6 +436,18 @@ $(document).ready(function () {
             $("#edit").val("Tambahkan");
           }
           
+          swal({
+            title: "Periksa Form",
+            text: data,
+            icon: "warning",
+            buttons: {
+              confirm: {
+                text: "Oke",
+                className: "sweet-button",
+              },
+            },
+          });
+
           if ($("#edit_url").val() == base_url + "/admin/cabang/edit") {
 
             if (data.includes("Kode cabang")) { $("#kode_cabangs").addClass("is-invalid"); }
@@ -465,18 +485,6 @@ $(document).ready(function () {
             else { $("#konfirmasi_passwords").remmoveClass("is-invalid"); $("#password_invalids").removeClass("is-invalid"); }
 
           }
-
-          swal({
-            title: "Periksa Form",
-            text: data,
-            icon: "warning",
-            buttons: {
-              confirm: {
-                text: "Oke",
-                className: "sweet-button",
-              },
-            },
-          });
         } else {
           $("#updateModal").modal("hide");
           $("#saldoModal").modal("hide");

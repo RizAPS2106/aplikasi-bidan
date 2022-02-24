@@ -24,6 +24,15 @@ class Bidan extends BaseController
                 ->join('layanan', 'layanan.id = detail_order.id_layanan', 'LEFT')
                 ->join('master_alamat', 'master_alamat.id = detail_order.id_alamat', 'LEFT')
                 ->groupBy('detail_order.invoice')
+                ->where('detail_order.tracking !=', 'done')
+                ->findAll(),
+            'order_done' => $order->select('order.*,detail_order.*,user.*,user.id as id_user,layanan.*,GROUP_CONCAT(layanan.nama_layanan) as list_layanan')
+                ->join('detail_order', 'detail_order.invoice = order.invoice', 'LEFT')
+                ->join('user', 'user.id = detail_order.id_user', 'LEFT')
+                ->join('layanan', 'layanan.id = detail_order.id_layanan', 'LEFT')
+                ->join('master_alamat', 'master_alamat.id = detail_order.id_alamat', 'LEFT')
+                ->groupBy('detail_order.invoice')
+                ->where('detail_order.tracking', 'done')
                 ->findAll()
         ];
 

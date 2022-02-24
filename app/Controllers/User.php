@@ -40,7 +40,7 @@ class User extends BaseController
                     'rules' => 'required|min_length[8]',
                     'errors' => [
                         'required' => 'Harap isi kolom {field}',
-                        'min_length' => 'Minimal 8 karakter'
+                        'min_length' => 'Harap isi kolom {field} minimal 8 karakter'
                     ]
                 ],
                 'konfirmasi_password' => [
@@ -48,7 +48,7 @@ class User extends BaseController
                     'rules' => 'required|min_length[8]|matches[password]',
                     'errors' => [
                         'required' => 'Harap isi kolom {field}',
-                        'min_length' => 'Minimal 8 karakter',
+                        'min_length' => 'Harap isi kolom {field} minimal 8 karakter',
                         'matches' => '{field} salah',
                     ]
                 ],

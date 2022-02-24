@@ -24,54 +24,58 @@ function rupiah_norp($angka)
 </div>
 
 <div class="row">
-    <?php foreach ($order as $orders) : ?>
-        <div class="col-12 mb-3">
-            <div class="card border-success">
-                <div class="card-body">
-                    <h5 class="card-title text-success"><b><?= ucfirst($orders['nama']) ?></b></h5>
-                    <div class="row">
-                        <div class="col">
-                            <table class="table">
-                                <tr>
-                                    <td>Layanan</td>
-                                    <td> : </td>
-                                    <td><?= $orders['list_layanan']; ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Total Harga</td>
-                                    <td> : </td>
-                                    <td><?= rupiah($orders['total_harga']); ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Jadwal</td>
-                                    <td> : </td>
-                                    <td><?= $orders['jadwal']; ?></td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="col">
-                            <table class="table">
-                                <tr>
-                                    <td>Pelayanan</td>
-                                    <td> : </td>
-                                    <td><?= $orders['layanan_detail']; ?></td>
-                                </tr>
-                                <?php if ($orders['layanan_detail'] == 'homecare') : ?>
+    <?php if ($order != null) { ?>
+        <?php foreach ($order as $orders) : ?>
+            <div class="col-12 mb-3">
+                <div class="card border-success">
+                    <div class="card-body">
+                        <h5 class="card-title text-success"><b><?= ucfirst($orders['nama']) ?></b></h5>
+                        <div class="row">
+                            <div class="col">
+                                <table class="table">
                                     <tr>
-                                        <td>Alamat</td>
+                                        <td>Layanan</td>
+                                        <td> : </td>
+                                        <td><?= $orders['list_layanan']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Harga</td>
                                         <td> : </td>
                                         <td><?= rupiah($orders['total_harga']); ?></td>
                                     </tr>
-                                <?php endif; ?>
-                            </table>
+                                    <tr>
+                                        <td>Jadwal</td>
+                                        <td> : </td>
+                                        <td><?= $orders['jadwal']; ?></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col">
+                                <table class="table">
+                                    <tr>
+                                        <td>Pelayanan</td>
+                                        <td> : </td>
+                                        <td><?= $orders['layanan_detail']; ?></td>
+                                    </tr>
+                                    <?php if ($orders['layanan_detail'] == 'homecare') : ?>
+                                        <tr>
+                                            <td>Alamat</td>
+                                            <td> : </td>
+                                            <td><?= rupiah($orders['total_harga']); ?></td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </table>
+                            </div>
                         </div>
-                    </div>
 
-                    <a href="#" class="btn btn-success float-end">Terima Pesanan</a>
+                        <a href="#" class="btn btn-success float-end">Terima Pesanan</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
+    <?php } else { ?>
+        <text class="text-secondary">Tidak ada pesanan masuk</text>
+    <?php } ?>
 </div>
 
 <hr>
@@ -83,24 +87,58 @@ function rupiah_norp($angka)
 </div>
 
 <div class="row">
-    <div class="col-12 mb-3">
-        <div class="card border-success">
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-success float-end">Go somewhere</a>
+    <?php if ($order_done != null) { ?>
+        <?php foreach ($order_done as $order_dones) : ?>
+            <div class="col-12 mb-3">
+                <div class="card border-success">
+                    <div class="card-body">
+                        <h5 class="card-title text-success"><b><?= ucfirst($order_dones['nama']) ?></b></h5>
+                        <div class="row">
+                            <div class="col">
+                                <table class="table">
+                                    <tr>
+                                        <td>Layanan</td>
+                                        <td> : </td>
+                                        <td><?= $order_dones['list_layanan']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Harga</td>
+                                        <td> : </td>
+                                        <td><?= rupiah($order_dones['total_harga']); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jadwal</td>
+                                        <td> : </td>
+                                        <td><?= $order_dones['jadwal']; ?></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col">
+                                <table class="table">
+                                    <tr>
+                                        <td>Pelayanan</td>
+                                        <td> : </td>
+                                        <td><?= $order_dones['layanan_detail']; ?></td>
+                                    </tr>
+                                    <?php if ($order_dones['layanan_detail'] == 'homecare') : ?>
+                                        <tr>
+                                            <td>Alamat</td>
+                                            <td> : </td>
+                                            <td><?= rupiah($order_dones['total_harga']); ?></td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </table>
+                            </div>
+                        </div>
+
+                        <a href="#" class="btn btn-success float-end" target="_blank">Detail Pesanan</a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card border-success">
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-success float-end">Go somewhere</a>
-            </div>
-        </div>
-    </div>
+        <?php endforeach; ?>
+    <?php } else { ?>
+        <text class="text-secondary">Tidak ada riwayat pesanan</text>
+    <?php } ?>
 </div>
 
 <?= $this->endSection(); ?>

@@ -22,6 +22,9 @@
 <!-- Datetime Picker Languages -->
 <script src="/datetimepicker/js/locales/bootstrap-datetimepicker.id.js"></script>
 
+<!-- Moment JavaScript -->
+<script type="text/javascript" src="/moment/moment.js"></script>
+
 <!-- Custom JavaScript -->
 <script type="text/javascript" src="/js/script.js"></script>
 
