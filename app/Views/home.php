@@ -244,7 +244,7 @@ function rupiah_norp($angka)
                     <h6 class="text-uppercase fw-bold mb-4">
                         Kontak
                     </h6>
-                    <p><i class="fas fa-home me-3"></i> -, ----, --</p>
+                    <p><i class="fas fa-home me-3"></i> a, aaaa, aa</p>
                     <p>
                         <i class="fas fa-envelope me-3"></i>
                         info@example.com
