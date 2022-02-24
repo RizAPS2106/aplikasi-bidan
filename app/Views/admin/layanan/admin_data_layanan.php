@@ -20,42 +20,44 @@ function rupiah_norp($angka)
     <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fas fa-plus"></i> Tambah Layanan</button>
 </div>
 
-<table class="table py-1 align-middle" id="layanan_table">
-    <thead class="bg-success text-white">
-        <tr>
-            <th>#</th>
-            <th>Nama Layanan</th>
-            <th>Harga</th>
-            <th>
-                <center>Aksi</center>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        $no = 0;
-        foreach ($layanan as $layanans) :
-            $no++;
-        ?>
+<div class="table-responsive">
+    <table class="table py-1 align-middle" id="layanan_table">
+        <thead class="bg-success text-white">
             <tr>
-                <td><?= $no; ?></td>
-                <td>
-                    <?= $layanans['nama_layanan'] ?><br>
-                </td>
-                <td>
-                    <?= rupiah($layanans['harga']) ?><br>
-                </td>
-                <td>
-                    <center>
-                        <a href="<?= base_url('admin/layanan/' . $layanans['id'] . '/preview') ?>" class="btn btn-sm btn-outline-secondary" target="_blank"><i class="fa fa-search-plus"></i> Detail</a>
-                        <a href="javascript:;" class="btn btn-sm btn-outline-primary item_edit" data="<?php echo $layanans['id']; ?>"><i class="far fa-edit"></i> Ubah</a>
-                        <a href="javascript:;" class="btn btn-sm btn-outline-danger item_delete" data="<?= $layanans['id']; ?>"><i class="far fa-trash-alt"></i> Hapus</a>
-                    </center>
-                </td>
+                <th>#</th>
+                <th>Nama Layanan</th>
+                <th>Harga</th>
+                <th>
+                    <center>Aksi</center>
+                </th>
             </tr>
-        <?php endforeach ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php
+            $no = 0;
+            foreach ($layanan as $layanans) :
+                $no++;
+            ?>
+                <tr>
+                    <td><?= $no; ?></td>
+                    <td>
+                        <?= $layanans['nama_layanan'] ?><br>
+                    </td>
+                    <td>
+                        <?= rupiah($layanans['harga']) ?><br>
+                    </td>
+                    <td>
+                        <center>
+                            <a href="<?= base_url('admin/layanan/' . $layanans['id'] . '/preview') ?>" class="btn btn-sm btn-outline-secondary" target="_blank"><i class="fa fa-search-plus"></i> Detail</a>
+                            <a href="javascript:;" class="btn btn-sm btn-outline-primary item_edit" data="<?php echo $layanans['id']; ?>"><i class="far fa-edit"></i> Ubah</a>
+                            <a href="javascript:;" class="btn btn-sm btn-outline-danger item_delete" data="<?= $layanans['id']; ?>"><i class="far fa-trash-alt"></i> Hapus</a>
+                        </center>
+                    </td>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
+</div>
 
 <!-- Create Modal -->
 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">

@@ -19,11 +19,12 @@ section {
 }
 
 .top-navbar {
-  height: 60px;
+  height: 69px;
+  width: 100%;
 }
 
 .top-navbar-list {
-  margin-top: 16px;
+  margin-top: 20px;
 }
 
 .sub-navbar {
@@ -67,4 +68,8 @@ section {
   background-image: url("/img/bidan02.png");
   background-size: cover;
   height: 60vh;
+}
+
+.select2 {
+  width: 100% !important;
 }

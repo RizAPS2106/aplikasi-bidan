@@ -2,7 +2,7 @@
 
 <div class="container">
     <div class="row justify-content-md-center">
-        <div class="col-6 mt-3">
+        <div class="col mt-3">
             <h1 class="text-center text-success">Daftar</h1>
 
             <form method="post" id="create_form">

@@ -25,9 +25,6 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 
-    <!-- Simple Sidebar CSS -->
-    <link rel="stylesheet" type="text/css" href="/css/simple-sidebar.css" />
-
     <!-- Datetime Picker CSS -->
     <link rel="stylesheet" type="text/css" href="/datetimepicker/css/bootstrap-datetimepicker.css" />
 

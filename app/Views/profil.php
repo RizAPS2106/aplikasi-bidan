@@ -14,14 +14,14 @@ function rupiah_norp($angka)
 
 <?= $this->include('layout/header'); ?>
 
-<div class="container mt-5">
+<div class="container my-5">
 
     <div class="row">
-        <div class="col-4">
+        <div class="col-sm-4">
             <div class="card border-success" style="height:33rem;">
                 <div class="card-body">
                     <center>
-                        <img src="/img/notfound.png" width="200" height="200" alt="...">
+                        <img src="/img/notfound.png" class="img-thumbnail mb-4" width="200" height="200" alt="...">
                     </center>
                     <ul class="list-group">
 
@@ -40,7 +40,7 @@ function rupiah_norp($angka)
                 </div>
             </div>
         </div>
-        <div class="col-8">
+        <div class="col-sm-8">
             <div class="card border-success h-100">
                 <div class="card-body">
                     <h4 class="h4 text-success">Profil</h4>

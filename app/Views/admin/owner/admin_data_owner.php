@@ -6,46 +6,48 @@
     <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fas fa-plus"></i> Tambah Data owner</button>
 </div>
 
-<table class="table py-1 align-middle" id="user_table">
-    <thead class="bg-success text-light">
-        <tr>
-            <th>#</th>
-            <th>Nama</th>
-            <th>Telepon</th>
-            <th>Email</th>
-            <th>
-                <center>Aksi</center>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        $no = 0;
-        foreach ($owner as $owners) :
-            $no++;
-        ?>
+<div class="table-responsive">
+    <table class="table py-1 align-middle" id="user_table">
+        <thead class="bg-success text-light">
             <tr>
-                <td><?= $no; ?></td>
-                <td>
-                    <?= $owners['nama'] ?><br>
-                </td>
-                <td>
-                    <?= $owners['telepon'] ?><br>
-                </td>
-                <td>
-                    <?= $owners['email'] ?><br>
-                </td>
-                <td>
-                    <center>
-                        <a href="<?= base_url('admin/owner/' . $owners['id'] . '/preview') ?>" class="btn btn-sm btn-outline-secondary" target="_blank"><i class="fas fa-search-plus"></i> Detail</a>
-                        <a href="javascript:;" class="btn btn-sm btn-outline-primary item_edit" data="<?= $owners['id']; ?>"><i class="far fa-edit"></i> Ubah</a>
-                        <a href="javascript:;" class="btn btn-sm btn-outline-danger item_delete" data="<?= $owners['id']; ?>"><i class="far fa-trash-alt"></i> Hapus</a>
-                    </center>
-                </td>
+                <th>#</th>
+                <th>Nama</th>
+                <th>Telepon</th>
+                <th>Email</th>
+                <th>
+                    <center>Aksi</center>
+                </th>
             </tr>
-        <?php endforeach ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php
+            $no = 0;
+            foreach ($owner as $owners) :
+                $no++;
+            ?>
+                <tr>
+                    <td><?= $no; ?></td>
+                    <td>
+                        <?= $owners['nama'] ?><br>
+                    </td>
+                    <td>
+                        <?= $owners['telepon'] ?><br>
+                    </td>
+                    <td>
+                        <?= $owners['email'] ?><br>
+                    </td>
+                    <td>
+                        <center>
+                            <a href="<?= base_url('admin/owner/' . $owners['id'] . '/preview') ?>" class="btn btn-sm btn-outline-secondary" target="_blank"><i class="fas fa-search-plus"></i> Detail</a>
+                            <a href="javascript:;" class="btn btn-sm btn-outline-primary item_edit" data="<?= $owners['id']; ?>"><i class="far fa-edit"></i> Ubah</a>
+                            <a href="javascript:;" class="btn btn-sm btn-outline-danger item_delete" data="<?= $owners['id']; ?>"><i class="far fa-trash-alt"></i> Hapus</a>
+                        </center>
+                    </td>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
+</div>
 
 <!-- Create Modal -->
 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">

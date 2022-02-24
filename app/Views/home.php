@@ -16,7 +16,7 @@ function rupiah_norp($angka)
 
 <?= $this->section('content'); ?>
 
-<div id="carouselExampleCaptions" class="carousel slide my-4" data-bs-ride="carousel">
+<div id="carouselExampleCaptions" class="carousel slide my-3" data-bs-ride="carousel">
     <div class="container">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -119,8 +119,8 @@ function rupiah_norp($angka)
         <hr class="hr-short">
         <div class="row">
             <?php foreach ($cabang as $cabangs) : ?>
-                <div class="col-md-3 my-3 mx-2 text-center">
-                    <img src="/img/notfound.png" alt="..." class="img-thumbnail mb-1">
+                <div class="col-md-3 text-center">
+                    <img src="/img/notfound.png" alt="..." class="img-thumbnail mb-1" width="300" height="300">
                     <h4><?= ucfirst($cabangs['nama']); ?></h4>
                     <span>Alamat : <?= ucfirst($cabangs['alamat']); ?></span>
                 </div>

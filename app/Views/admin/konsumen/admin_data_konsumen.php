@@ -6,54 +6,56 @@
   <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fas fa-plus"></i> Tambah Data Konsumen</button>
 </div>
 
-<table class="table py-1 align-middle" id="user_table">
-  <thead class="bg-success text-white">
-    <tr>
-      <th>#</th>
-      <th>Nama</th>
-      <th>Alamat</th>
-      <th>Telepon</th>
-      <th>Email</th>
-      <th>
-        <center>Aksi</center>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php
-    $no = 0;
-    foreach ($konsumen as $konsumens) :
-      $no++;
-    ?>
+<div class="table-responsive">
+  <table class="table py-1 align-middle" id="user_table">
+    <thead class="bg-success text-white">
       <tr>
-        <td><?= $no; ?></td>
-        <td>
-          <?= $konsumens['nama'] ?><br>
-        </td>
-        <td>
-          <?php if ($konsumens['alamat'] != '') {
-            echo $konsumens['alamat'];
-          } else {
-            echo '-';
-          } ?>
-        </td>
-        <td>
-          <?= $konsumens['telepon'] ?><br>
-        </td>
-        <td>
-          <?= $konsumens['email'] ?><br>
-        </td>
-        <td>
-          <center>
-            <a href="<?= base_url('admin/konsumen/' . $konsumens['id'] . '/preview') ?>" class="btn btn-sm btn-outline-secondary" target="_blank"><i class="fa fa-search-plus"></i> Detail</a>
-            <a href="javascript:;" class="btn btn-sm btn-outline-primary item_edit" data="<?php echo $konsumens['id']; ?>"><i class="far fa-edit"></i> Ubah</a>
-            <a href="javascript:;" class="btn btn-sm btn-outline-danger item_delete" data="<?= $konsumens['id']; ?>"><i class="far fa-trash-alt"></i> Hapus</a>
-          </center>
-        </td>
+        <th>#</th>
+        <th>Nama</th>
+        <th>Alamat</th>
+        <th>Telepon</th>
+        <th>Email</th>
+        <th>
+          <center>Aksi</center>
+        </th>
       </tr>
-    <?php endforeach ?>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <?php
+      $no = 0;
+      foreach ($konsumen as $konsumens) :
+        $no++;
+      ?>
+        <tr>
+          <td><?= $no; ?></td>
+          <td>
+            <?= $konsumens['nama'] ?><br>
+          </td>
+          <td>
+            <?php if ($konsumens['alamat'] != '') {
+              echo $konsumens['alamat'];
+            } else {
+              echo '-';
+            } ?>
+          </td>
+          <td>
+            <?= $konsumens['telepon'] ?><br>
+          </td>
+          <td>
+            <?= $konsumens['email'] ?><br>
+          </td>
+          <td>
+            <center>
+              <a href="<?= base_url('admin/konsumen/' . $konsumens['id'] . '/preview') ?>" class="btn btn-sm btn-outline-secondary" target="_blank"><i class="fa fa-search-plus"></i> Detail</a>
+              <a href="javascript:;" class="btn btn-sm btn-outline-primary item_edit" data="<?php echo $konsumens['id']; ?>"><i class="far fa-edit"></i> Ubah</a>
+              <a href="javascript:;" class="btn btn-sm btn-outline-danger item_delete" data="<?= $konsumens['id']; ?>"><i class="far fa-trash-alt"></i> Hapus</a>
+            </center>
+          </td>
+        </tr>
+      <?php endforeach ?>
+    </tbody>
+  </table>
+</div>
 
 <!-- Create Modal -->
 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
