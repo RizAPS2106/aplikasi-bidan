@@ -5,7 +5,7 @@ $(document).ready(function () {
     var momentNow = moment();
     console.log(momentNow);
     $('#date-part').html(momentNow.format('dddd') + ' , ' + momentNow.format('DD MMMM YYYY') + ' ');
-    $('#time-part').html(momentNow.format('hh:mm:ss A'));
+    $('#time-part').html(momentNow.format('hh:mm A'));
   }, 100);
 
   // Ketika Refresh

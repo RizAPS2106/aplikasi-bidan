@@ -9,6 +9,12 @@
                 <div class="col">
                     <h1 class="h1 my-4"><?= $header; ?></h1>
                 </div>
+                <div class="col text-end mt-auto mb-auto">
+                    <div class='time-frame'>
+                        <div id='date-part'></div>
+                        <div id='time-part'></div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
