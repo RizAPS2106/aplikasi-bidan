@@ -224,6 +224,12 @@ $(document).ready(function () {
   });
 
   // Logout Script
+  window.addEventListener('storage', function(event){
+    if (event.key == 'logout-event') {
+      window.close();
+    }
+  }, false);
+
   $("#logout").on("click", function () {
     swal({
       title: "Keluar?",
@@ -233,6 +239,8 @@ $(document).ready(function () {
     }).then((willDelete) => {
       if (willDelete) {
         location.replace(base_url+"/login/logout");
+        localStorage.setItem('logout-event', 'logout' + Math.random());
+        return true;
       }
     });
   });

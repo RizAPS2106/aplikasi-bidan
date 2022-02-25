@@ -24,6 +24,10 @@ class Filters extends BaseConfig
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'auth'          => \App\Filters\Auth::class,
+        'auth_admin'    => \App\Filters\AuthAdmin::class,
+        'auth_owner'    => \App\Filters\AuthOwner::class,
+        'auth_konsumen' => \App\Filters\AuthKonsumen::class,
+        'auth_bidan'    => \App\Filters\AuthBidan::class,
     ];
 
     /**

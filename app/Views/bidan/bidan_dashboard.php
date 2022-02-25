@@ -61,7 +61,7 @@ function rupiah_norp($angka)
                                         <tr>
                                             <td>Alamat</td>
                                             <td> : </td>
-                                            <td><?= rupiah($orders['total_harga']); ?></td>
+                                            <td><?= $orders['alamat']; ?></td>
                                         </tr>
                                     <?php endif; ?>
                                 </table>

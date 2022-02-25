@@ -6,19 +6,22 @@ use \App\Controllers\BaseController;
 use \App\Models\UserModel;
 use \App\Models\CabangModel;
 use \App\Models\OrderModel;
-use \App\Models\DetailOrderModel;
 
 class Bidan extends BaseController
 {
     public function index()
     {
+
+        $user = new UserModel();
         $order = new OrderModel();
-        $detail_order = new DetailOrderModel();
+
+        $id_user = session()->get('id_user');
 
         $data = [
             'title' => "Bidan",
             'header' => "Dashboard",
-            'order' => $order->select('order.*,detail_order.*,user.*,user.id as id_user,layanan.*,GROUP_CONCAT(layanan.nama_layanan) as list_layanan')
+            'saldo' => $user->select('saldo')->where('id', $id_user)->first(),
+            'order' => $order->select('order.*,detail_order.*,user.*,user.id as id_user,layanan.*,GROUP_CONCAT(layanan.nama_layanan) as list_layanan,master_alamat.*')
                 ->join('detail_order', 'detail_order.invoice = order.invoice', 'LEFT')
                 ->join('user', 'user.id = detail_order.id_user', 'LEFT')
                 ->join('layanan', 'layanan.id = detail_order.id_layanan', 'LEFT')
@@ -26,7 +29,7 @@ class Bidan extends BaseController
                 ->groupBy('detail_order.invoice')
                 ->where('detail_order.tracking !=', 'done')
                 ->findAll(),
-            'order_done' => $order->select('order.*,detail_order.*,user.*,user.id as id_user,layanan.*,GROUP_CONCAT(layanan.nama_layanan) as list_layanan')
+            'order_done' => $order->select('order.*,detail_order.*,user.*,user.id as id_user,layanan.*,GROUP_CONCAT(layanan.nama_layanan) as list_layanan,master_alamat.*')
                 ->join('detail_order', 'detail_order.invoice = order.invoice', 'LEFT')
                 ->join('user', 'user.id = detail_order.id_user', 'LEFT')
                 ->join('layanan', 'layanan.id = detail_order.id_layanan', 'LEFT')
@@ -79,11 +82,12 @@ class Bidan extends BaseController
             [
                 'id' => 'required',
                 'nama' => [
+                    'label' => 'Nama',
                     'rules' => 'required',
                     'errors' => ['required' => 'Harap isi kolom {field}']
                 ],
                 'telepon'  => [
-                    'label' => 'nomor telepon',
+                    'label' => 'Telepon',
                     'rules' => 'required|numeric|min_length[10]|is_unique[user.telepon,id,{id}]',
                     'errors' => [
                         'required' => 'Harap isi kolom {field}',
@@ -93,6 +97,7 @@ class Bidan extends BaseController
                     ]
                 ],
                 'email'  => [
+                    'label' => 'Email',
                     'rules' => 'required|valid_email|is_unique[user.email,id,{id}]',
                     'errors' => [
                         'required' => 'Harap isi kolom {field}',
@@ -108,13 +113,14 @@ class Bidan extends BaseController
                     ]
                 ],
                 'password'  => [
+                    'label' => 'Password',
                     'rules' => 'min_length[8]|permit_empty',
                     'errors' => [
                         'min_length' => 'Kolom {field} Minimal 8 karakter'
                     ]
                 ],
                 'password_confirm'  => [
-                    'label' => 'konfirmasi password',
+                    'label' => 'Konfirmasi password',
                     'rules' => 'min_length[8]|matches[password]|permit_empty',
                     'errors' => [
                         'min_length' => 'Kolom {field} minimal 8 karakter',

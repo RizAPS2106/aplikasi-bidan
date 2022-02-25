@@ -34,11 +34,12 @@ class Konsumen extends BaseController
             [
                 'id' => 'required',
                 'nama' => [
+                    'label' => 'Nama',
                     'rules' => 'required',
                     'errors' => ['required' => 'Harap isi kolom {field}']
                 ],
-                'telepon' => [
-                    'label' => 'nomor telepon',
+                'telepon'  => [
+                    'label' => 'Telepon',
                     'rules' => 'required|numeric|min_length[10]|is_unique[user.telepon,id,{id}]',
                     'errors' => [
                         'required' => 'Harap isi kolom {field}',
@@ -47,7 +48,8 @@ class Konsumen extends BaseController
                         'is_unique' => '{field} sudah terdaftar',
                     ]
                 ],
-                'email' => [
+                'email'  => [
+                    'label' => 'Email',
                     'rules' => 'required|valid_email|is_unique[user.email,id,{id}]',
                     'errors' => [
                         'required' => 'Harap isi kolom {field}',
@@ -55,21 +57,22 @@ class Konsumen extends BaseController
                         'is_unique' => '{field} sudah terdaftar'
                     ]
                 ],
-                'first_password' => [
+                'first_password'  => [
                     'label' => 'Password lama',
                     'rules' => 'min_length[8]|permit_empty',
                     'errors' => [
                         'min_length' => 'Kolom {field} Minimal 8 karakter'
                     ]
                 ],
-                'password' => [
+                'password'  => [
+                    'label' => 'Password',
                     'rules' => 'min_length[8]|permit_empty',
                     'errors' => [
                         'min_length' => 'Kolom {field} Minimal 8 karakter'
                     ]
                 ],
                 'password_confirm'  => [
-                    'label' => 'konfirmasi password',
+                    'label' => 'Konfirmasi password',
                     'rules' => 'min_length[8]|matches[password]|permit_empty',
                     'errors' => [
                         'min_length' => 'Kolom {field} minimal 8 karakter',

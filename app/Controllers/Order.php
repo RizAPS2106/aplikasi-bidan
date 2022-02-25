@@ -3,10 +3,12 @@
 namespace App\Controllers;
 
 use \App\Controllers\BaseController;
+use \App\Models\UserModel;
 use \App\Models\LayananModel;
 use \App\Models\AlamatModel;
 use \App\Models\DetailOrderModel;
 use \App\Models\OrderModel;
+use \App\Models\TransaksiModel;
 
 class Order extends BaseController
 {
@@ -26,15 +28,21 @@ class Order extends BaseController
             'alamat_disable' => $alamat->where('id_user', $id_user)->where('status_alamat', 'disable')->findAll()
         ];
 
-        echo view('pesan_bidan', $data);
+        echo view('pesan', $data);
     }
 
     public function create()
     {
+        $user = new UserModel();
         $detail_order = new DetailOrderModel();
         $order = new OrderModel();
+        $transaksi = new TransaksiModel();
 
         $id_user = session()->get('id_user');
+
+        $data_user = $user->where('id', $id_user)->first();
+
+        $saldo_user = $data_user['saldo'];
 
         $validation =  \Config\Services::validation();
         $validation->setRules(
@@ -68,43 +76,62 @@ class Order extends BaseController
         $isDataValid = $validation->withRequest($this->request)->run();
 
         if ($isDataValid) {
-            foreach ($this->request->getPost('layanan') as $layanan) {
-                $data_layanan = json_decode($layanan);
-                $id_layanan = $data_layanan->{'id'};
-                $harga_layanan = $data_layanan->{'harga'};
+            if ((int)$saldo_user >= (int)$this->request->getPost('total_harga')) {
+                foreach ($this->request->getPost('layanan') as $layanan) {
+                    $data_layanan = json_decode($layanan);
+                    $id_layanan = $data_layanan->{'id'};
+                    $harga_layanan = $data_layanan->{'harga'};
 
-                if ($this->request->getPost('layanan_detail') == "onsite") {
-                    $detail_order->insert([
-                        "invoice" => $this->request->getPost('invoice'),
-                        "id_user" => $id_user,
-                        "id_layanan" => $id_layanan,
-                        "harga" => $harga_layanan,
-                        "jadwal" => $this->request->getPost('jadwal'),
-                        "layanan_detail" => $this->request->getPost('layanan_detail'),
-                        "tracking" => "menuju_lokasi"
-                    ]);
-                } else if ($this->request->getPost('layanan_detail') == "homecare") {
-                    $detail_order->insert([
-                        "invoice" => $this->request->getPost('invoice'),
-                        "id_user" => $id_user,
-                        "id_layanan" => $id_layanan,
-                        "harga" => $harga_layanan,
-                        "jadwal" => $this->request->getPost('jadwal'),
-                        "layanan_detail" => $this->request->getPost('layanan_detail'),
-                        "id_alamat" => $this->request->getPost('id_alamat'),
-                        "tracking" => "menuju_lokasi"
-                    ]);
-                } else {
-                    echo "Error";
+                    // insert detail order
+                    if ($this->request->getPost('layanan_detail') == "onsite") {
+                        $detail_order->insert([
+                            "invoice" => $this->request->getPost('invoice'),
+                            "id_user" => $id_user,
+                            "id_layanan" => $id_layanan,
+                            "harga" => $harga_layanan,
+                            "jadwal" => $this->request->getPost('jadwal'),
+                            "layanan_detail" => $this->request->getPost('layanan_detail'),
+                            "tracking" => "menuju_lokasi"
+                        ]);
+                    } else if ($this->request->getPost('layanan_detail') == "homecare") {
+                        $detail_order->insert([
+                            "invoice" => $this->request->getPost('invoice'),
+                            "id_user" => $id_user,
+                            "id_layanan" => $id_layanan,
+                            "harga" => $harga_layanan,
+                            "jadwal" => $this->request->getPost('jadwal'),
+                            "layanan_detail" => $this->request->getPost('layanan_detail'),
+                            "id_alamat" => $this->request->getPost('id_alamat'),
+                            "tracking" => "menuju_lokasi"
+                        ]);
+                    } else {
+                        echo "Error";
+                    }
                 }
+
+                // insert order
+                $order->insert([
+                    "invoice" => $this->request->getPost('invoice'),
+                    "total_harga" => $this->request->getPost('total_harga')
+                ]);
+
+                // insert transaksi
+                $data_order = $order->select('order.*,MAX(order.id) as max_id_order')->first();
+                $transaksi->insert([
+                    "id_order" => $data_order['max_id_order'],
+                    "detail_transaksi" => 'lunas'
+                ]);
+
+                // update saldo
+                $saldo_berkurang = (int) $saldo_user - (int) $this->request->getPost('total_harga');
+                $user->update($id_user, [
+                    "saldo" => $saldo_berkurang
+                ]);
+
+                echo 'Pesanan berhasil dibuat';
+            } else {
+                echo 'Saldo kurang';
             }
-
-            $order->insert([
-                "invoice" => $this->request->getPost('invoice'),
-                "total_harga" => $this->request->getPost('total_harga')
-            ]);
-
-            echo 'Pesanan berhasil dibuat';
         } else {
             $message = $validation->getErrors();
 

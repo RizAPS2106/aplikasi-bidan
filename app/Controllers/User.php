@@ -115,11 +115,12 @@ class User extends BaseController
             [
                 'id' => 'required',
                 'nama' => [
+                    'label' => 'Nama',
                     'rules' => 'required',
                     'errors' => ['required' => 'Harap isi kolom {field}']
                 ],
                 'telepon' => [
-                    'label' => 'nomor telepon',
+                    'label' => 'Telepon',
                     'rules' => 'required|numeric|min_length[10]|is_unique[user.telepon,id,{id}]',
                     'errors' => [
                         'required' => 'Harap isi kolom {field}',
@@ -129,6 +130,7 @@ class User extends BaseController
                     ]
                 ],
                 'email' => [
+                    'label' => 'Email',
                     'rules' => 'required|valid_email|is_unique[user.email,id,{id}]',
                     'errors' => [
                         'required' => 'Harap isi kolom {field}',
@@ -136,7 +138,7 @@ class User extends BaseController
                         'is_unique' => '{field} sudah terdaftar'
                     ]
                 ],
-                'first_password' => [
+                'password_lama' => [
                     'label' => 'Password lama',
                     'rules' => 'min_length[8]|permit_empty',
                     'errors' => [
@@ -144,13 +146,14 @@ class User extends BaseController
                     ]
                 ],
                 'password' => [
+                    'label' => 'Password',
                     'rules' => 'min_length[8]|permit_empty',
                     'errors' => [
                         'min_length' => 'Kolom {field} Minimal 8 karakter'
                     ]
                 ],
-                'password_confirm'  => [
-                    'label' => 'konfirmasi password',
+                'konfirmasi_password' => [
+                    'label' => 'Konfirmasi password',
                     'rules' => 'min_length[8]|matches[password]|permit_empty',
                     'errors' => [
                         'min_length' => 'Kolom {field} minimal 8 karakter',
@@ -163,9 +166,9 @@ class User extends BaseController
 
         if ($isDataValid) {
             $first_password_data = $data['password'];
-            $first_password = $this->request->getPost('first_password');
+            $first_password = $this->request->getPost('password_lama');
             $password = $this->request->getPost('password');
-            $password_confirm = $this->request->getPost('password_confirm');
+            $password_confirm = $this->request->getPost('konfirmasi_password');
 
             if (empty($password) && empty($first_password) && empty($password_confirm)) {
                 $user->update($id_user, [
@@ -196,7 +199,7 @@ class User extends BaseController
                 } else {
                     $message = 'Password lama tidak sesuai';
                 }
-                echo $first_password;
+                echo $message;
             }
         } else {
             $message = $validation->getErrors();

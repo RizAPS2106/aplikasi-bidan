@@ -29,6 +29,8 @@ if ($invoice['max_invoice'] == null) {
             <div class="col">
                 <h1 class="h1 my-3 text-success">Pesan Layanan</h1>
             </div>
+            <div class="col">
+            </div>
         </div>
     </div>
 </header>

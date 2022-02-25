@@ -38,18 +38,7 @@ $routes->add('login/auth', 'Login::auth');
 $routes->get('register', 'Register::index');
 $routes->add('register/register', 'Register::register');
 
-$routes->group('konsumen', ['filter' => 'auth'], function ($routes) {
-	$routes->get('/', 'Konsumen\Konsumen::profil');
-	$routes->get('profil', 'Konsumen\Konsumen::profil');
-	$routes->add('profil/edit', 'Konsumen\Konsumen::profil_edit');
-	$routes->add('saldo', 'Konsumen\Konsumen::saldo');
-	$routes->add('saldo/add', 'Konsumen\Konsumen::saldo_add');
-	$routes->add('alamat', 'Konsumen\Konsumen::alamat');
-	$routes->add('alamat/add', 'Konsumen\Konsumen::alamat_add');
-	$routes->add('alamat/pick', 'Konsumen\Konsumen::alamat_pick');
-});
-
-$routes->group('admin', ['filter' => 'auth'], function ($routes) {
+$routes->group('admin', ['filter' => 'auth_admin'], function ($routes) {
 	$routes->get('/', 'Admin\Admin::index');
 	$routes->get('profil', 'Admin\Admin::profil');
 
@@ -81,17 +70,29 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 	$routes->add('layanan/(:segment)/delete', 'Layanan::delete/$1');
 });
 
-$routes->group('bidan', ['filter' => 'auth'], function ($routes) {
-	$routes->get('/', 'Bidan\Bidan::index');
-	$routes->get('profil', 'Bidan\Bidan::profil');
+$routes->group('konsumen', ['filter' => 'auth_konsumen'], function ($routes) {
+	$routes->get('/', 'Konsumen\Konsumen::profil');
+	$routes->get('profil', 'Konsumen\Konsumen::profil');
+	$routes->add('profil/edit', 'Konsumen\Konsumen::profil_edit');
+	$routes->add('saldo', 'Konsumen\Konsumen::saldo');
+	$routes->add('saldo/add', 'Konsumen\Konsumen::saldo_add');
+	$routes->add('alamat', 'Konsumen\Konsumen::alamat');
+	$routes->add('alamat/add', 'Konsumen\Konsumen::alamat_add');
+	$routes->add('alamat/pick', 'Konsumen\Konsumen::alamat_pick');
 });
 
-$routes->group('pesan', ['filter' => 'auth'], function ($routes) {
+$routes->group('pesan', ['filter' => 'auth_konsumen'], function ($routes) {
 	$routes->get('/', 'Order::index');
 	$routes->add('create', 'Order::create');
 	$routes->add('create/addalamat', 'Order::alamat_add');
 	$routes->add('create/pickalamat', 'Order::alamat_pick');
 });
+
+$routes->group('bidan', ['filter' => 'auth_bidan'], function ($routes) {
+	$routes->get('/', 'Bidan\Bidan::index');
+	$routes->get('profil', 'Bidan\Bidan::profil');
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
