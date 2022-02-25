@@ -171,7 +171,7 @@
                                         <input type="password" name="password" class="form-control" id="passwords" placeholder="Password baru">
                                     </div>
                                     <div class="col">
-                                        <input type="password" name="password_konfirmasi" class="form-control" id="password_konfirmasis" placeholder="Konfirmasi password">
+                                        <input type="password" name="konfirmasi_password" class="form-control" id="konfirmasi_passwords" placeholder="Konfirmasi password">
                                     </div>
                                 </div>
                                 <input type="hidden" id="password_invalids">

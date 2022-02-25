@@ -37,7 +37,7 @@
                         </table>
                     </div>
 
-                    <a href="javascript:;" class="btn btn-sm btn-success my-3 item_edit" data="<?= session()->get('id_user'); ?>">Ubah profil</a>
+                    <a href="<?= base_url('preview_edit'); ?>" class="btn btn-sm btn-success my-3 item_edit" data="<?= session()->get('id_user'); ?>">Ubah profil</a>
                 </div>
             </div>
         </div>
@@ -111,7 +111,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" value="<?= base_url('admin/user/edit'); ?>" id="edit_url">
+                    <input type="hidden" value="<?= base_url('user/edit'); ?>" id="edit_url">
                     <input type="submit" class="btn btn-success" value="Ubah" id="edit">
                 </div>
             </form>

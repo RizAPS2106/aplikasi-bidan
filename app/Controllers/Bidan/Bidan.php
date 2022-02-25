@@ -105,9 +105,9 @@ class Bidan extends BaseController
                         'is_unique' => '{field} sudah terdaftar'
                     ]
                 ],
-                'first_password'  => [
-                    'label' => 'Password lama',
-                    'rules' => 'min_length[8]|permit_empty',
+                'password_lama'  => [
+                    'label' => 'password lama',
+                    'rules' => 'permit_empty',
                     'errors' => [
                         'min_length' => 'Kolom {field} Minimal 8 karakter'
                     ]
@@ -119,7 +119,7 @@ class Bidan extends BaseController
                         'min_length' => 'Kolom {field} Minimal 8 karakter'
                     ]
                 ],
-                'password_confirm'  => [
+                'konfirmasi_password'  => [
                     'label' => 'Konfirmasi password',
                     'rules' => 'min_length[8]|matches[password]|permit_empty',
                     'errors' => [

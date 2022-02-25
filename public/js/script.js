@@ -328,9 +328,9 @@ $(document).ready(function () {
             else { $("#telepon").removeClass("is-invalid"); }
             if (data.includes("Email")) { $("#email").addClass("is-invalid"); }
             else { $("#email").removeClass("is-invalid"); }
-            if (data.includes("Password")) { $("#password").addClass("is-invalid"); $("#password_invalid").addClass("is-invalid"); }
+            if (data.includes("Password")||data.includes("password")) { $("#password").addClass("is-invalid"); $("#password_invalid").addClass("is-invalid"); }
             else { $("#password").removeClass("is-invalid"); $("#password_invalid").removeClass("is-invalid"); }
-            if (data.includes("Konfirmasi password")) { $("#konfirmasi_password").addClass("is-invalid"); $("#password_invalid").addClass("is-invalid"); }
+            if (data.includes("Konfirmasi password")||data.includes("password")) { $("#konfirmasi_password").addClass("is-invalid"); $("#password_invalid").addClass("is-invalid"); }
             else { $("#konfirmasi_password").remmoveClass("is-invalid"); $("#password_invalid").removeClass("is-invalid"); }
           
           }
@@ -364,17 +364,17 @@ $(document).ready(function () {
   $(".item_edit").on("click", function () {
     var id = $(this).attr("data");
 
+    var id_table = $(".table").attr('id');
     
-      var id_table = $("#table").attr('id');
-      if (id_table == "user_table") {
-        var url_preview_edit = base_url + "/admin/user/preview_edit";
-      } else if (id_table == "cabang_table") {
-        var url_preview_edit = base_url + "/admin/cabang/preview_edit";
-      } else if (id_table == "layanan_table") {
-        var url_preview_edit = base_url + "/admin/layanan/preview_edit";
-      } else {
-        var url_preview_edit = base_url + "/admin/user/preview_edit";
-      }
+    if (id_table == "user_table") {
+      var url_preview_edit = base_url + "/admin/user/preview_edit";
+    } else if (id_table == "cabang_table") {
+      var url_preview_edit = base_url + "/admin/cabang/preview_edit";
+    } else if (id_table == "layanan_table") {
+      var url_preview_edit = base_url + "/admin/layanan/preview_edit";
+    } else {
+      var url_preview_edit = base_url + "/user/preview_edit";
+    }
 
     $.ajax({
       type: "GET",
@@ -485,11 +485,11 @@ $(document).ready(function () {
             else { $("#telepons").removeClass("is-invalid"); }
             if (data.includes("Email")) { $("#emails").addClass("is-invalid"); }
             else { $("#emails").removeClass("is-invalid"); }
-            if (data.includes("Password lama")) { $("#password_lamas").addClass("is-invalid"); }
+            if (data.includes("password lama")||data.includes("password")) { $("#password_lamas").addClass("is-invalid"); }
             else { $("#password_lamas").removeClass("is-invalid"); }
-            if (data.includes("Password")) { $("#passwords").addClass("is-invalid"); $("#password_invalids").addClass("is-invalid"); }
+            if (data.includes("Password")||data.includes("password")) { $("#passwords").addClass("is-invalid"); $("#password_invalids").addClass("is-invalid"); }
             else { $("#passwords").removeClass("is-invalid"); $("#password_invalids").removeClass("is-invalid"); }
-            if (data.includes("Konfirmasi password")) { $("#konfirmasi_passwords").addClass("is-invalid"); $("#password_invalids").addClass("is-invalid"); }
+            if (data.includes("Konfirmasi password")||data.includes("password")) { $("#konfirmasi_passwords").addClass("is-invalid"); $("#password_invalids").addClass("is-invalid"); }
             else { $("#konfirmasi_passwords").remmoveClass("is-invalid"); $("#password_invalids").removeClass("is-invalid"); }
 
           }
