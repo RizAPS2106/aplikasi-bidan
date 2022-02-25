@@ -3,7 +3,6 @@ $(document).ready(function () {
   setInterval(function() {
     moment.locale('id');
     var momentNow = moment();
-    console.log(momentNow);
     $('#date-part').html(momentNow.format('dddd') + ' , ' + momentNow.format('DD MMMM YYYY') + ' ');
     $('#time-part').html(momentNow.format('hh:mm A'));
   }, 100);

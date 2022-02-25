@@ -11,16 +11,11 @@ class Bidan extends BaseController
 {
     public function index()
     {
-
-        $user = new UserModel();
         $order = new OrderModel();
-
-        $id_user = session()->get('id_user');
 
         $data = [
             'title' => "Bidan",
             'header' => "Dashboard",
-            'saldo' => $user->select('saldo')->where('id', $id_user)->first(),
             'order' => $order->select('order.*,detail_order.*,user.*,user.id as id_user,layanan.*,GROUP_CONCAT(layanan.nama_layanan) as list_layanan,master_alamat.*')
                 ->join('detail_order', 'detail_order.invoice = order.invoice', 'LEFT')
                 ->join('user', 'user.id = detail_order.id_user', 'LEFT')
