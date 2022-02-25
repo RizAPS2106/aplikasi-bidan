@@ -19,10 +19,9 @@
                     <li class="list-unstyled">
                         <div class="dropdown">
                             <a class="text-decoration-none link-success" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                <div class="overflow">
-                                    <text><?= session()->get('nama_user') ?></text>
+                                <div class="overflow-auto">
+                                    <text><?= session()->get('nama_user') ?></text><i class="fas fa-user-circle"></i> <i class="fas fa-caret-down"></i>
                                 </div>
-                                <i class="fas fa-user-circle"></i> <i class="fas fa-caret-down"></i>
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
