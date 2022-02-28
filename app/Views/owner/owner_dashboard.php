@@ -12,7 +12,7 @@ function rupiah_norp($angka)
 }
 ?>
 
-<?= $this->extend('bidan/layout/bidan_layout') ?>
+<?= $this->extend('owner/layout/owner_layout') ?>
 
 <?= $this->section('content') ?>
 

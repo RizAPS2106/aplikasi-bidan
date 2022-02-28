@@ -95,9 +95,9 @@ $routes->group('pesan', ['filter' => 'auth_konsumen'], function ($routes) {
 	$routes->add('create/pickalamat', 'Order::alamat_pick');
 });
 
-$routes->group('bidan', ['filter' => 'auth_bidan'], function ($routes) {
-	$routes->get('/', 'Bidan\Bidan::index');
-	$routes->get('profil', 'Bidan\Bidan::profil');
+$routes->group('owner', ['filter' => 'auth_owner'], function ($routes) {
+	$routes->get('/', 'Owner\Owner::index');
+	$routes->get('profil', 'Owner\Owner::profil');
 });
 
 /*

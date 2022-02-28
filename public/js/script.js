@@ -171,9 +171,9 @@ $(document).ready(function () {
       success: function (data) {
         if (data.includes("Admin")) {
           location.replace(base_url + "/admin/");
-        } else if (data.includes("Bidan")){
-          location.replace(base_url + "/bidan/");
-        }else if (data.includes("Owner") || data.includes("Konsumen") || data.includes("Bidan")) {
+        } else if (data.includes("Owner")){
+          location.replace(base_url + "/owner/");
+        } else if (data.includes("Konsumen") || data.includes("Bidan")) {
           swal({
             title: "Berhasil",
             text: 'Selamat Datang, '+data,
