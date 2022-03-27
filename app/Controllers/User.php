@@ -139,8 +139,8 @@ class User extends BaseController
                     ]
                 ],
                 'password_lama' => [
-                    'label' => 'Password lama',
-                    'rules' => 'min_length[8]|permit_empty',
+                    'label' => 'password lama',
+                    'rules' => 'permit_empty',
                     'errors' => [
                         'min_length' => 'Kolom {field} Minimal 8 karakter'
                     ]
@@ -197,7 +197,7 @@ class User extends BaseController
                         $message = 'Jika ingin mengubah password silahkan isi semua kolom password, jika tidak kosongkan saja';
                     }
                 } else {
-                    $message = 'Password lama tidak sesuai';
+                    $message = 'password lama tidak sesuai';
                 }
                 echo $message;
             }

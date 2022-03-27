@@ -18,7 +18,7 @@ class AuthOwner implements FilterInterface
             } else if (session()->get('group_user') == 2) {
                 return redirect()->to('/');
             } else if (session()->get('group_user') == 3) {
-                return redirect()->to('/bidan');
+                return redirect()->to('/');
             } else {
                 return 'Error';
             }

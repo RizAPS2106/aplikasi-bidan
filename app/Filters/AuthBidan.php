@@ -16,7 +16,7 @@ class AuthBidan implements FilterInterface
             if (session()->get('group_user') == 0) {
                 return redirect()->to('/admin');
             } else if (session()->get('group_user') == 1) {
-                return redirect()->to('/');
+                return redirect()->to('/owner');
             } else if (session()->get('group_user') == 2) {
                 return redirect()->to('/');
             } else {

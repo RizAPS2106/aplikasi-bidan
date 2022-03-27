@@ -38,6 +38,13 @@ $routes->add('login/auth', 'Login::auth');
 $routes->get('register', 'Register::index');
 $routes->add('register/register', 'Register::register');
 
+$routes->group('user', ['filter' => 'auth'], function ($routes) {
+	$routes->add('create', 'User::create');
+	$routes->get('preview_edit', 'User::preview_edit');
+	$routes->add('edit', 'User::edit');
+	$routes->add('(:segment)/delete', 'User::delete/$1');
+});
+
 $routes->group('admin', ['filter' => 'auth_admin'], function ($routes) {
 	$routes->get('/', 'Admin\Admin::index');
 	$routes->get('profil', 'Admin\Admin::profil');
@@ -45,16 +52,16 @@ $routes->group('admin', ['filter' => 'auth_admin'], function ($routes) {
 	$routes->get('owner', 'Admin\OwnerAdmin::index');
 	$routes->get('owner/(:segment)/preview', 'Admin\OwnerAdmin::preview/$1');
 
-	$routes->get('bidan', 'Admin\BidanAdmin::index');
-	$routes->get('bidan/(:segment)/preview', 'Admin\BidanAdmin::preview/$1');
-
 	$routes->get('konsumen', 'Admin\KonsumenAdmin::index');
 	$routes->get('konsumen/(:segment)/preview', 'Admin\KonsumenAdmin::preview/$1');
 
-	$routes->add('user/create', 'User::create');
-	$routes->get('user/preview_edit', 'User::preview_edit');
-	$routes->add('user/edit', 'User::edit');
-	$routes->add('user/(:segment)/delete', 'User::delete/$1');
+	$routes->get('bidan', 'Admin\BidanAdmin::index');
+	$routes->get('bidan/(:segment)/preview', 'Admin\BidanAdmin::preview/$1');
+
+	$routes->add('create', 'User::create');
+	$routes->get('preview_edit', 'User::preview_edit');
+	$routes->add('edit', 'User::edit');
+	$routes->add('(:segment)/delete', 'User::delete/$1');
 
 	$routes->get('cabang', 'Admin\CabangAdmin::index');
 	$routes->get('cabang/(:segment)/preview', 'Admin\CabangAdmin::preview/$1');
@@ -88,9 +95,9 @@ $routes->group('pesan', ['filter' => 'auth_konsumen'], function ($routes) {
 	$routes->add('create/pickalamat', 'Order::alamat_pick');
 });
 
-$routes->group('bidan', ['filter' => 'auth_bidan'], function ($routes) {
-	$routes->get('/', 'Bidan\Bidan::index');
-	$routes->get('profil', 'Bidan\Bidan::profil');
+$routes->group('owner', ['filter' => 'auth_owner'], function ($routes) {
+	$routes->get('/', 'Owner\Owner::index');
+	$routes->get('profil', 'Owner\Owner::profil');
 });
 
 /*

@@ -1,26 +1,21 @@
 <?php
 
-namespace App\Controllers\Bidan;
+namespace App\Controllers\Owner;
 
 use \App\Controllers\BaseController;
 use \App\Models\UserModel;
 use \App\Models\CabangModel;
 use \App\Models\OrderModel;
 
-class Bidan extends BaseController
+class Owner extends BaseController
 {
     public function index()
     {
-
-        $user = new UserModel();
         $order = new OrderModel();
 
-        $id_user = session()->get('id_user');
-
         $data = [
-            'title' => "Bidan",
+            'title' => "Owner",
             'header' => "Dashboard",
-            'saldo' => $user->select('saldo')->where('id', $id_user)->first(),
             'order' => $order->select('order.*,detail_order.*,user.*,user.id as id_user,layanan.*,GROUP_CONCAT(layanan.nama_layanan) as list_layanan,master_alamat.*')
                 ->join('detail_order', 'detail_order.invoice = order.invoice', 'LEFT')
                 ->join('user', 'user.id = detail_order.id_user', 'LEFT')
@@ -39,7 +34,7 @@ class Bidan extends BaseController
                 ->findAll()
         ];
 
-        echo view('bidan/bidan_dashboard', $data);
+        echo view('owner/owner_dashboard', $data);
     }
 
     public function profil()
@@ -50,13 +45,13 @@ class Bidan extends BaseController
         $id_user = session()->get('id_user');
 
         $data = [
-            'title' => "Profil Bidan",
+            'title' => "Profil Owner",
             'header' => "Profil",
             'profil' => $user->select('user.*,cabang.nama as nama_cabang')->join('cabang', 'cabang.id = user.id_cabang', 'LEFT')->where('user.id', $id_user)->first(),
             'cabang' => $cabang->findAll(),
         ];
 
-        echo view('bidan/bidan_profil', $data);
+        echo view('owner/owner_profil', $data);
     }
 
     public function profil_preview_edit()
@@ -105,9 +100,9 @@ class Bidan extends BaseController
                         'is_unique' => '{field} sudah terdaftar'
                     ]
                 ],
-                'first_password'  => [
-                    'label' => 'Password lama',
-                    'rules' => 'min_length[8]|permit_empty',
+                'password_lama'  => [
+                    'label' => 'password lama',
+                    'rules' => 'permit_empty',
                     'errors' => [
                         'min_length' => 'Kolom {field} Minimal 8 karakter'
                     ]
@@ -119,7 +114,7 @@ class Bidan extends BaseController
                         'min_length' => 'Kolom {field} Minimal 8 karakter'
                     ]
                 ],
-                'password_confirm'  => [
+                'konfirmasi_password'  => [
                     'label' => 'Konfirmasi password',
                     'rules' => 'min_length[8]|matches[password]|permit_empty',
                     'errors' => [

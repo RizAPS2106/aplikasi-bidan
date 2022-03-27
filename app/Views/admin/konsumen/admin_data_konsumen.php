@@ -120,7 +120,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-success text-light">
-        <h5 class="modal-title" id="updateModalLabel">Ubah Data Bidan</h5>
+        <h5 class="modal-title" id="updateModalLabel">Ubah Data Konsumen</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="post" id="edit_form">
@@ -151,6 +151,7 @@
 
           <hr>
 
+
           <div class="form-group my-2">
             <label type="button" for="password" class="w-100 dropdown-toggle" id="ubah_password">Ubah Password</label>
             <div id="form_ubah_password" class="mt-3" style="display: none;">
@@ -161,7 +162,7 @@
                     <input type="password" name="password" class="form-control" id="passwords" placeholder="Password baru">
                   </div>
                   <div class="col">
-                    <input type="password" name="konfirmasi_password" class="form-control" id="konfirmasi_passwords " placeholder="Konfirmasi password">
+                    <input type="password" name="konfirmasi_password" class="form-control" id="konfirmasi_passwords" placeholder="Konfirmasi password">
                   </div>
                 </div>
                 <input type="hidden" id="password_invalids">
